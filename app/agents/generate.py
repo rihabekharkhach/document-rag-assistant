@@ -51,12 +51,17 @@ Rules:
 - Answer in the same language as the question, as briefly as the question allows.
 - If the context does not contain the answer, set found=false and say so. Never use outside knowledge.
 - Support your answer with citations: the chunk number and a short excerpt copied EXACTLY
-  (word for word) from that chunk. Never paraphrase inside a quote."""
+  (word for word) from that chunk. Never paraphrase inside a quote.
+- Quotes must stay in the original language of the chunk. Never translate a quote.
+- Write the answer in the exact language of the question, even if the context is in another language."""
 
     result: Answer = structured_llm.invoke(prompt)
+
+    verified = verify_citations(result.citations, chunks)
+    print(f"[Citations] kept {len(verified)}/{len(result.citations)}")
 
     return {
         "answer": result.answer,
         "found": result.found,
-        "citations": verify_citations(result.citations, chunks),
+        "citations": verified,
     }
