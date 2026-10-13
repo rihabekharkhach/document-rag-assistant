@@ -7,13 +7,12 @@ On retry (when the Critic flagged something missing), it searches
 using the critic's feedback instead of the original query, and
 appends new findings to what's already been gathered.
 """
-
-from langchain_ollama import ChatOllama
+from app.llm import llm
 
 from app.agents.state import GraphState
 from app.rag.vector_store import retrieve
 
-llm = ChatOllama(model="llama3.1:8b")
+#llm = ChatOllama(model="llama3.1:8b")
 
 
 def researcher_node(state: GraphState) -> dict:

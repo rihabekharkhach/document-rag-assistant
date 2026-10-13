@@ -6,11 +6,10 @@ a structured, readable report. This is the last node in the graph —
 after this runs, execution ends.
 """
 
-from langchain_ollama import ChatOllama
+from app.llm import llm
 
 from app.agents.state import GraphState
 
-llm = ChatOllama(model="llama3.1:8b")
 
 
 def writer_node(state: GraphState) -> dict:

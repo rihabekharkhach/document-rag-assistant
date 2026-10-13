@@ -12,11 +12,9 @@ Researcher can act on.
 
 import re
 
-from langchain_ollama import ChatOllama
+from app.llm import llm
 
 from app.agents.state import GraphState
-
-llm = ChatOllama(model="llama3.1:8b")
 
 MAX_RETRIES = 3
 
