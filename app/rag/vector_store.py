@@ -51,14 +51,17 @@ def ingest_documents(chunks: list[str]) -> None:
     client.upsert(collection_name=COLLECTION_NAME, points=points)
 
 
-def retrieve(query: str, top_k: int = 5) -> str:
-    """Embed a query and return the top-k most similar chunks, joined as one string."""
+def retrieve_chunks(query: str, top_k: int = 5) -> list[str]:
+    """Embed a query and return the top-k most similar chunks as a list."""
     query_vector = embed_text(query)
-
     results = client.query_points(
         collection_name=COLLECTION_NAME,
         query=query_vector,
         limit=top_k,
     )
+    return [hit.payload["text"] for hit in results.points]
 
-    return "\n\n".join(hit.payload["text"] for hit in results.points)
+
+def retrieve(query: str, top_k: int = 3) -> str:
+    """Same as before, kept so your test scripts still work."""
+    return "\n\n".join(retrieve_chunks(query, top_k))
