@@ -4,4 +4,5 @@ from app.rag.reranker import rerank
 
 
 def rerank_node(state: GraphState) -> dict:
-    return {"chunks": rerank(state["query"], state["chunks"], top_n=4)}
+    question = state["standalone_query"]
+    return {"chunks": rerank(question, state["chunks"], top_n=4)}

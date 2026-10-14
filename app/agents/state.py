@@ -3,8 +3,10 @@ from typing import TypedDict
 
 
 class GraphState(TypedDict):
-    query: str            # the user's question
-    chunks: list[str]     # retrieved context chunks
-    answer: str           # the final answer
-    found: bool           # False if the documents don't contain the answer
-    citations: list[dict] # verified citations: {"chunk": int, "quote": str}
+    query: str               # the raw question as the user typed it
+    chat_history: list[dict] # [{"role": "user" | "assistant", "content": str}]
+    standalone_query: str    # the question rewritten to stand on its own
+    chunks: list[str]
+    answer: str
+    found: bool
+    citations: list[dict]

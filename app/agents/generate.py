@@ -4,6 +4,8 @@ from pydantic import BaseModel, Field
 from app.agents.state import GraphState
 from app.llm import llm
 
+import unicodedata
+
 
 class Citation(BaseModel):
     chunk: int = Field(description="Number of the context chunk the quote comes from")
@@ -20,8 +22,10 @@ structured_llm = llm.with_structured_output(Answer)
 
 
 def _normalize(text: str) -> str:
-    """Collapse whitespace and lowercase, so PDF line breaks don't break the comparison."""
-    return " ".join(text.split()).lower()
+    """Keep only lowercase letters and digits, so line breaks, hyphenation,
+    quote styles and punctuation from the PDF can't cause false rejections."""
+    text = unicodedata.normalize("NFKC", text).lower()
+    return "".join(ch for ch in text if ch.isalnum())
 
 
 def verify_citations(citations: list[Citation], chunks: list[str]) -> list[dict]:
@@ -29,20 +33,22 @@ def verify_citations(citations: list[Citation], chunks: list[str]) -> list[dict]
     verified = []
     for c in citations:
         index = c.chunk - 1
-        if 0 <= index < len(chunks) and _normalize(c.quote) in _normalize(chunks[index]):
+        quote = _normalize(c.quote)
+        if len(quote) >= 10 and 0 <= index < len(chunks) and quote in _normalize(chunks[index]):
             verified.append({"chunk": c.chunk, "quote": c.quote})
+        else:
+            print(f"[Citations] rejected: chunk={c.chunk} quote={c.quote!r}")
     return verified
 
-
 def generate_node(state: GraphState) -> dict:
-    query = state["query"]
+    question = state["standalone_query"] 
     chunks = state["chunks"]
 
     context = "\n\n".join(f"[{i}] {chunk}" for i, chunk in enumerate(chunks, start=1))
 
     prompt = f"""You answer questions using ONLY the numbered context chunks below.
 
-Question: {query}
+Question: {question}
 
 Context:
 {context}
@@ -60,8 +66,15 @@ Rules:
     verified = verify_citations(result.citations, chunks)
     print(f"[Citations] kept {len(verified)}/{len(result.citations)}")
 
+    history = state.get("chat_history", [])
+    new_history = history + [
+        {"role": "user", "content": state["query"]},
+        {"role": "assistant", "content": result.answer},
+    ]
+
     return {
         "answer": result.answer,
         "found": result.found,
         "citations": verified,
+        "chat_history": new_history,
     }

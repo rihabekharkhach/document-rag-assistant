@@ -1,9 +1,15 @@
-# test_graph.py
 from app.agents.graph import research_graph
 
-result = research_graph.invoke({"query": "Quel est le rôle de DANN dans l'architecture utilisée ?"})
+config = {"configurable": {"thread_id": "test-1"}}  # one thread = one conversation
 
-print(result["answer"])
-print("Found:", result["found"])
-for c in result["citations"]:
-    print(f'  [{c["chunk"]}] "{c["quote"]}"')
+
+def ask(question: str) -> None:
+    result = research_graph.invoke({"query": question}, config=config)
+    print(f"\nQ: {question}")
+    print(f"   (reformulée : {result['standalone_query']})")
+    print(f"A: {result['answer']}  [found={result['found']}, citations={len(result['citations'])}]")
+
+
+ask("Quelles sont les conditions de fonctionnement utilisées pour le test ?")
+ask("Et pour la validation ?")
+ask("Combien y en a-t-il au total ?")
