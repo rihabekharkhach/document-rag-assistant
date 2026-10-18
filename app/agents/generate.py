@@ -4,6 +4,8 @@ from pydantic import BaseModel, Field
 from app.agents.state import GraphState
 from app.llm import llm
 
+import json
+import re
 import unicodedata
 
 
@@ -40,6 +42,28 @@ def verify_citations(citations: list[Citation], chunks: list[str]) -> list[dict]
             print(f"[Citations] rejected: chunk={c.chunk} quote={c.quote!r}")
     return verified
 
+def _parse_json_answer(text: str) -> Answer:
+    """Extract the first {...} block from plain model output and validate it."""
+    match = re.search(r"\{.*\}", text, re.DOTALL)
+    if not match:
+        raise ValueError("no JSON object in model output")
+    return Answer.model_validate(json.loads(match.group(0)))
+
+
+def _invoke_structured(prompt: str) -> Answer:
+    """Try native structured output; on failure, fall back to plain JSON parsing."""
+    try:
+        return structured_llm.invoke(prompt)
+    except Exception as e:
+        print(f"[Generate] structured output failed ({type(e).__name__}): falling back to plain JSON")
+
+    text = llm.invoke(
+        prompt
+        + "\n\nReturn ONLY a JSON object with the keys: answer (string), found (boolean), "
+          "citations (list of objects with chunk (int) and quote (string)). No other text."
+    ).content
+    return _parse_json_answer(text)
+
 def generate_node(state: GraphState) -> dict:
     question = state["standalone_query"] 
     chunks = state["chunks"]
@@ -61,7 +85,7 @@ Rules:
 - Quotes must stay in the original language of the chunk. Never translate a quote.
 - Write the answer in the exact language of the question, even if the context is in another language."""
 
-    result: Answer = structured_llm.invoke(prompt)
+    result: Answer = _invoke_structured(prompt)
 
     verified = verify_citations(result.citations, chunks)
     print(f"[Citations] kept {len(verified)}/{len(result.citations)}")

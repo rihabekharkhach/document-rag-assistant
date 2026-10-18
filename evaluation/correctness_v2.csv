@@ -1,0 +1,21 @@
+question,modality,score,reason
+Combien de conditions de fonctionnement contient le jeu de d,?,1.0,The system answer correctly identifies the number of operating conditions (neuf) as stated in the reference.
+Quelles conditions de fonctionnement sont utilisées pour le ,?,1.0,The system answer correctly identifies all key operating conditions from the reference answer.
+Quelle précision est obtenue sur le gearbox ?,?,1.0,The system answer correctly identifies the exact precision percentage mentioned in the reference answer.
+Quelles classes du gearbox sont les plus confondues ?,?,1.0,The system answer correctly identifies G4 and G8 as the most confused classes.
+À quelle fréquence les signaux sont-ils échantillonnés ?,?,1.0,The system answer correctly provides the exact sampling frequency of 64 kHz.
+Quelles sont les valeurs de lambda max et de gamma dans le p,?,1.0,The system answer correctly provides both lambda max and gamma values.
+Sur combien d'époques l'entraînement est-il réalisé ?,?,1.0,The system answer correctly identifies the number of epochs as 80.
+Quel type de couche de graphe est utilisé après les encodeur,?,1.0,The system answer correctly identifies the use of GATConv layers after the CNN encoders.
+Quelle est la dimension de l'embedding produit par le NodeCN,?,1.0,"The system answer correctly states the dimension as 128, matching the reference answer."
+Quels sont les descripteurs du courant qui obtiennent les sc,?,0.5,Le système identifie l'entropie spectrale mais donne des descripteurs différents (déséquilibre et courant RMS) par rapport à la référence.
+"D'après le texte de l'article, quels descripteurs du courant",?,1.0,The system answer correctly identifies all three key descriptors of the current mentioned in the reference answer.
+Pourquoi des têtes de classification indépendantes ont-elles,?,1.0,The system answer includes the key fact of avoiding inter-component interference and adds valid complementary details.
+Comment s'explique l'aspect visuellement entremêlé des class,?,1.0,The system answer includes all key facts from the reference (class imbalance and the 2D projection not aligning with the decision boundary) while adding precise context.
+Selon quel critère les données du benchmark sont-elles répar,?,1.0,"The system answer correctly identifies the split based on working conditions rather than random splitting, and even provides the specific conditions for each subset as correct extra detail."
+Quel composant mécanique présente la plus lente convergence ,?,1.0,"The system answer correctly identifies the gearbox (la boîte de vitesses), matching the reference answer."
+Quel rôle joue la couche d'inversion de gradient (GRL) dans ,?,1.0,La réponse du système contient tous les faits clés de la réponse de référence avec des détails supplémentaires corrects.
+Vers quelles classes de conditions d'entraînement les échant,?,1.0,The system answer contains all key facts matching the reference answer exactly.
+Quelle information additionnelle a permis de réduire en part,?,1.0,"The system answer contains all key facts of the reference, including the harmonic energy features on the first three harmonics."
+Quelle est la charge latérale de la condition de fonctionnem,?,1.0,The system answer contains the correct lateral load value (-10 kN) from the reference.
+"Combien de canaux de capteurs le jeu de données fournit-il, ",?,1.0,The system answer correctly provides both the number of channels (24) and the low-pass filter cutoff frequency (25 kHz).
