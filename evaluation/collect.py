@@ -41,6 +41,7 @@ def main() -> None:
             "question": item["question"],
             "reference": item["reference"],
             "answerable": item["answerable"],
+            "modality": item.get("modality", "?"),
             "answer": result["answer"],
             "found": result["found"],
             "contexts": result["chunks"],
