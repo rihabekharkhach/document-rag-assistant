@@ -1,21 +1,23 @@
 question,modality,score,reason
-Combien de conditions de fonctionnement contient le jeu de d,text,1.0,The system answer correctly identifies the number of operating conditions (neuf / 9) present in the reference answer.
-Quelles conditions de fonctionnement sont utilisées pour le ,table,1.0,The system answer correctly provides all key conditions (WC3 at 60 Hz / 0 kN and WC9 at 60 Hz / -10 kN) mentioned in the reference.
-Quelle précision est obtenue sur le gearbox ?,text,1.0,"The system answer correctly identifies the percentage (95,4 %) mentioned in the reference."
-Quelles classes du gearbox sont les plus confondues ?,text,1.0,The system answer correctly identifies G4 and G8 as the most confused classes.
-À quelle fréquence les signaux sont-ils échantillonnés ?,text,1.0,The system answer matches the reference answer exactly.
-Quelles sont les valeurs de lambda max et de gamma dans le p,text,1.0,The system answer correctly identifies both lambda max = 0.5 and gamma = 5.
+Combien de conditions de fonctionnement contient le jeu de d,text,1.0,The system answer correctly identifies the number of operating conditions (neuf / 9) in the BJTU-RAO dataset.
+Quelles conditions de fonctionnement sont utilisées pour le ,table,1.0,The system answer correctly identifies both operating conditions (WC3 at 60 Hz / 0 kN and WC9 at 60 Hz / -10 kN).
+Quelle précision est obtenue sur le gearbox ?,text,1.0,"The system answer gives the exact same accuracy percentage (95,4 %) as the reference."
+Quelles classes du gearbox sont les plus confondues ?,text,1.0,"The system answer correctly identifies the most confused classes as G4 and G8, matching the reference answer."
+À quelle fréquence les signaux sont-ils échantillonnés ?,text,1.0,"The system answer correctly identifies the sampling frequency as 64 kHz, matching the reference answer."
+Quelles sont les valeurs de lambda max et de gamma dans le p,text,1.0,The system answer correctly identifies both lambda max as 0.5 and gamma as 5.
 Sur combien d'époques l'entraînement est-il réalisé ?,text,1.0,The system answer correctly identifies the number of epochs as 80.
 Quel type de couche de graphe est utilisé après les encodeur,text,1.0,The system answer correctly identifies the use of GATConv layers after CNN encoders.
 Quelle est la dimension de l'embedding produit par le NodeCN,text,1.0,"The system answer correctly identifies the dimension as 128, matching the reference answer."
-Quels sont les descripteurs du courant qui obtiennent les sc,figure,0.5,"Le système identifie correctement l'entropie spectrale, mais se trompe sur les deux autres descripteurs par rapport à la référence."
+Quels sont les descripteurs du courant qui obtiennent les sc,figure,0.5,Le système identifie l'entropie spectrale mais donne de mauvais descripteurs pour les deux autres (déséquilibre et courant RMS au lieu de l'écart-type RMS des phases et la moyenne RMS du courant).
 "D'après le texte de l'article, quels descripteurs du courant",text,1.0,The system answer correctly identifies all three key current descriptors mentioned in the reference.
-Pourquoi des têtes de classification indépendantes ont-elles,text,1.0,"The system answer correctly identifies the avoidance of inter-component interference as mentioned in the reference, while adding valid extra context."
-Comment s'explique l'aspect visuellement entremêlé des class,text,1.0,"The system answer includes all key facts from the reference (class imbalance and the 2D projection not reflecting the classifier's decision boundary), with accurate additional context."
-Selon quel critère les données du benchmark sont-elles répar,text,1.0,"The system answer includes the correct criterion (working conditions, not random) and even provides the specific details for each split."
-Quel composant mécanique présente la plus lente convergence ,text,1.0,"The system correctly identifies the gearbox, matching the reference answer."
-Quel rôle joue la couche d'inversion de gradient (GRL) dans ,text,1.0,La réponse du système contient tous les éléments clés de la référence avec des détails supplémentaires corrects.
+Pourquoi des têtes de classification indépendantes ont-elles,text,1.0,The system answer correctly captures the key fact of avoiding inter-component interference and allowing separate optimization for each component.
+Comment s'explique l'aspect visuellement entremêlé des class,text,1.0,The system answer correctly identifies both key facts: the strong class imbalance and the fact that the 2D projection does not necessarily reflect the classifier's decision boundary.
+Selon quel critère les données du benchmark sont-elles répar,text,1.0,"The system answer correctly identifies that data is split according to working conditions, including the detail about assignment to splits."
+Quel composant mécanique présente la plus lente convergence ,text,1.0,The system answer correctly identifies the gearbox (boîte de vitesses) as having the slowest convergence and marked fluctuations.
+Quel rôle joue la couche d'inversion de gradient (GRL) dans ,text,1.0,The system answer correctly identifies that the GRL leaves the forward signal unchanged and inverts the gradient during backpropagation to force domain-invariant feature representations.
 Vers quelles classes de conditions d'entraînement les échant,text,1.0,"The system answer correctly identifies the training condition classes WC2, WC5, and WC6 as the reference does."
-Quelle information additionnelle a permis de réduire en part,text,1.0,"The system answer includes all key facts of the reference answer, providing precise details about the harmonic energy features."
-Quelle est la charge latérale de la condition de fonctionnem,table,1.0,The system answer provides the correct lateral load value of -10 kN.
-"Combien de canaux de capteurs le jeu de données fournit-il, ",multi,1.0,The system answer correctly provides both the number of sensor channels (24) and the low-pass filter cutoff frequency (25 kHz).
+Quelle information additionnelle a permis de réduire en part,text,1.0,The system answer correctly identifies the addition of harmonic energy features on the first harmonics of bearing characteristic frequencies as the key information.
+Quelle est la charge latérale de la condition de fonctionnem,table,1.0,The system answer provides the correct lateral load value (-10 kN) matching the reference.
+"Combien de canaux de capteurs le jeu de données fournit-il, ",multi,1.0,The system answer correctly provides both key facts: 24 sensor channels and a 25 kHz low-pass filter cutoff frequency.
+"Dans la matrice de confusion de domaine, quelle proportion d",figure,1.0,"The system answer correctly provides the proportion 0,39 (and its percentage equivalent) matching the reference."
+"Dans la matrice de confusion de domaine, quelle proportion d",figure,1.0,The system answer correctly identifies the proportion as 0.31 (31%).

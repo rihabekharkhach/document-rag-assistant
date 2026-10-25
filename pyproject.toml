@@ -36,6 +36,8 @@ requests = "^2.34.2"
 fastapi = "^0.143.1"
 uvicorn = {extras = ["standard"], version = "^0.54.0"}
 ragas = "^0.4.3"
+pymupdf = "^2.0"
+pytesseract = "^0.3.13"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.0"

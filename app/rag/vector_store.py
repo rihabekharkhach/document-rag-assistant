@@ -35,19 +35,20 @@ def create_collection() -> None:
 
 import uuid
 
-def ingest_documents(chunks: list[str]) -> None:
-    """Embed chunks and upsert them. IDs come from the text, so re-ingesting never duplicates."""
-    vectors = embed_texts(chunks)
+def ingest_documents(items: list[dict]) -> None:
+    """items: [{"text": str, "type": "text" | "figure", "source": str,
+                "page": int (figures), "image_path": str (figures)}]"""
+    vectors = embed_texts([item["text"] for item in items])
 
     points = [
         PointStruct(
-            id=str(uuid.uuid5(uuid.NAMESPACE_URL, chunk)),
+            # source + type in the ID: the same text in two documents stays two points
+            id=str(uuid.uuid5(uuid.NAMESPACE_URL, f"{item.get('source', '')}|{item.get('type', 'text')}|{item['text']}")),
             vector=vectors[i],
-            payload={"text": chunk},
+            payload=item,  # contains "text", so retrieve_chunks keeps working unchanged
         )
-        for i, chunk in enumerate(chunks)
+        for i, item in enumerate(items)
     ]
-
     client.upsert(collection_name=COLLECTION_NAME, points=points)
 
 

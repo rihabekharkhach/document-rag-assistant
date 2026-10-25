@@ -1,50 +1,71 @@
 # app/rag/ingest.py
 
 """
-One-time (or on-demand) script to populate the vector database.
-Run this whenever you add or update source documents:
+Populate the vector database from data/source_documents:
+text chunks, plus one element per figure (caption + OCR text) for PDFs.
 
     python -m app.rag.ingest
 """
 
 import os
-from app.rag.loaders import load_file
-from app.rag.chunking import chunk_text
-from app.rag.vector_store import ingest_documents, create_collection
 
-SOURCE_DIR = "data/source_documents"  # put your PDFs/docx/images here
+from app.rag.chunking import chunk_text
+from app.rag.figures import Figure, extract_figures
+from app.rag.loaders import load_file
+from app.rag.ocr import ocr_image
+from app.rag.vector_store import create_collection, ingest_documents
+
+SOURCE_DIR = "data/source_documents"
+MAX_FIGURE_CHARS = 2000  # keeps one figure within the embedding model's input size
+
+
+def figure_item(fig: Figure) -> dict:
+    """One searchable element per figure: caption first (anchors the meaning), then the OCR text."""
+    ocr_text = ocr_image(fig.image_path)[:MAX_FIGURE_CHARS]
+    caption = fig.caption or "Figure (caption not found)"
+    return {
+        "text": f"[Figure, page {fig.page}] {caption}\nText detected in the figure:\n{ocr_text}",
+        "type": "figure",
+        "source": fig.source,
+        "page": fig.page,
+        "image_path": fig.image_path,
+    }
 
 
 def ingest_directory(source_dir: str) -> None:
-    """Load every supported file in a directory, chunk it, and store it in Qdrant."""
-    create_collection()  # safe to call each run; skips if it already exists
-
-    all_chunks: list[str] = []
+    create_collection()
+    items: list[dict] = []
 
     for filename in os.listdir(source_dir):
-        file_path = os.path.join(source_dir, filename)
-
-        if not os.path.isfile(file_path):
+        path = os.path.join(source_dir, filename)
+        if not os.path.isfile(path):
             continue
 
         print(f"Loading: {filename}")
         try:
-            raw_pages = load_file(file_path)
+            raw_pages = load_file(path)
         except ValueError as e:
             print(f"  Skipped ({e})")
             continue
 
-        full_text = "\n".join(raw_pages)
-        chunks = chunk_text(full_text)
-        print(f"  → {len(chunks)} chunks")
-        all_chunks.extend(chunks)
+        text_items = [
+            {"text": chunk, "type": "text", "source": filename}
+            for chunk in chunk_text("\n".join(raw_pages))
+        ]
+        print(f"  → {len(text_items)} text chunks")
+        items.extend(text_items)
 
-    if not all_chunks:
-        print("No chunks produced — check your source directory and file types.")
+        if filename.lower().endswith(".pdf"):
+            figures = extract_figures(path)
+            print(f"  → {len(figures)} figures (OCR)")
+            items.extend(figure_item(f) for f in figures)
+
+    if not items:
+        print("Nothing to ingest: check your source directory.")
         return
 
-    print(f"\nIngesting {len(all_chunks)} chunks into Qdrant...")
-    ingest_documents(all_chunks)
+    print(f"\nIngesting {len(items)} elements into Qdrant...")
+    ingest_documents(items)
     print("Done.")
 
 

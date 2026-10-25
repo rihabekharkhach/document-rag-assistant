@@ -30,13 +30,28 @@ def _normalize(text: str) -> str:
     return "".join(ch for ch in text if ch.isalnum())
 
 
+MIN_QUOTE_CHARS = 10
+MIN_NUMERIC_QUOTE_CHARS = 3  # numbers like "0.31" are legitimate short quotes
+
+
+def _is_supported(quote: str, chunk_norm: str) -> bool:
+    """A quote may contain '...': each segment must appear in the chunk."""
+    segments = [s for s in re.split(r"\.\.\.|…", quote) if s.strip()]
+    if not segments:
+        return False
+    for segment in segments:
+        s = _normalize(segment)
+        min_len = MIN_NUMERIC_QUOTE_CHARS if any(ch.isdigit() for ch in s) else MIN_QUOTE_CHARS
+        if len(s) < min_len or s not in chunk_norm:
+            return False
+    return True
+
+
 def verify_citations(citations: list[Citation], chunks: list[str]) -> list[dict]:
-    """Keep only citations whose quote really appears in the chunk they claim."""
     verified = []
     for c in citations:
         index = c.chunk - 1
-        quote = _normalize(c.quote)
-        if len(quote) >= 10 and 0 <= index < len(chunks) and quote in _normalize(chunks[index]):
+        if 0 <= index < len(chunks) and _is_supported(c.quote, _normalize(chunks[index])):
             verified.append({"chunk": c.chunk, "quote": c.quote})
         else:
             print(f"[Citations] rejected: chunk={c.chunk} quote={c.quote!r}")
