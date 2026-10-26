@@ -10,3 +10,4 @@ class GraphState(TypedDict):
     answer: str
     found: bool
     citations: list[dict]
+    sources: list[str] | None   # documents to search; None = all

@@ -106,7 +106,8 @@ def load_file(file_path: str) -> list[str]:
     elif file_path.endswith(".docx"):
         return load_docx_text(file_path)
     elif file_path.endswith((".png", ".jpg", ".jpeg")):
-        return load_image_vlm(file_path)
+        from app.rag.ocr import ocr_image
+        return [ocr_image(file_path)]
     else:
         raise ValueError(f"Unsupported file type: {file_path}")
 

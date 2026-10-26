@@ -11,7 +11,10 @@ retrieve() without knowing how the storage works underneath.
 """
 
 from qdrant_client import QdrantClient
-from qdrant_client.models import VectorParams, Distance, PointStruct
+from qdrant_client.models import (
+    Distance, FieldCondition, Filter, MatchAny, MatchValue, PointStruct, VectorParams,
+)
+
 
 from app.rag.embeddings import embed_text, embed_texts, EMBEDDING_DIM
 
@@ -52,15 +55,52 @@ def ingest_documents(items: list[dict]) -> None:
     client.upsert(collection_name=COLLECTION_NAME, points=points)
 
 
-def retrieve_chunks(query: str, top_k: int = 5) -> list[str]:
-    """Embed a query and return the top-k most similar chunks as a list."""
-    query_vector = embed_text(query)
+def _source_filter(sources: list[str] | None) -> Filter | None:
+    """Restrict a search to some documents. None or empty = search everything."""
+    if not sources:
+        return None
+    return Filter(must=[FieldCondition(key="source", match=MatchAny(any=sources))])
+
+
+def retrieve_chunks(query: str, top_k: int = 5, sources: list[str] | None = None) -> list[str]:
     results = client.query_points(
         collection_name=COLLECTION_NAME,
-        query=query_vector,
+        query=embed_text(query),
         limit=top_k,
+        query_filter=_source_filter(sources),
     )
     return [hit.payload["text"] for hit in results.points]
+
+
+def delete_source(source: str) -> None:
+    """Remove every point that belongs to one document."""
+    client.delete(
+        collection_name=COLLECTION_NAME,
+        points_selector=Filter(must=[FieldCondition(key="source", match=MatchValue(value=source))]),
+    )
+
+
+def list_sources() -> list[dict]:
+    """Aggregate the collection by document: name, number of text chunks, number of figures."""
+    existing = [c.name for c in client.get_collections().collections]
+    if COLLECTION_NAME not in existing:
+        return []
+
+    stats: dict[str, dict] = {}
+    offset = None
+    while True:
+        points, offset = client.scroll(
+            collection_name=COLLECTION_NAME, limit=500, offset=offset,
+            with_payload=["source", "type"], with_vectors=False,
+        )
+        for point in points:
+            payload = point.payload or {}
+            name = payload.get("source", "(inconnu)")
+            entry = stats.setdefault(name, {"name": name, "text_chunks": 0, "figures": 0})
+            entry["figures" if payload.get("type") == "figure" else "text_chunks"] += 1
+        if offset is None:
+            break
+    return sorted(stats.values(), key=lambda d: d["name"])
 
 
 def retrieve(query: str, top_k: int = 3) -> str:

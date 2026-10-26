@@ -1,21 +1,18 @@
 # app/models.py
 
-"""
-Pydantic schemas: the shape of what goes into and out of the API.
-FastAPI uses them to validate requests automatically and to generate
-the interactive documentation.
-"""
-
 from pydantic import BaseModel, Field
 
 
 class QueryRequest(BaseModel):
-    question: str = Field(..., min_length=1, max_length=2000, description="The user's question")
-    thread_id: str | None = Field(
-        default=None,
-        description="Conversation id. Omit it to start a new conversation; "
-                    "send the one you received to continue it.",
-    )
+    model_config = {
+        "json_schema_extra": {
+            "examples": [{"question": "Quelles sont les conditions de fonctionnement utilisées pour le test ?"}]
+        }
+    }
+
+    question: str = Field(..., min_length=1, max_length=2000)
+    thread_id: str | None = Field(default=None, description="Conversation id. Omit to start a new one.")
+    sources: list[str] | None = Field(default=None, description="Document names to search. Omit for all.")
 
 
 class CitationOut(BaseModel):
@@ -29,3 +26,35 @@ class QueryResponse(BaseModel):
     found: bool
     citations: list[CitationOut]
     standalone_query: str
+
+
+class IngestReportOut(BaseModel):
+    name: str
+    status: str
+    pages: int = 0
+    characters: int = 0
+    text_chunks: int = 0
+    figures: int = 0
+    seconds: float = 0.0
+    message: str = ""
+
+
+class DocumentOut(BaseModel):
+    name: str
+    text_chunks: int
+    figures: int
+
+
+class ConversationOut(BaseModel):
+    id: str
+    title: str
+    updated_at: str
+
+
+class MessageOut(BaseModel):
+    role: str
+    content: str
+    found: bool | None = None
+    citations: list[CitationOut] = []
+    standalone_query: str | None = None
+    created_at: str

@@ -3,3 +3,4 @@ __pycache__/
 .env
 data/source_documents/
 data/figures/
+data/app.db

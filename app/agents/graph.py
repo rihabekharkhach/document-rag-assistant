@@ -1,6 +1,5 @@
 # app/agents/graph.py
 from langgraph.graph import StateGraph, END
-from langgraph.checkpoint.memory import MemorySaver
 
 from app.agents.state import GraphState
 from app.agents.condense import condense_node
@@ -23,7 +22,7 @@ def build_graph():
     graph.add_edge("rerank", "generate")
     graph.add_edge("generate", END)
 
-    return graph.compile(checkpointer=MemorySaver())
+    return graph.compile()
 
 
 research_graph = build_graph()

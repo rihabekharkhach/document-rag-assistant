@@ -1,8 +1,14 @@
 # app/agents/condense.py
 from app.agents.state import GraphState
 from app.llm import llm
+import unicodedata
 
 MAX_HISTORY_MESSAGES = 6  # last 3 exchanges: enough context, small prompt
+
+def _same(a: str, b: str) -> bool:
+    def keep(t: str) -> str:
+        return "".join(ch for ch in unicodedata.normalize("NFKC", t).lower() if ch.isalnum())
+    return keep(a) == keep(b)
 
 
 def condense_node(state: GraphState) -> dict:
@@ -27,5 +33,7 @@ Conversation:
 Follow-up question: {query}
 Standalone question:"""
 
-    standalone = llm.invoke(prompt).content.strip()
-    return {"standalone_query": standalone or query}
+    answer = llm.invoke(prompt).content.strip().strip('"«»“”')
+    if not answer or answer.upper().rstrip(".") == "SAME" or _same(answer, query):
+        return {"standalone_query": query}
+    return {"standalone_query": answer}
