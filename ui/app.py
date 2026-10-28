@@ -110,28 +110,70 @@ def documents_page() -> None:
 # ---------------------------------------------------------------- screen 2
 
 
+def source_label(src: dict) -> str:
+    page = f", p.{src['page']}" if src.get("page") else ""
+    return f"{src.get('source', '?')}{page}"
+
+
+@st.cache_data(show_spinner=False)
+def load_image(path: str) -> bytes | None:
+    try:
+        response = requests.get(f"{API_URL}/image", params={"path": path}, timeout=20)
+        response.raise_for_status()
+        return response.content
+    except requests.RequestException:
+        return None
+
+
+def source_at(sources: list[dict], chunk_number: int) -> dict | None:
+    index = chunk_number - 1
+    return sources[index] if 0 <= index < len(sources) else None
+
+
 def render_message(message: dict, previous_user: str) -> None:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
         if message["role"] != "assistant":
             return
+
+        sources = message.get("sources") or []
+        citations = message.get("citations") or []
+
         if message.get("found") is False:
             st.caption("⚠️ Information non trouvée dans les documents.")
-        elif message.get("citations"):
-            with st.expander(f"Sources vérifiées ({len(message['citations'])})"):
-                for c in message["citations"]:
-                    st.markdown(f"> {c['quote']}")
-                    st.caption(f"extrait n°{c['chunk']}")
         else:
-            st.caption("ℹ️ Aucune citation vérifiée pour cette réponse.")
+            if citations:
+                with st.expander(f"Sources vérifiées ({len(citations)})"):
+                    for c in citations:
+                        st.markdown(f"> {c['quote']}")
+                        src = source_at(sources, c["chunk"])
+                        label = source_label(src) + (" · texte OCR de la figure" if src.get("type") == "figure" else "")
+                        st.caption(f"📄 {label}" if src else f"extrait n°{c['chunk']}")
+            else:
+                st.caption("ℹ️ Aucune citation vérifiée pour cette réponse.")
+
+            cited = [s for c in citations if (s := source_at(sources, c["chunk"])) is not None]
+            text_supported = any(s.get("type") != "figure" for s in cited)
+
+            # A figure is shown only when it is the evidence: the answer has no text support
+            figures: dict[str, dict] = {}
+            if not text_supported:
+                for s in cited:
+                    if s.get("type") == "figure" and s.get("image_path"):
+                        figures.setdefault(s["image_path"], s)
+
+            if figures:
+                with st.expander(f"Figure source ({len(figures)})", expanded=True):
+                    for path, src in figures.items():
+                        data = load_image(path)
+                        if data:
+                            st.image(data, caption=source_label(src), use_container_width=True)
+                        else:
+                            st.caption(f"{source_label(src)} (image indisponible)")
+
         rewritten = message.get("standalone_query")
         if rewritten and not same_text(rewritten, previous_user):
             st.caption(f"Question reformulée : {rewritten}")
-
-
-def reset_conversation() -> None:
-    st.session_state.thread_id = None
-    st.session_state.messages = []
 
 
 def chat_page() -> None:
@@ -192,7 +234,7 @@ def chat_page() -> None:
             st.session_state.messages.append({"role": "user", "content": question})
             st.session_state.messages.append({
                 "role": "assistant", "content": data["answer"], "found": data["found"],
-                "citations": data["citations"], "standalone_query": data["standalone_query"],
+                "citations": data["citations"], "standalone_query": data["standalone_query"], "sources": data["sources"],
             })
             st.rerun()
 

@@ -42,6 +42,8 @@ def ingest_file(path: str) -> dict:
 
     text_items: list[dict] = []
     figure_items: list[dict] = []
+    pages = 0          # defined up front so the report can never hit an unbound variable
+    characters = 0
     warning = ""
 
     if name.lower().endswith(IMAGE_SUFFIXES):
@@ -59,9 +61,15 @@ def ingest_file(path: str) -> dict:
             warning = "Très peu de texte détecté dans l'image (photo, ou schéma sans texte ?)."
     else:
         raw_pages = load_file(path)  # raises ValueError for unsupported types
+        is_pdf = name.lower().endswith(".pdf")
+        for page_number, page_text in enumerate(raw_pages, start=1):
+            for chunk in chunk_text(page_text):
+                text_items.append({
+                    "text": chunk, "type": "text", "source": name,
+                    "page": page_number if is_pdf else None,
+                })
         text = "\n".join(raw_pages)
-        text_items = [{"text": c, "type": "text", "source": name} for c in chunk_text(text)]
-        if name.lower().endswith(".pdf"):
+        if is_pdf:
             figure_items = [figure_item(f) for f in extract_figures(path)]
         pages, characters = len(raw_pages), len(text)
         if len(text.strip()) < 50:

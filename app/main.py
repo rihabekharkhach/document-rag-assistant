@@ -10,6 +10,7 @@ from contextlib import asynccontextmanager
 from pathlib import Path
 
 from fastapi import FastAPI, File, HTTPException, UploadFile
+from fastapi.responses import FileResponse
 
 from app import db
 from app.agents.graph import research_graph
@@ -22,6 +23,7 @@ from app.rag.vector_store import delete_source, list_sources
 logger = logging.getLogger("rag-api")
 
 ALLOWED_SUFFIXES = {".pdf", ".docx", ".png", ".jpg", ".jpeg"}
+IMAGE_SUFFIXES = {".png", ".jpg", ".jpeg"}
 MAX_UPLOAD_BYTES = 25 * 1024 * 1024
 HISTORY_MESSAGES = 6
 
@@ -33,7 +35,7 @@ async def lifespan(_: FastAPI):
     yield
 
 
-app = FastAPI(title="Conversational RAG API", version="0.2.0", lifespan=lifespan)
+app = FastAPI(title="Conversational RAG API", version="0.3.0", lifespan=lifespan)  # <- app is created here
 
 
 @app.get("/health")
@@ -86,6 +88,20 @@ def remove_document(name: str) -> dict:
     return {"deleted": name}
 
 
+@app.get("/image")
+def image(path: str) -> FileResponse:
+    """Serve a figure or an uploaded image. Only files inside the two data folders are allowed."""
+    resolved = Path(path).resolve()
+    allowed = [Path("data/figures").resolve(), Path(SOURCE_DIR).resolve()]
+    if (
+        not any(resolved.is_relative_to(folder) for folder in allowed)
+        or resolved.suffix.lower() not in IMAGE_SUFFIXES
+        or not resolved.is_file()
+    ):
+        raise HTTPException(status_code=404, detail="Image not found.")
+    return FileResponse(resolved)
+
+
 # ---------- conversations ----------
 
 @app.get("/conversations", response_model=list[ConversationOut])
@@ -136,6 +152,7 @@ def query(req: QueryRequest) -> QueryResponse:
         thread_id, "assistant", result["answer"],
         found=result["found"], citations=result["citations"],
         standalone_query=result["standalone_query"],
+        sources=result["sources_used"],
     )
 
     return QueryResponse(
@@ -144,4 +161,5 @@ def query(req: QueryRequest) -> QueryResponse:
         found=result["found"],
         citations=result["citations"],
         standalone_query=result["standalone_query"],
+        sources=result["sources_used"],
     )

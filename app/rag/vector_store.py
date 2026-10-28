@@ -106,3 +106,17 @@ def list_sources() -> list[dict]:
 def retrieve(query: str, top_k: int = 3) -> str:
     """Same as before, kept so your test scripts still work."""
     return "\n\n".join(retrieve_chunks(query, top_k))
+
+def retrieve_items(query: str, top_k: int = 5, sources: list[str] | None = None) -> list[dict]:
+    """Like retrieve_chunks, but returns the full payload: text, type, source, page, image_path."""
+    results = client.query_points(
+        collection_name=COLLECTION_NAME,
+        query=embed_text(query),
+        limit=top_k,
+        query_filter=_source_filter(sources),
+    )
+    return [hit.payload for hit in results.points]
+
+
+def retrieve_chunks(query: str, top_k: int = 5, sources: list[str] | None = None) -> list[str]:
+    return [item["text"] for item in retrieve_items(query, top_k, sources)]

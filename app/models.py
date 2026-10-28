@@ -15,6 +15,13 @@ class QueryRequest(BaseModel):
     sources: list[str] | None = Field(default=None, description="Document names to search. Omit for all.")
 
 
+class SourceOut(BaseModel):          # must come before QueryResponse and MessageOut
+    source: str | None = None
+    page: int | None = None
+    type: str = "text"
+    image_path: str | None = None
+
+
 class CitationOut(BaseModel):
     chunk: int
     quote: str
@@ -26,6 +33,7 @@ class QueryResponse(BaseModel):
     found: bool
     citations: list[CitationOut]
     standalone_query: str
+    sources: list[SourceOut] = []
 
 
 class IngestReportOut(BaseModel):
@@ -57,4 +65,5 @@ class MessageOut(BaseModel):
     found: bool | None = None
     citations: list[CitationOut] = []
     standalone_query: str | None = None
+    sources: list[SourceOut] = []
     created_at: str

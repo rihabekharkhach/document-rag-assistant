@@ -116,4 +116,13 @@ Rules:
         "found": result.found,
         "citations": verified,
         "chat_history": new_history,
+                "sources_used": [
+            {
+                "source": item.get("source"),
+                "page": item.get("page"),
+                "type": item.get("type", "text"),
+                "image_path": item.get("image_path"),
+            }
+            for item in state["items"]
+        ],
     }
