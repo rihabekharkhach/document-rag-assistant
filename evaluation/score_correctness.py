@@ -75,14 +75,14 @@ def main() -> None:
         if not r.get("answerable") or "error" in r:
             continue
         g = grade(r["question"], r["reference"], r["answer"])
-        rows.append({"question": r["question"][:60], "modality": r.get("modality", "?"), **g})
+        rows.append({"question": r["question"][:60], "modality": r.get("modality", "?"),"source": r.get("source", "?"), **g})
         print(f"{g['score']:>4} | {r['question'][:60]}")
 
     df = pd.DataFrame(rows)
     df.to_csv(SCORES_FILE, index=False, encoding="utf-8")
 
     print(f"\nMean correctness: {df['score'].mean():.2f}  (NaN: {df['score'].isna().sum()})")
-    print(df.groupby("modality")["score"].agg(["mean", "count"]).round(2))
+    print(df.groupby(["source", "modality"])["score"].agg(["mean", "count"]).round(2))
     print("\nNot fully correct:")
     print(df[df["score"] < 1][["question", "score", "reason"]].to_string())
 

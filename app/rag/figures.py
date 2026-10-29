@@ -69,7 +69,7 @@ def extract_figures(pdf_path: str, out_dir: str = "data/figures") -> list[Figure
                     source=pdf.name,
                     page=page_number,
                     image_path=str(path),
-                    caption=_find_caption(blocks, rect),
+                    caption=_find_caption(blocks, rect)[:160],
                 ))
 
     doc.close()

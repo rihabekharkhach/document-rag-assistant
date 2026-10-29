@@ -16,6 +16,10 @@ unanswerable = [r for r in ok if not r["answerable"]]
 latencies = sorted(r["latency_s"] for r in ok)
 p90 = latencies[int(0.9 * (len(latencies) - 1))]
 
+with_source = [r for r in answerable if r.get("source") and r.get("context_sources")]
+right = sum(r["context_sources"][0] == r["source"] for r in with_source)
+print(f"Top chunk comes from the expected document: {right}/{len(with_source)}")
+
 print(f"Questions: {len(records)} | errors: {len(records) - len(ok)}")
 print(f"Abstention on unanswerable: {sum(not r['found'] for r in unanswerable)}/{len(unanswerable)}")
 print(f"False abstention on answerable: {sum(not r['found'] for r in answerable)}/{len(answerable)}")

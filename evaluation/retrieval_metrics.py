@@ -1,21 +1,27 @@
 # evaluation/retrieval_metrics.py
 
 """
-Retrieval-only comparison: vector search alone vs vector search + reranker.
-No LLM judge: a chunk is a "hit" if it contains the gold snippet.
+Dense vs hybrid retrieval, each with and without the reranker, per document.
     python -m evaluation.retrieval_metrics
+Env: QUESTIONS_FILE, RETRIEVE_CANDIDATES (30), FINAL_CHUNKS (5), RERANK_PAUSE (2 seconds)
 """
 
 import json
+import os
+import time
 import unicodedata
+from collections import defaultdict
 from pathlib import Path
 
-from app.rag.reranker import rerank
-from app.rag.vector_store import retrieve_chunks
+from app.rag import reranker
+from app.rag.reranker import rerank_indices
+from app.rag.vector_store import retrieve_items
 
-QUESTIONS_FILE = Path("evaluation/questions.jsonl")
-CANDIDATES = 20  # what the vector search returns
-K = 4            # what the generator receives
+QUESTIONS_FILE = Path(os.getenv("QUESTIONS_FILE", "evaluation/questions.jsonl"))
+CANDIDATES = int(os.getenv("RETRIEVE_CANDIDATES", "30"))
+K = int(os.getenv("FINAL_CHUNKS", "5"))
+PAUSE = float(os.getenv("RERANK_PAUSE", "2"))
+SYSTEMS = ("dense", "dense+rerank", "hybrid", "hybrid+rerank")
 
 
 def norm(text: str) -> str:
@@ -23,49 +29,63 @@ def norm(text: str) -> str:
     return "".join(ch for ch in text if ch.isalnum())
 
 
-def first_hit(chunks: list[str], snippet: str) -> int | None:
-    """1-based rank of the first chunk containing the snippet, or None."""
+def first_hit(texts: list[str], snippet: str) -> int | None:
     target = norm(snippet)
-    for rank, chunk in enumerate(chunks, start=1):
-        if target in norm(chunk):
+    for rank, text in enumerate(texts, start=1):
+        if target in norm(text):
             return rank
     return None
 
 
-def mrr(rank: int | None) -> float:
-    return 1 / rank if rank else 0.0
+def rerank_top(question: str, items: list[dict]) -> list[dict]:
+    order = rerank_indices(question, [i["text"] for i in items], top_n=K)
+    time.sleep(PAUSE)  # stay under the reranker's requests-per-minute limit
+    return [items[i] for i in order]
 
 
 def main() -> None:
     lines = QUESTIONS_FILE.read_text(encoding="utf-8").splitlines()
-    items = [json.loads(line) for line in lines if line.strip()]
-    items = [i for i in items if i.get("answerable") and i.get("gold_snippet")]
+    questions = [json.loads(line) for line in lines if line.strip()]
+    questions = [q for q in questions if q.get("answerable") and q.get("gold_snippet")]
 
-    ceiling = vec_hits = rr_hits = 0
-    vec_mrr = rr_mrr = 0.0
+    stats = defaultdict(lambda: {"n": 0, "right_doc": 0, **{s: [0, 0.0] for s in SYSTEMS}})
 
-    print(f"{'question':<48} | in top{CANDIDATES} | vector top{K} | reranked top{K}")
-    for item in items:
-        question, snippet = item["question"], item["gold_snippet"]
-        candidates = retrieve_chunks(question, top_k=CANDIDATES)
+    print(f"rank of the evidence within the top {K} ('-' = missed)")
+    print(f"{'question':<40} | " + " | ".join(f"{s:<13}" for s in SYSTEMS))
+    for q in questions:
+        question, snippet = q["question"], q["gold_snippet"]
+        source = q.get("source", "(unspecified)")
 
-        pos_all = first_hit(candidates, snippet)
-        pos_vec = first_hit(candidates[:K], snippet)
-        pos_rr = first_hit(rerank(question, candidates, top_n=K), snippet)
+        dense = retrieve_items(question, CANDIDATES, mode="dense")
+        hybrid = retrieve_items(question, CANDIDATES, mode="hybrid")
+        systems = {
+            "dense": dense[:K],
+            "dense+rerank": rerank_top(question, dense),
+            "hybrid": hybrid[:K],
+            "hybrid+rerank": rerank_top(question, hybrid),
+        }
+        ranks = {name: first_hit([i["text"] for i in items], snippet) for name, items in systems.items()}
 
-        ceiling += pos_all is not None
-        vec_hits += pos_vec is not None
-        rr_hits += pos_rr is not None
-        vec_mrr += mrr(pos_vec)
-        rr_mrr += mrr(pos_rr)
+        s = stats[source]
+        s["n"] += 1
+        top = systems["hybrid+rerank"]
+        s["right_doc"] += bool(top) and top[0].get("source") == source
+        for name in SYSTEMS:
+            s[name][0] += ranks[name] is not None
+            s[name][1] += 1 / ranks[name] if ranks[name] else 0.0
 
-        print(f"{question[:48]:<48} | {str(pos_all):>9} | {str(pos_vec):>10} | {str(pos_rr):>13}")
+        print(f"{question[:40]:<40} | " + " | ".join(f"{str(ranks[n] or '-'):<13}" for n in SYSTEMS))
 
-    n = len(items)
-    print(f"\nQuestions: {n}")
-    print(f"Hit@{CANDIDATES} (retrieval ceiling): {ceiling}/{n}")
-    print(f"Hit@{K} vector only : {vec_hits}/{n} | MRR {vec_mrr / n:.2f}")
-    print(f"Hit@{K} + reranker  : {rr_hits}/{n} | MRR {rr_mrr / n:.2f}")
+    print(f"\ncandidates per system: {CANDIDATES} | final chunks: {K}")
+    for source, s in stats.items():
+        n = s["n"]
+        print(f"\n== {source} ({n} questions) | top chunk from this document: {s['right_doc']}/{n}")
+        for name in SYSTEMS:
+            print(f"   {name:<14} Hit@{K}: {s[name][0]}/{n} | MRR {s[name][1] / n:.2f}")
+
+    if reranker.fallback_count:
+        print(f"\n⚠️ {reranker.fallback_count} rerank call(s) fell back to vector order: the +rerank "
+              f"columns are NOT valid. Raise RERANK_PAUSE (for example 5) and run again.")
 
 
 if __name__ == "__main__":

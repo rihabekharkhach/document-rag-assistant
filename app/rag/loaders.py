@@ -8,6 +8,7 @@ scanned PDFs use a local vision-language model (VLM) for OCR.
 
 import base64
 from io import BytesIO
+import pymupdf
 
 from PIL import Image
 from pdf2image import convert_from_path
@@ -49,10 +50,9 @@ def extract_text_from_image(image: Image.Image) -> str:
 
 
 def load_pdf_text(file_path: str) -> list[str]:
-    """Extract text directly from a text-based PDF (not scanned)."""
-    loader = PyPDFLoader(file_path)
-    documents = loader.load()
-    return [doc.page_content for doc in documents]
+    """Extract text page by page with PyMuPDF (correct word spacing, safe with math fonts)."""
+    with pymupdf.open(file_path) as doc:
+        return [page.get_text() for page in doc]
 
 
 def load_docx_text(file_path: str) -> list[str]:

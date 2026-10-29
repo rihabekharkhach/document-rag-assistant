@@ -47,6 +47,8 @@ def main() -> None:
             "contexts": result["chunks"],
             "n_citations": len(result["citations"]),
             "latency_s": latency,
+            "source": item.get("source"),
+            "context_sources": [i.get("source") for i in result["items"]],
         })
         print(f"[{latency:>5}s] found={result['found']!s:<5} | {item['question'][:70]}")
         OUTPUT_FILE.write_text(json.dumps(records, ensure_ascii=False, indent=2), encoding="utf-8")

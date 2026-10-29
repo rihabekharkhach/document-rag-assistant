@@ -11,48 +11,73 @@ retrieve() without knowing how the storage works underneath.
 """
 
 from qdrant_client import QdrantClient
+from app.rag.embeddings import embed_text, embed_texts, EMBEDDING_DIM
+import os
 from qdrant_client.models import (
-    Distance, FieldCondition, Filter, MatchAny, MatchValue, PointStruct, VectorParams,
+    Distance, FieldCondition, Filter, Fusion, FusionQuery, MatchAny, MatchValue,
+    Modifier, PointStruct, Prefetch, SparseVectorParams, VectorParams,
 )
 
+from app.rag.sparse import sparse_document, sparse_query
+import uuid
 
-from app.rag.embeddings import embed_text, embed_texts, EMBEDDING_DIM
 
 COLLECTION_NAME = "docs"
 
 # Local Qdrant running in Docker (docker-compose) — swap to :memory: only for quick throwaway tests
 client = QdrantClient(host="localhost", port=6333)
 
-
 def create_collection() -> None:
-    """Create the Qdrant collection if it doesn't already exist. Safe to call on every run."""
     existing = [c.name for c in client.get_collections().collections]
     if COLLECTION_NAME in existing:
         return
-
     client.create_collection(
         collection_name=COLLECTION_NAME,
-        vectors_config=VectorParams(size=EMBEDDING_DIM, distance=Distance.COSINE),
+        vectors_config={"dense": VectorParams(size=EMBEDDING_DIM, distance=Distance.COSINE)},
+        sparse_vectors_config={"sparse": SparseVectorParams(modifier=Modifier.IDF)},
     )
 
 
-import uuid
-
 def ingest_documents(items: list[dict]) -> None:
-    """items: [{"text": str, "type": "text" | "figure", "source": str,
-                "page": int (figures), "image_path": str (figures)}]"""
-    vectors = embed_texts([item["text"] for item in items])
-
+    dense_vectors = embed_texts([item["text"] for item in items])
     points = [
         PointStruct(
-            # source + type in the ID: the same text in two documents stays two points
             id=str(uuid.uuid5(uuid.NAMESPACE_URL, f"{item.get('source', '')}|{item.get('type', 'text')}|{item['text']}")),
-            vector=vectors[i],
-            payload=item,  # contains "text", so retrieve_chunks keeps working unchanged
+            vector={"dense": dense_vectors[i], "sparse": sparse_document(item["text"])},
+            payload=item,
         )
         for i, item in enumerate(items)
     ]
     client.upsert(collection_name=COLLECTION_NAME, points=points)
+
+
+def retrieve_items(query: str, top_k: int = 5, sources: list[str] | None = None,
+                   mode: str | None = None) -> list[dict]:
+    """mode: 'dense', 'sparse' or 'hybrid' (default, or set RETRIEVAL_MODE in .env)."""
+    mode = mode or os.getenv("RETRIEVAL_MODE", "dense")
+    flt = _source_filter(sources)
+    sparse = sparse_query(query)
+
+    if mode == "sparse":
+        if not sparse.indices:
+            return []
+        response = client.query_points(collection_name=COLLECTION_NAME, query=sparse,
+                                       using="sparse", limit=top_k, query_filter=flt)
+    elif mode == "dense":
+        response = client.query_points(collection_name=COLLECTION_NAME, query=embed_text(query),
+                                       using="dense", limit=top_k, query_filter=flt)
+    else:
+        legs = [Prefetch(query=embed_text(query), using="dense", limit=top_k, filter=flt)]
+        if sparse.indices:  # a query with no usable tokens falls back to dense only
+            legs.append(Prefetch(query=sparse, using="sparse", limit=top_k, filter=flt))
+        response = client.query_points(collection_name=COLLECTION_NAME, prefetch=legs,
+                                       query=FusionQuery(fusion=Fusion.RRF), limit=top_k)
+    return [hit.payload for hit in response.points]
+
+
+def retrieve_chunks(query: str, top_k: int = 5, sources: list[str] | None = None,
+                    mode: str | None = None) -> list[str]:
+    return [item["text"] for item in retrieve_items(query, top_k, sources, mode)]
 
 
 def _source_filter(sources: list[str] | None) -> Filter | None:
@@ -106,16 +131,6 @@ def list_sources() -> list[dict]:
 def retrieve(query: str, top_k: int = 3) -> str:
     """Same as before, kept so your test scripts still work."""
     return "\n\n".join(retrieve_chunks(query, top_k))
-
-def retrieve_items(query: str, top_k: int = 5, sources: list[str] | None = None) -> list[dict]:
-    """Like retrieve_chunks, but returns the full payload: text, type, source, page, image_path."""
-    results = client.query_points(
-        collection_name=COLLECTION_NAME,
-        query=embed_text(query),
-        limit=top_k,
-        query_filter=_source_filter(sources),
-    )
-    return [hit.payload for hit in results.points]
 
 
 def retrieve_chunks(query: str, top_k: int = 5, sources: list[str] | None = None) -> list[str]:

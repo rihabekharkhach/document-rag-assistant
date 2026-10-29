@@ -16,6 +16,7 @@ from app.rag.figures import Figure, extract_figures
 from app.rag.loaders import load_file
 from app.rag.ocr import ocr_image
 from app.rag.vector_store import create_collection, delete_source, ingest_documents
+from app.rag.textutils import clean_text
 
 SOURCE_DIR = "data/source_documents"
 MAX_FIGURE_CHARS = 2000
@@ -23,8 +24,8 @@ IMAGE_SUFFIXES = (".png", ".jpg", ".jpeg")
 
 
 def figure_item(fig: Figure) -> dict:
-    ocr_text = ocr_image(fig.image_path)[:MAX_FIGURE_CHARS]
-    caption = fig.caption or "Figure (caption not found)"
+    ocr_text = clean_text(ocr_image(fig.image_path))[:MAX_FIGURE_CHARS]
+    caption = clean_text(fig.caption) or "Figure (caption not found)"
     return {
         "text": f"[Figure, page {fig.page}] {caption}\nText detected in the figure:\n{ocr_text}",
         "type": "figure",
@@ -48,7 +49,7 @@ def ingest_file(path: str) -> dict:
 
     if name.lower().endswith(IMAGE_SUFFIXES):
         # A standalone image is ONE element: splitting OCR text would separate a schema's labels
-        ocr_text = ocr_image(path)[:MAX_FIGURE_CHARS]
+        ocr_text = clean_text(ocr_image(path))[:MAX_FIGURE_CHARS]
         figure_items = [{
             "text": f"[Image : {name}]\nText detected in the image:\n{ocr_text}",
             "type": "figure",
@@ -60,7 +61,7 @@ def ingest_file(path: str) -> dict:
         if len(ocr_text.strip()) < 20:
             warning = "Très peu de texte détecté dans l'image (photo, ou schéma sans texte ?)."
     else:
-        raw_pages = load_file(path)  # raises ValueError for unsupported types
+        raw_pages = [clean_text(p) for p in load_file(path)]  # raises ValueError for unsupported types
         is_pdf = name.lower().endswith(".pdf")
         for page_number, page_text in enumerate(raw_pages, start=1):
             for chunk in chunk_text(page_text):
@@ -101,8 +102,8 @@ def ingest_directory(source_dir: str) -> None:
             continue
         try:
             print(ingest_file(path))
-        except ValueError as e:
-            print(f"Skipped {filename}: {e}")
+        except Exception as e:
+            print(f"Skipped {filename}: {type(e).__name__}: {e}")
 
 
 if __name__ == "__main__":

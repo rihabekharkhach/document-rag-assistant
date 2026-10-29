@@ -101,6 +101,7 @@ Rules:
 - Write the answer in the exact language of the question, even if the context is in another language."""
 
     result: Answer = _invoke_structured(prompt)
+    answer = result.answer.strip() or "Je n'ai pas trouvé cette information dans les documents."
 
     verified = verify_citations(result.citations, chunks)
     print(f"[Citations] kept {len(verified)}/{len(result.citations)}")
@@ -112,7 +113,7 @@ Rules:
     ]
 
     return {
-        "answer": result.answer,
+        "answer": answer,
         "found": result.found,
         "citations": verified,
         "chat_history": new_history,

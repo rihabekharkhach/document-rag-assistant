@@ -1,23 +1,37 @@
-question,modality,score,reason
-Combien de conditions de fonctionnement contient le jeu de d,text,1.0,"The system answer correctly identifies the number 9, which is the key fact in the reference answer."
-Quelles conditions de fonctionnement sont utilisées pour le ,table,1.0,The system answer correctly identifies all key operating conditions (WC3 at 60 Hz / 0 kN and WC9 at 60 Hz / -10 kN).
-Quelle précision est obtenue sur le gearbox ?,text,1.0,"The system answer correctly provides the exact precision of 95,4 % on the gearbox."
-Quelles classes du gearbox sont les plus confondues ?,text,1.0,The system answer correctly identifies G4 and G8 as the most confused classes.
-À quelle fréquence les signaux sont-ils échantillonnés ?,text,1.0,The system answer correctly provides the exact sampling frequency of 64 kHz.
-Quelles sont les valeurs de lambda max et de gamma dans le p,text,1.0,The system answer correctly identifies both lambda max as 0.5 and gamma as 5.
-Sur combien d'époques l'entraînement est-il réalisé ?,text,1.0,The system answer correctly identifies the number of epochs as 80.
-Quel type de couche de graphe est utilisé après les encodeur,text,0.0,The system answer fails to provide the key fact present in the reference.
-Quelle est la dimension de l'embedding produit par le NodeCN,text,1.0,"The system answer correctly identifies the dimension as 128, matching the reference answer."
-Quels sont les descripteurs du courant qui obtiennent les sc,figure,0.5,Le système identifie correctement un des descripteurs clés (entropie spectrale) mais se trompe sur les deux autres par rapport à la référence.
-"D'après le texte de l'article, quels descripteurs du courant",text,1.0,The system answer correctly identifies all three key current descriptors mentioned in the reference.
-Pourquoi des têtes de classification indépendantes ont-elles,text,1.0,The system answer correctly includes the key fact about avoiding inter-component interference and adds valid complementary details.
-Comment s'explique l'aspect visuellement entremêlé des class,text,1.0,The system answer correctly identifies both key facts: the strong class imbalance and the fact that 2D t-SNE projection does not reflect the classifier's decision boundary.
-Selon quel critère les données du benchmark sont-elles répar,text,1.0,"The system answer correctly identifies that the data is split based on working conditions, and even provides the specific details mentioned in the reference."
-Quel composant mécanique présente la plus lente convergence ,text,1.0,"The system answer correctly identifies the gearbox as having the slowest convergence and most marked fluctuations, matching the reference answer."
-Quel rôle joue la couche d'inversion de gradient (GRL) dans ,text,1.0,The system answer contains all key facts from the reference answer.
-Vers quelles classes de conditions d'entraînement les échant,text,1.0,"The system answer includes all the key facts from the reference (WC2, WC5, and WC6)."
-Quelle information additionnelle a permis de réduire en part,text,1.0,The system answer contains all the key facts from the reference answer with accurate details.
-Quelle est la charge latérale de la condition de fonctionnem,table,1.0,The system answer provides the correct lateral load value (-10 kN) matching the reference.
-"Combien de canaux de capteurs le jeu de données fournit-il, ",multi,1.0,The system answer correctly provides both the number of sensor channels (24) and the low-pass filter cutoff frequency (25 kHz).
-"Dans la matrice de confusion de domaine, quelle proportion d",figure,1.0,"The system answer correctly identifies the proportion as 39%, which is equivalent to 0,39 in the reference answer."
-"Dans la matrice de confusion de domaine, quelle proportion d",figure,1.0,The system answer correctly provides the number 0.31 as in the reference.
+question,modality,source,score,reason
+Combien de conditions de fonctionnement contient le jeu de d,text,Article (2).pdf,1.0,The system answer correctly identifies the number of operating conditions in the BJTU-RAO dataset.
+Quelles conditions de fonctionnement sont utilisées pour le ,table,Article (2).pdf,1.0,The system answer includes all key facts and conditions from the reference answer.
+Quelle précision est obtenue sur le gearbox ?,text,Article (2).pdf,1.0,"The system answer correctly provides the exact same precision percentage (95,4 %) as the reference answer."
+Quelles classes du gearbox sont les plus confondues ?,text,Article (2).pdf,1.0,The system answer correctly identifies G4 and G8 as the most confused classes.
+À quelle fréquence les signaux sont-ils échantillonnés ?,text,Article (2).pdf,1.0,The system answer correctly identifies the sampling frequency as 64 kHz.
+Quelles sont les valeurs de lambda max et de gamma dans le p,text,Article (2).pdf,1.0,The system answer correctly identifies both lambda max = 0.5 and gamma = 5.
+Sur combien d'époques l'entraînement est-il réalisé ?,text,Article (2).pdf,1.0,"The system answer correctly identifies the number of epochs as 80, matching the reference answer."
+Quel type de couche de graphe est utilisé après les encodeur,text,Article (2).pdf,1.0,The system answer correctly identifies the use of GATConv layers.
+Quelle est la dimension de l'embedding produit par le NodeCN,text,Article (2).pdf,1.0,The system answer correctly states that the embedding dimension is 128.
+Quels sont les descripteurs du courant qui obtiennent les sc,figure,Article (2).pdf,0.0,The system answer lists different descriptors than the reference answer.
+"D'après le texte de l'article, quels descripteurs du courant",text,Article (2).pdf,0.0,"The system answer failed to find the information, missing all key facts of the reference."
+Pourquoi des têtes de classification indépendantes ont-elles,text,Article (2).pdf,1.0,"The system answer correctly captures the main reason from the reference, which is avoiding inter-component interference."
+Comment s'explique l'aspect visuellement entremêlé des class,text,Article (2).pdf,1.0,The system answer correctly identifies both key facts: the strong class imbalance and the limitation of the 2D t-SNE projection regarding the decision boundary.
+Selon quel critère les données du benchmark sont-elles répar,text,Article (2).pdf,1.0,The system answer includes the key fact from the reference and provides the precise details.
+Quel composant mécanique présente la plus lente convergence ,text,Article (2).pdf,1.0,The system answer correctly identifies the gearbox (boîte de vitesses) as having the slowest convergence and most marked fluctuations during training.
+Quel rôle joue la couche d'inversion de gradient (GRL) dans ,text,Article (2).pdf,1.0,"The system answer correctly includes all key facts from the reference: leaves the forward signal unchanged, inverts the gradient during backpropagation, and pushes the extractor towards domain-independent representations."
+Vers quelles classes de conditions d'entraînement les échant,text,Article (2).pdf,1.0,"The system answer correctly identifies the exact same conditions (WC2, WC5, and WC6) as the reference answer."
+Quelle information additionnelle a permis de réduire en part,text,Article (2).pdf,1.0,The system answer correctly includes all key facts from the reference regarding the harmonic energy features.
+Quelle est la charge latérale de la condition de fonctionnem,table,Article (2).pdf,1.0,The system answer provides the correct lateral load value of -10 kN for the WC7 condition.
+"Combien de canaux de capteurs le jeu de données fournit-il, ",multi,Article (2).pdf,1.0,The system answer correctly provides both key facts: 24 sensor channels and a 25 kHz low-pass filter cutoff frequency.
+"Dans la matrice de confusion de domaine, quelle proportion d",figure,Article (2).pdf,0.0,The system failed to find the answer and stated it was missing.
+"Dans la matrice de confusion de domaine, quelle proportion d",figure,Article (2).pdf,1.0,"The system answer correctly provides the number 0,31 matching the reference, with an added percentage."
+Combien de caractéristiques temporelles et fréquentielles so,text,Article-LLM (1).pdf,0.5,The system answer gives the total number (24) but misses the breakdown of temporal and frequency features.
+Quelle valeur est donnée au paramètre de température du modè,text,Article-LLM (1).pdf,1.0,"The system answer correctly identifies the value as 0,01."
+Which patch size and stride were finally selected for the da,text,Article-LLM (1).pdf,1.0,The system answer correctly identifies both the patch size (128) and the stride (8).
+Quelles parties du modèle GPT-2 sont figées et lesquelles so,text,Article-LLM (1).pdf,1.0,The system answer correctly identifies all frozen and retrained parts of the GPT-2 model matching the reference.
+Pourquoi le même nombre d'échantillons est-il utilisé pour c,text,Article-LLM (1).pdf,1.0,The system answer conveys the exact same key facts as the reference answer using synonymous phrasing.
+Quelle précision est obtenue sur CWRU à l'époque 10 dans l'e,table,Article-LLM (1).pdf,0.0,"The system answer gives 0,8996, but the reference answer is 0,9685."
+In the CWRU cross-condition experiment with the data-based m,table,Article-LLM (1).pdf,1.0,The system answer matches the reference answer of 1.0000 exactly.
+Combien de roulements contient le jeu de données PU et à que,multi,Article-LLM (1).pdf,1.0,The system answer contains all key facts: 18 total bearings (12 damaged and 6 normal) and a 64 kHz sampling frequency.
+"De combien la précision augmente-t-elle pour PU, MFPT, JNU e",text,Article-LLM (1).pdf,1.0,"The system answer correctly provides all the precise numerical increases for PU, MFPT, JNU, and CWRU as stated in the reference."
+"Dans la Figure 9(a) (condition 1,3→2), quelle proportion des",figure,Article-LLM (1).pdf,0.0,"The system answer (0.082) contradicts the reference answer (1,000)."
+"In Figure 9(b) (condition 1,2→3), what proportion of ball-fa",figure,Article-LLM (1).pdf,0.0,The system answer 0.020 does not match the reference answer 0.143.
+"Sur les courbes d'entraînement mono-jeu de la Figure 6, quel",figure,Article-LLM (1).pdf,0.0,The system failed to find the information and did not provide the correct answer.
+"Sur la Figure 10, pour quel jeu de données la barre « Trans ",figure,Article-LLM (1).pdf,0.0,The system answer fails to identify the dataset 'PU' mentioned in the reference answer.
+"Sur la Figure 4, quelles couches suivent le LLM pré-entraîné",figure,Article-LLM (1).pdf,1.0,"The system answer correctly identifies the Layer Norm and Linear layers following the LLM, matching the reference key facts."
