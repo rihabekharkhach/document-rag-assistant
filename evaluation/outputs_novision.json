@@ -1,0 +1,1042 @@
+[
+  {
+    "question": "Combien de conditions de fonctionnement contient le jeu de données BJTU-RAO ?",
+    "reference": "Le jeu de données comporte 9 conditions de fonctionnement (WC1 à WC9).",
+    "answerable": true,
+    "modality": "text",
+    "answer": "Le jeu de données BJTU-RAO contient neuf conditions de fonctionnement.",
+    "found": true,
+    "contexts": [
+      "[Figure 1: General project workflow.]\nthe data are partitioned according to working conditions rather than\nthrough a random split. WC1, WC2, WC4, WC5, and WC6 are used\nfor training, WC7 and WC8 for validation, while WC3 and WC9 are\nreserved exclusively for testing. The characteristics of the nine working\nconditions and their corresponding dataset partitions are summarized\nin Table 1. The test set includes operating configurations that are\nFigure 2: Experimental test rig of the BJTU-RAO benchmark bogie\nsystem.\nnot observed during training, allowing the robustness of the proposed\nmodel to changes in operating conditions to be evaluated.\nTable 1: Working conditions and dataset partition\nWorking Condition\nMotor speed / Lateral load\nDataset partition\nWC1\n20 Hz / 0 kN\nTraining\nWC2\n40 Hz / 0 kN\nTraining\nWC3\n60 Hz / 0 kN\nTest\nWC4",
+      "[Figure 1: General project workflow.]\npublicly available benchmark dedicated to railway bogie transmission\nsystems, it includes a half-scale experimental bogie test rig equipped\nwith an asynchronous traction motor, a helical gearbox, and two axle-\nbox assemblies (Fig. 2). The dataset provides 24 synchronized sensing\nchannels, including vibration, motor current, rotational speed, and\nacoustic signals sampled at 64 kHz. It covers 51 health conditions under\nnine operating conditions, combining different rotational speeds and\nlateral loads [3]. The dataset also exhibits a pronounced class imbalance\nacross health conditions, which faithfully reflects the industrial reality\nof railway predictive maintenance, where healthy or mildly degraded\nstates vastly outnumber severe fault occurrences.",
+      "lower weight; the motor and gearbox losses are given equal importance.\nLabel smoothing is also incorporated with a small smoothing factor\nto reduce excessive classifier confidence and improve the stability of\nthe predictions across the imbalanced health-state distribution. The\nresulting task loss is computed as the weighted combination of the four\nnode-level losses and is optimized jointly with the domain-adversarial\nobjective presented in Section 3.3.3.\n3.3.3\nDomain-Adversarial Training\nTo improve the robustness of the proposed model across the nine operat-\ning conditions of the BJTU-RAO benchmark (WC1–WC9), each work-\ning condition is treated as a separate domain. The domain-adversarial\nmodule is introduced after the two GATConv layers, where the four 128-",
+      "[Figure 7: t-SNE projection of the post-GAT node embeddings on the test set.]\nThe proposed framework is evaluated on the BJTU-RAO benchmark,\nwhich reproduces bogie fault conditions using a half-scale laboratory\ntest rig under controlled operating conditions. Although the dataset\nprovides diverse fault states and reliable ground-truth labels, it does\nnot reproduce all sources of variability encountered in real railway\noperation. Factors such as long-term component degradation, environ-\nmental conditions, sensor aging, and variations in sensor placement\nacross different rolling-stock configurations are not explicitly repre-\nsented. The generalization demonstrated in this study should therefore\nbe understood in the context of unseen combinations of operating con-\nditions within the benchmark, rather than as evidence of direct transfer\nto real-world railway data.",
+      "[Figure, page 2] Figure 2: Experimental test rig of the BJTU-RAO benchmark bogie system.\nText detected in the figure:\nty\n4\n\"ly\nay\nRe\nwe\nSe"
+    ],
+    "n_citations": 2,
+    "latency_s": 4.8,
+    "source": "Article (2).pdf",
+    "context_sources": [
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf"
+    ],
+    "answer_mode": "text"
+  },
+  {
+    "question": "Quelles conditions de fonctionnement sont utilisées pour le test ?",
+    "reference": "WC3 (60 Hz / 0 kN) et WC9 (60 Hz / -10 kN).",
+    "answerable": true,
+    "modality": "table",
+    "answer": "Les conditions de fonctionnement réservées au test sont WC3 (60 Hz / 0 kN) et WC9.",
+    "found": true,
+    "contexts": [
+      "[Figure 1: General project workflow.]\nthe data are partitioned according to working conditions rather than\nthrough a random split. WC1, WC2, WC4, WC5, and WC6 are used\nfor training, WC7 and WC8 for validation, while WC3 and WC9 are\nreserved exclusively for testing. The characteristics of the nine working\nconditions and their corresponding dataset partitions are summarized\nin Table 1. The test set includes operating configurations that are\nFigure 2: Experimental test rig of the BJTU-RAO benchmark bogie\nsystem.\nnot observed during training, allowing the robustness of the proposed\nmodel to changes in operating conditions to be evaluated.\nTable 1: Working conditions and dataset partition\nWorking Condition\nMotor speed / Lateral load\nDataset partition\nWC1\n20 Hz / 0 kN\nTraining\nWC2\n40 Hz / 0 kN\nTraining\nWC3\n60 Hz / 0 kN\nTest\nWC4",
+      "[Figure, page 2] Figure 2: Experimental test rig of the BJTU-RAO benchmark bogie system.\nText detected in the figure:\nty\n4\n\"ly\nay\nRe\nwe\nSe",
+      "[Table 10 Cross-condition experiment results of CWRU dataset]\n14\n1,2,3\n0\n0.9901−0.0072\n+0.0072\n15\n0,1,3\n2\n0.9967−0.0046\n+0.0033\n16\n0,2,3\n1\n1.0000−0.0000\n+0.0000\nCross-case experiments were also conducted on the JNU bearing dataset. The JNU dataset\nconsists of three conditions, which are described in the following table:\nTable 11 Working condition of JNU dataset\nWorking Condition\nNo.\nApprox. Motor Speed\n(rpm)\n1\n600\n2\n800\n3\n1000\nThe specific experimental design and results are shown in the table below:\nTable 12 Cross-condition experiment results of JNU dataset\nNo.\nTrain\nCondition\nTest\nCondition\nAccuracy\n1\n1,3\n2\n0.9796−0.0064\n+0.0064\n2\n1,2\n3\n0.9439−0.0227\n+0.0227\n3\n2,3\n1\n0.8991−0.0363\n+0.0363",
+      "[Figure 1: General project workflow.]\npublicly available benchmark dedicated to railway bogie transmission\nsystems, it includes a half-scale experimental bogie test rig equipped\nwith an asynchronous traction motor, a helical gearbox, and two axle-\nbox assemblies (Fig. 2). The dataset provides 24 synchronized sensing\nchannels, including vibration, motor current, rotational speed, and\nacoustic signals sampled at 64 kHz. It covers 51 health conditions under\nnine operating conditions, combining different rotational speeds and\nlateral loads [3]. The dataset also exhibits a pronounced class imbalance\nacross health conditions, which faithfully reflects the industrial reality\nof railway predictive maintenance, where healthy or mildly degraded\nstates vastly outnumber severe fault occurrences.",
+      "continuously varying working conditions. If left undetected, bearing de-\nfects may progressively propagate to neighboring components, leading\nto increased maintenance costs, service disruptions, and potential safety\nrisks. Structural fatigue further illustrates the importance of effective\ncondition monitoring. Qu et al. reported that 27 bogie frames developed\nfatigue cracks after only 3 million kilometers of operation, despite an\nexpected service life of 15 million kilometers, emphasizing the need\nfor reliable health monitoring under real operating conditions [4].\nDriven by these challenges, predictive maintenance has emerged\nas a promising alternative to conventional maintenance strategies by\nenabling early fault detection through artificial intelligence and data-"
+    ],
+    "n_citations": 2,
+    "latency_s": 2.8,
+    "source": "Article (2).pdf",
+    "context_sources": [
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article-LLM (1).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf"
+    ],
+    "answer_mode": "text"
+  },
+  {
+    "question": "Quelle précision est obtenue sur le gearbox ?",
+    "reference": "95,4 %.",
+    "answerable": true,
+    "modality": "text",
+    "answer": "L'exactitude obtenue sur le gearbox est de 95,4 %.",
+    "found": true,
+    "contexts": [
+      "provided in Fig. 3.\nThe two axle-box nodes show the strongest overall performance,\nwith macro-averaged F1-scores of at least 0.99. This performance can\nbe related to the combination of the learned CNN representations with\nbearing-related handcrafted descriptors, including BPFI, BPFO, and\nBSF envelope amplitudes. For the motor, the main reduction in preci-\nsion is observed for class M2, which reaches 0.84 while maintaining a\nrecall of 1.00. This indicates that some samples from other classes are\nassigned to M2, whereas M2 samples themselves are not missed.\n4.2\nWeak Classes and Confusion Patterns\nThe gearbox remains the most challenging node for the proposed frame-\nwork. Ten of its thirteen health states obtain an F1-score above 0.95,",
+      "work. Ten of its thirteen health states obtain an F1-score above 0.95,\nwhereas G4 and G8 remain around 0.50. The corresponding confusion\nmatrix in Fig. 3 reveals a clear pattern: 47% of G4 samples are assigned\nto G8, while 50% of G8 samples are classified as G4. Misclassification\ninvolving the remaining gearbox classes is comparatively limited.\nThis reciprocal confusion indicates a strong similarity between the\nlearned representations of G4 and G8 under the current feature set.\nThe bearing-envelope descriptors introduced for the gearbox node do\nnot appear sufficient to clearly separate these two fault categories. A\nweaker confusion is also observed for the compound state G2+G5, for\nwhich the recall decreases to 0.65. In this case, 29% of the samples are\n3",
+      "guess probability of 1/9 ≈0.11. Such behavior indicates that the\nlearned graph representation retains information relevant to fault diag-\nnosis while reducing its dependence on the operating condition.\n4\nEXPERIMENTAL RESULTS\n4.1\nTask Classification Performance\nThe proposed framework is evaluated on the held-out test conditions,\nWC3 and WC9. The model reaches an accuracy of 97.0% for the\nmotor, 95.4% for the gearbox, 99.8% for the left axle box, and 99.97%\nfor the right axle box. These results indicate that the learned graph\nrepresentation remains effective under operating configurations not\nincluded in the training set. The corresponding confusion matrices are\nprovided in Fig. 3.\nThe two axle-box nodes show the strongest overall performance,",
+      "[Figure, page 4] Figure 3: Test set confusion matrices for the four bogie components.\nText detected in the figure:\nMotor\nGearbox\nLeft axle\nRight Axle\n(5 classes) acc=0.970\n(13 classes)\n(11 classes)\n20.998\n(2 classes)\n10\n10\n1.0\n10\naL\n200\n08\n200\n08\n08\n08\n00\n00\nao\n06\nas\n0.6\nas\n06\n06\n2\n°°\n04\n04\n04\n04\nUa\n02\nox»\n02\n02\n02\nAl\n65\n00\n0.0\n0.0\n0.0\nPrédit\nPrédit",
+      "R. Kharkhach\nFigure 7: t-SNE projection of the post-GAT node embeddings on the test set.\ngearbox model reported in Section 4. A dedicated binary classifier\nwas applied only to samples initially classified as G4 or G8, while all\nother predictions were left unchanged. The classifier used the exist-\ning handcrafted feature vector enriched with harmonic-energy features\ncalculated over the first three harmonics of the characteristic bearing\nfrequencies (BPFI, BPFO, BSF, and FTF), rather than relying only\non the fundamental frequency. On this earlier checkpoint, for which\nthe G4 and G8 F1-scores were substantially lower (0.04 and 0.42, re-\nspectively), the restricted G4/G8 accuracy increased from 27.2% to\n71.8%.\nAlthough this experiment was performed on an earlier checkpoint"
+    ],
+    "n_citations": 1,
+    "latency_s": 2.7,
+    "source": "Article (2).pdf",
+    "context_sources": [
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf"
+    ],
+    "answer_mode": "text"
+  },
+  {
+    "question": "Quelles classes du gearbox sont les plus confondues ?",
+    "reference": "G4 et G8.",
+    "answerable": true,
+    "modality": "text",
+    "answer": "Les classes G4 et G8 du gearbox sont les plus confondues.",
+    "found": true,
+    "contexts": [
+      "four bogie components. For the motor and left axle-box nodes, the pro-\njected embeddings form visually distinct clusters that align well with\nthe corresponding health states, consistent with the high classification\naccuracies reported in Section 4.1. For the gearbox node, most health\nstates also form separable clusters; however, the G4 and G8 clusters\nappear spatially close and partially overlapping, which is consistent\nwith the reciprocal confusion between these two classes identified in\nSection 4.2.\nFor the right axle box, the two classes appear visually intermixed in\nthis two-dimensional projection, despite the near-perfect classification\naccuracy (99.97%) obtained by the model for this node. This apparent\ndiscrepancy is consistent with the pronounced class imbalance of the",
+      "work. Ten of its thirteen health states obtain an F1-score above 0.95,\nwhereas G4 and G8 remain around 0.50. The corresponding confusion\nmatrix in Fig. 3 reveals a clear pattern: 47% of G4 samples are assigned\nto G8, while 50% of G8 samples are classified as G4. Misclassification\ninvolving the remaining gearbox classes is comparatively limited.\nThis reciprocal confusion indicates a strong similarity between the\nlearned representations of G4 and G8 under the current feature set.\nThe bearing-envelope descriptors introduced for the gearbox node do\nnot appear sufficient to clearly separate these two fault categories. A\nweaker confusion is also observed for the compound state G2+G5, for\nwhich the recall decreases to 0.65. In this case, 29% of the samples are\n3",
+      "[Figure 7: t-SNE projection of the post-GAT node embeddings on the test set.]\nout WC3 and WC9 conditions. The strongest results are obtained for\nthe two axle-box nodes, highlighting the benefit of combining learned\nrepresentations with physics-informed descriptors for bearing-related\nfault diagnosis.\nThe gearbox remains the main challenging component, particularly\ndue to the persistent confusion between the G4 and G8 fault classes.\nA preliminary post-hoc experiment using additional harmonic-domain\nfeatures showed that part of this confusion can be reduced, although the\ncorrection was evaluated on an earlier training checkpoint and has not\nyet been validated on the final gearbox model. This result provides a\npromising direction for further improving the discrimination of closely\nrelated gearbox fault conditions.",
+      "[Figure, page 4] Figure 3: Test set confusion matrices for the four bogie components.\nText detected in the figure:\nMotor\nGearbox\nLeft axle\nRight Axle\n(5 classes) acc=0.970\n(13 classes)\n(11 classes)\n20.998\n(2 classes)\n10\n10\n1.0\n10\naL\n200\n08\n200\n08\n08\n08\n00\n00\nao\n06\nas\n0.6\nas\n06\n06\n2\n°°\n04\n04\n04\n04\nUa\n02\nox»\n02\n02\n02\nAl\n65\n00\n0.0\n0.0\n0.0\nPrédit\nPrédit",
+      "[Figure, page 6] Figure 7: t-SNE projection of the post-GAT node embeddings on the test set.\nText detected in the figure:\nMotor t-SNE\n(5 classes)\nGearbox t-SNE\n(13 classes)\neft Axle t-SNE\n(11 classes)\nt-SNE\n100\n100\n100\nSe.\n100\nou\neee\nege\n“ee\nwa\nee\noS!\n34\nPo\ne*\nee\n‘19\n#9\nPe Pe\nFa\n®e\nFe\nee\ne®\n-50\n9\n-50\n-50\n-50\nOP\naq\n-100\net\n-100\n-100\n-100\n-50\nai. 1\n100\n-50\n1\n100\n-50\nt-SNE dim. 1\n100\n-50\nt-SNE dim. 1\n100"
+    ],
+    "n_citations": 2,
+    "latency_s": 2.5,
+    "source": "Article (2).pdf",
+    "context_sources": [
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf"
+    ],
+    "answer_mode": "text"
+  },
+  {
+    "question": "À quelle fréquence les signaux sont-ils échantillonnés ?",
+    "reference": "64 kHz.",
+    "answerable": true,
+    "modality": "text",
+    "answer": "Les signaux sont échantillonnés à 64 kHz.",
+    "found": true,
+    "contexts": [
+      "[Table 2 Content and validated capabilities for case study]\nThe JNU dataset had a sampling frequency of 50 kHz and included three rotational speeds:\n600 rpm, 800 rpm, and 1000 rpm. It covered four fault modes: normal, inner race fault, outer race\nfault, and rolling element fault.\nIn the PU dataset, we used data from 12 artificially damaged bearings (seven with outer race\nfaults and five with inner race faults) and six normal bearings. The vibration signal sampling\nfrequency was 64 kHz, with three fault modes.",
+      "[Figure 1: General project workflow.]\npublicly available benchmark dedicated to railway bogie transmission\nsystems, it includes a half-scale experimental bogie test rig equipped\nwith an asynchronous traction motor, a helical gearbox, and two axle-\nbox assemblies (Fig. 2). The dataset provides 24 synchronized sensing\nchannels, including vibration, motor current, rotational speed, and\nacoustic signals sampled at 64 kHz. It covers 51 health conditions under\nnine operating conditions, combining different rotational speeds and\nlateral loads [3]. The dataset also exhibits a pronounced class imbalance\nacross health conditions, which faithfully reflects the industrial reality\nof railway predictive maintenance, where healthy or mildly degraded\nstates vastly outnumber severe fault occurrences.",
+      "[Figure, page 10] Figure 4 Framework of data-based LLM fault diagnosis 3.2.1 Patching The high sampling frequency of vibration data creates information redundancy. To address thi\nText detected in the figure:\nFault\nDiagnosis resul ts\nModel\ndimen sion\nPatch number\nCl\nWD\nPE(pos, 2i)\n10000a\n———\n‘| PE(pos,2i+1)=\n000\n——\nWwW\npatchsize\nstride\npatching\nwm\nVibration signal",
+      "[Table 2 Content and validated capabilities for case study]\nrace fault, outer race fault, and rolling element fault.\nIn the MFPT dataset, data from three normal bearings, 3+7 outer race fault bearings, and\nseven inner race fault bearings were used. This dataset included three outer race fault bearings had\nan input shaft speed of 25 Hz, a load of 270 lbs, and a sampling frequency of 97,656 Hz. The\nseven outer race fault bearings had an input shaft speed of 25Hz, a sampling frequency of 48,828\nHz, and loads of 25, 50, 100, 150, 200, 250, and 300 lbs. The seven inner race fault bearings had\nan input shaft speed of 25 Hz, a sampling frequency of 48,828 Hz, and loads of 0, 50, 100, 150,\n200, 250, and 300 lbs.\nThe JNU dataset had a sampling frequency of 50 kHz and included three rotational speeds:",
+      "[Figure 1: General project workflow.]\nstates vastly outnumber severe fault occurrences.\nPrior to training, raw signals are filtered using a low-pass filter with\na 25 kHz cutoff frequency, which removes high-frequency noise while\npreserving the lower-frequency spectral content where fault-related\nsignatures are concentrated, most notably the characteristic bearing\nfault frequencies (BPFI, BPFO, BSF, FTF). The filtered signals are then\nsegmented into synchronized 2048-sample windows. The resulting\ndata are normalized independently for each bogie node using training-\nset statistics only, ensuring a consistent representation without data\nleakage.\nTo assess the generalization capability of the proposed framework,\nthe data are partitioned according to working conditions rather than"
+    ],
+    "n_citations": 1,
+    "latency_s": 3.1,
+    "source": "Article (2).pdf",
+    "context_sources": [
+      "Article-LLM (1).pdf",
+      "Article (2).pdf",
+      "Article-LLM (1).pdf",
+      "Article-LLM (1).pdf",
+      "Article (2).pdf"
+    ],
+    "answer_mode": "text"
+  },
+  {
+    "question": "Quelles sont les valeurs de lambda max et de gamma dans le planning adversarial ?",
+    "reference": "lambda max = 0,5 et gamma = 5.",
+    "answerable": true,
+    "modality": "text",
+    "answer": "λmax = 0.5 et γ = 5",
+    "found": true,
+    "contexts": [
+      "dition, while the reversed gradient drives the shared feature extractor\ntoward representations that are less dependent on domain-specific char-\nacteristics. In this architecture, the adversarial constraint is applied to\nthe NodeCNN, CrossAttentionFusion, and GATConv layers. The coef-\nficient λ is progressively increased according to the sigmoid schedule:\nλ(p) = λmax\n \n2\n1+e−γ p −1\n \n,\n(1)\nwhere p denotes the fraction of completed training epochs, γ = 5 con-\ntrols the ramp-up rate, and λmax = 0.5 defines the maximum adversarial\nstrength. A five-epoch warm-up is used at the beginning of training,\nwith λ = 0, allowing the feature extractor and classification heads to\nstabilize before the adversarial objective is introduced.\nThe diagnostic and domain objectives are optimized jointly using",
+      "module is introduced after the two GATConv layers, where the four 128-\ndimensional node embeddings are concatenated into a 512-dimensional\ngraph-level representation. This representation is connected to a Gra-\ndient Reversal Layer (GRL) and then supplied to a domain discrimi-\nnator. The discriminator comprises two fully connected blocks with\ndimensions 512 →256, each including Batch Normalization, ReLU\nactivation, and Dropout, followed by a linear layer that predicts the\nworking condition among the nine domain classes.\nThe GRL leaves the forward signal unchanged but reverses the gra-\ndient during backpropagation by multiplying it by −λ. The domain\ndiscriminator is consequently optimized to identify the operating con-\ndition, while the reversed gradient drives the shared feature extractor",
+      "The diagnostic and domain objectives are optimized jointly using\nAdamW. The task loss is based on a component-weighted Focal Loss\napplied to the fault classes, whereas the domain discriminator uses the\nstandard cross-entropy loss for working-condition classification. The\noverall objective is therefore written as:\nLtotal = Ltask +Ldomain.\n(2)\nThe domain discriminator accuracy is monitored throughout training\nas an indicator of the degree of domain invariance achieved by the\nshared representation. As domain-specific information is progressively\nremoved, the discriminator should become less capable of identifying\nthe operating condition, with its accuracy approaching the random-\nguess probability of 1/9 ≈0.11. Such behavior indicates that the",
+      "lower weight; the motor and gearbox losses are given equal importance.\nLabel smoothing is also incorporated with a small smoothing factor\nto reduce excessive classifier confidence and improve the stability of\nthe predictions across the imbalanced health-state distribution. The\nresulting task loss is computed as the weighted combination of the four\nnode-level losses and is optimized jointly with the domain-adversarial\nobjective presented in Section 3.3.3.\n3.3.3\nDomain-Adversarial Training\nTo improve the robustness of the proposed model across the nine operat-\ning conditions of the BJTU-RAO benchmark (WC1–WC9), each work-\ning condition is treated as a separate domain. The domain-adversarial\nmodule is introduced after the two GATConv layers, where the four 128-",
+      "however, should not be interpreted as direct evidence of perfect do-\nmain invariance. The discriminator was trained only on the working-\ncondition classes included in the training set and therefore could not\ncorrectly predict the validation and test domains, whose labels were\nnot available during its training. The resulting accuracy is consequently\nmore representative of the evaluation protocol than of the actual de-\ngree of domain invariance achieved by the learned representation. The\nadversarial objective may still reduce domain-specific information in\nthe shared embedding, but the current experiment does not provide a\ndirect measure of this effect on unseen domains. A more conclusive\nevaluation would require a leave-one-domain-out protocol in which the"
+    ],
+    "n_citations": 1,
+    "latency_s": 2.5,
+    "source": "Article (2).pdf",
+    "context_sources": [
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf"
+    ],
+    "answer_mode": "text"
+  },
+  {
+    "question": "Sur combien d'époques l'entraînement est-il réalisé ?",
+    "reference": "80 époques.",
+    "answerable": true,
+    "modality": "text",
+    "answer": "L'entraînement est réalisé sur 80 époques.",
+    "found": true,
+    "contexts": [
+      "[Figure, page 4] Figure 4: Training dynamics over 80 epochs.\nText detected in the figure:\nTask Loss\nTask Accuracy\n040\nTrin\n100\n035\nvi\n0.98\n0.30\n0.96\n0.25\n094\n0.20\n0.92\n015\n0.90\n0.10\n088\n0.05\n0.86\nTrain\n0.00\n—— Val\n20\n20\n40\nSo\n6\n70\n80\n20\n20\n40\n50\n60\nEpoch\nEpoch\nDomain Loss\nDomain Accuracy\n1.5\nTrin\nTen\nwi\n—wi\n06\nes\nRandom (1/9=0.21)\n15.0\nos\n25\no4\n10.0\n03\n1S\n02\n5.0\neee\n25\n00\n0.0\n10\n2\nx»\n50\n70\n80\n10\n20\n40\n50\n60\n70\n80\nEpoch\nEpoch",
+      "R. Kharkhach\nFigure 3: Test set confusion matrices for the four bogie components.\nclassified as G3+G5, suggesting that compound conditions involving\nG5 are more difficult to distinguish than the corresponding single-fault\nstates.\n4.3\nTraining Dynamics and Domain Invariance\nThe evolution of the training process over 80 epochs is shown in Fig. 4.\nThe task loss decreases rapidly during the first 10–15 epochs and\nsubsequently remains relatively stable. Validation accuracy follows\na similar trend, reaching a plateau around 98–99%. Among the four\nnodes, the gearbox presents the slowest convergence and the largest\nfluctuations, which is consistent with its lower final accuracy and the\nclass-specific errors discussed above.\nThe domain discriminator reaches an accuracy of 0.000 on the test",
+      "[Table 4 Cross-condition experiment results of the CWRU dataset]\nof these experiments are presented in the table below. Compared with single dataset training,\nmulti-dataset training improved the LLM’s knowledge transfer to new datasets. For the four\ndatasets, the diagnosis effect was greatly improved compared with single-dataset training at\ntransfer training under epoch=1. For the PU and CWRU datasets, the diagnosis accuracy was\nimproved by 0.077 and 0.0235, respectively, after 10 training epochs with the other three datasets.\nIn contrast, improvements for the MFPT and JNU datasets were smaller.\nTable 5 Complete-data cross-dataset experiment results\nTrain Dataset\n(epoch=10)\nCWRU+MFPT\n+JNU\nCWRU+MFPT\n+PU\nCWRU+JNU\n+PU\nMFPT+JNU\n+PU\nTransfer dataset\nPU\nJNU\nMFPT\nCWRU\nTest dataset\nPU\nJNU\nMFPT\nCWRU\nEpoch\nAccuracy\n1\n0.8607\n0.8688\n0.9918\n0.9391\n2\n0.8738\n0.9063",
+      "[Figure 3: Test set confusion matrices for the four bogie components.]\nThe domain discriminator reaches an accuracy of 0.000 on the test\nset, compared with the random-guess probability of 1/9 ≈0.111. This\nvalue should, however, be interpreted with caution. Although a very\nlow discriminator accuracy might initially suggest strong domain in-\nvariance, the validation domain accuracy also remains exactly 0.000\nthroughout the 80 training epochs. Rather than providing direct evi-\ndence of learned invariance, this behavior results from the domain-class\nconfiguration used during training. The discriminator is trained only on\nthe working-condition labels available in the training set and therefore\ncannot correctly predict the validation or test domains, whose labels\nwere not included in its training targets.",
+      "[Figure, page 14] Figure 6 Results of feature-based single-dataset experiments 4.4.2 Single-dataset cross-condition experiment To assess the generalization capability of the prop\nText detected in the figure:\n10\n0.9\n08\n07\n0.6\n—@\n05\njnu\n—@ MFPT\nPU\n0.4\n1\n2\n4\n8\n5\n10\nepoch"
+    ],
+    "n_citations": 2,
+    "latency_s": 12.2,
+    "source": "Article (2).pdf",
+    "context_sources": [
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article-LLM (1).pdf",
+      "Article (2).pdf",
+      "Article-LLM (1).pdf"
+    ],
+    "answer_mode": "text"
+  },
+  {
+    "question": "Quel est le prix d'un bogie de train ?",
+    "reference": "",
+    "answerable": false,
+    "modality": "none",
+    "answer": "Le contexte ne fournit pas le prix d'un bogie de train.",
+    "found": false,
+    "contexts": [
+      "data fusion.\n1\nINTRODUCTION\nThe rapid development of high-speed railway systems has significantly\nincreased the demand for intelligent maintenance solutions capable of\nensuring safe, reliable, and uninterrupted operation. As train speeds\nand operational complexity continue to grow, maintaining the health of\ncritical mechanical subsystems has become a key challenge for railway\noperators.\nAmong these subsystems, the bogie plays a fundamental role in\nvehicle stability, traction, and running safety. Within the bogie assem-\nbly, axle bearings are particularly susceptible to degradation because\nthey operate under high rotational speeds, heavy mechanical loads, and\ncontinuously varying working conditions. If left undetected, bearing de-",
+      "A Graph-Based Multimodal Framework for Intelligent Predictive\nMaintenance of High-Speed Train Bogies\nRihabe Kharkhach∗\nKhalid Dahi\nComplex Systems and Interactions\nComplex Systems and Interactions\nEcole Centrale of Casablanca\nEcole Centrale of Casablanca\nBouskoura, Morocco\nBouskoura, Morocco\nÉcole Nationale de l’Intelligence Artificielle et du Digital\nkhalid.dahi@centrale-casablanca.ma\nENIAD\nBerkane, Morocco\nkharkhach.rihabe@gmail.com\nMeryem Abtane\nHervé Martinez\nComplex Systems and Interactions\nComplex Systems and Interactions\nEcole Centrale of Casablanca\nEcole Centrale of Casablanca\nBouskoura, Morocco\nBouskoura, Morocco\nUniversité de Pau et des pays de l’Adour\nUniversité de Pau et des pays de l’Adour\nE2S UPPA, CNRS UMR 5254, IPREM\nE2S UPPA, CNRS UMR 5254, IPREM\nPau, France\nPau, France",
+      "guess probability of 1/9 ≈0.11. Such behavior indicates that the\nlearned graph representation retains information relevant to fault diag-\nnosis while reducing its dependence on the operating condition.\n4\nEXPERIMENTAL RESULTS\n4.1\nTask Classification Performance\nThe proposed framework is evaluated on the held-out test conditions,\nWC3 and WC9. The model reaches an accuracy of 97.0% for the\nmotor, 95.4% for the gearbox, 99.8% for the left axle box, and 99.97%\nfor the right axle box. These results indicate that the learned graph\nrepresentation remains effective under operating configurations not\nincluded in the training set. The corresponding confusion matrices are\nprovided in Fig. 3.\nThe two axle-box nodes show the strongest overall performance,",
+      "[Figure, page 4] Figure 3: Test set confusion matrices for the four bogie components.\nText detected in the figure:\nMotor\nGearbox\nLeft axle\nRight Axle\n(5 classes) acc=0.970\n(13 classes)\n(11 classes)\n20.998\n(2 classes)\n10\n10\n1.0\n10\naL\n200\n08\n200\n08\n08\n08\n00\n00\nao\n06\nas\n0.6\nas\n06\n06\n2\n°°\n04\n04\n04\n04\nUa\n02\nox»\n02\n02\n02\nAl\n65\n00\n0.0\n0.0\n0.0\nPrédit\nPrédit",
+      "continuously varying working conditions. If left undetected, bearing de-\nfects may progressively propagate to neighboring components, leading\nto increased maintenance costs, service disruptions, and potential safety\nrisks. Structural fatigue further illustrates the importance of effective\ncondition monitoring. Qu et al. reported that 27 bogie frames developed\nfatigue cracks after only 3 million kilometers of operation, despite an\nexpected service life of 15 million kilometers, emphasizing the need\nfor reliable health monitoring under real operating conditions [4].\nDriven by these challenges, predictive maintenance has emerged\nas a promising alternative to conventional maintenance strategies by\nenabling early fault detection through artificial intelligence and data-"
+    ],
+    "n_citations": 0,
+    "latency_s": 10.9,
+    "source": "Article (2).pdf",
+    "context_sources": [
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf"
+    ],
+    "answer_mode": "text"
+  },
+  {
+    "question": "Quelle est la consommation d'énergie du banc d'essai ?",
+    "reference": "",
+    "answerable": false,
+    "modality": "none",
+    "answer": "Le contexte fourni ne mentionne pas la consommation d'énergie du banc d'essai.",
+    "found": false,
+    "contexts": [
+      "[Figure, page 20] Figure 10 The comparison with single-dataset complete-data experiments 4.5.4.2 Limited data transfer experiment A limited data transfer experiment was conducted\nText detected in the figure:\n1.0\nSingle\nTrans\n0.9\n0.8\n0.7\nCWRU\nMFPT\nJNU\ndataset",
+      "[Figure, page 5] Figure 6: Normalized cross-attention feature importance across the four bogie components.\nText detected in the figure:\nMotor\nGearbox\nSpEnt_cur\nRatio_in_out\nStd_RMS_phases\nSpKurtosis\nRatio_bands\nRMS_mean_cur\nShapeFactor_in\nCur_Imbalance\nKurtosis_out\nSkewness_vib\nKurtosis_in\nImpulseFactor_in\nRMS_vib\nPeak2peak_vib\nCrestFactor_in\nEnv_energy\nA_frot_mean\nA_FTF_gb\nAsym_phase\nRatio_BSF_FTF\nA_fs_vib\nSum_bearing_gb\nA_BSF_gb\n2fs_vib\nA_BPFI_gb\nEnv_energy_low\nA_BPFO_gb\nTHD_cur\nSkewness_in\nPeak2peak_in\nCrest_Factor\nRMS_in\nSpEnt_vib\nSpEnt\nKurtosis_vib\nRMS_out\n0.0\n0.2\n0.4\n0.6\n0.8\n1.0\n0.0\n0.2\n0.4\n0.6\n0.8\n1.0\nImportance (attention normalisée)\nImportance (attention normalisée)\nLeft Axle\nRight Axle\nSpKurtosis\nSpEnt\nCrestFactor\nSpKurtosis\nImpulseFactor\nKurtosis_aco\nShapeFactor\nA_BSF\nKurtosis\nCrestFactor\nSpEnt\nSkewness\nKurtosis\nBPFI\nRatio_BPFI_BPFO\nRMS_aco\nPeak2peak\nSum_bearing_feats\nSum_bearing_feats\nEnv_low\nSkewness\nA_BPFO\nRMS_aco\nRatio_BPFI_BPFO\nA_BSF\nBPFI\nKurtosis_aco\nRMS_vib\nE_band_low\nShapeFactor\nRMS_vib\nE_band_low\nA_BPFO\nImpulseFactor\nEnv_low\nPeak2peak\n0.0\n0.2\n0.4\n0.6\n0.8\n1.0\n0.0\n0.2\n0.4\n0.6\n0.8\n1.0\nImportance (attention normalisée)\nImportance (attention normalisée)",
+      "[Figure, page 21] Figure 11 Limited data cross-dataset experiment results 5 Conclusion\nText detected in the figure:\n10\nmm Single\nTrans\n0.9 4\n0.8 4\n0.74\n0.64\n05\nMFPT\nJNU\nCWRU\ndataset",
+      "[Table 14 Cross-condition experiment results of PU dataset]\n+0.0363\n5\n0,3\n1\n0.5889−0.0520\n+0.0520\n6\n0,3\n2\n0.9232−0.0079\n+0.0079\n7\n0,1\n2\n0.8537−0.0107\n+0.0107\n8\n0,1\n3\n0.6982−0.0261\n+0.0261\n9\n1,2\n0\n0.8908−0.0053\n+0.0053",
+      "[Fig. 6 reports the normalized cross-attention weights extracted from the]\nrank above vibration-based descriptors, consistent with the electri-\ncal nature of motor-related faults. For the left and right axle boxes,\nthe ranking is led by spectral kurtosis, crest factor, and the bearing\nenvelope amplitudes (BPFI, BPFO, BSF), matching the expected phys-\n4"
+    ],
+    "n_citations": 0,
+    "latency_s": 12.2,
+    "source": "Article (2).pdf",
+    "context_sources": [
+      "Article-LLM (1).pdf",
+      "Article (2).pdf",
+      "Article-LLM (1).pdf",
+      "Article-LLM (1).pdf",
+      "Article (2).pdf"
+    ],
+    "answer_mode": "text"
+  },
+  {
+    "question": "Quel type de couche de graphe est utilisé après les encodeurs CNN ?",
+    "reference": "Des couches GATConv (graph attention).",
+    "answerable": true,
+    "modality": "text",
+    "answer": "Le contexte ne précise pas quel type de couche de graphe est utilisé après les encodeurs CNN.",
+    "found": false,
+    "contexts": [
+      "module is introduced after the two GATConv layers, where the four 128-\ndimensional node embeddings are concatenated into a 512-dimensional\ngraph-level representation. This representation is connected to a Gra-\ndient Reversal Layer (GRL) and then supplied to a domain discrimi-\nnator. The discriminator comprises two fully connected blocks with\ndimensions 512 →256, each including Batch Normalization, ReLU\nactivation, and Dropout, followed by a linear layer that predicts the\nworking condition among the nine domain classes.\nThe GRL leaves the forward signal unchanged but reverses the gra-\ndient during backpropagation by multiplying it by −λ. The domain\ndiscriminator is consequently optimized to identify the operating con-\ndition, while the reversed gradient drives the shared feature extractor",
+      "neighboring nodes according to the fault context. Stacking two GAT\nlayers further enables information to propagate across the entire me-\nchanical graph, allowing the two axle boxes to exchange information\nindirectly through the gearbox despite the absence of a direct connec-\ntion.\n3.3.2\nClassification Heads and Loss Function\nFollowing the graph-based feature extraction and fusion stages, the\nresulting node embeddings are classified separately for the four bogie\ncomponents using dedicated linear classification heads. A separate\nclassifier is assigned to each node instead of using a shared decision\nlayer, since the fault categories associated with one component are not\nnecessarily related to those of another. This independent configuration",
+      "A Graph-Based Multimodal Framework for Intelligent Predictive\nMaintenance of High-Speed Train Bogies\nRihabe Kharkhach∗\nKhalid Dahi\nComplex Systems and Interactions\nComplex Systems and Interactions\nEcole Centrale of Casablanca\nEcole Centrale of Casablanca\nBouskoura, Morocco\nBouskoura, Morocco\nÉcole Nationale de l’Intelligence Artificielle et du Digital\nkhalid.dahi@centrale-casablanca.ma\nENIAD\nBerkane, Morocco\nkharkhach.rihabe@gmail.com\nMeryem Abtane\nHervé Martinez\nComplex Systems and Interactions\nComplex Systems and Interactions\nEcole Centrale of Casablanca\nEcole Centrale of Casablanca\nBouskoura, Morocco\nBouskoura, Morocco\nUniversité de Pau et des pays de l’Adour\nUniversité de Pau et des pays de l’Adour\nE2S UPPA, CNRS UMR 5254, IPREM\nE2S UPPA, CNRS UMR 5254, IPREM\nPau, France\nPau, France",
+      "[Table 1: Working conditions and dataset partition]\nboxes, making the gearbox the central node connected bidirectionally\nto the other components. This physically meaningful topology reflects\n2",
+      "remains insufficiently addressed.\nIn this context, the proposed framework combines graph-based mod-\neling with domain-adversarial learning to improve diagnostic robust-\nness under varying operating conditions."
+    ],
+    "n_citations": 0,
+    "latency_s": 6.7,
+    "source": "Article (2).pdf",
+    "context_sources": [
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf"
+    ],
+    "answer_mode": "text"
+  },
+  {
+    "question": "Quelle est la dimension de l'embedding produit par le NodeCNN pour chaque nœud ?",
+    "reference": "128 dimensions.",
+    "answerable": true,
+    "modality": "text",
+    "answer": "L'embedding produit par le NodeCNN pour chaque nœud a une dimension de 128.",
+    "found": true,
+    "contexts": [
+      "mechanical faults. Adaptive average pooling followed by a linear pro-\njection produces a 128-dimensional embedding for each node, while\nthe number of input channels (10/6/4/4) is adapted to the sensing con-\nfiguration of the corresponding component.\nTo enrich the learned representation, each embedding is combined\nwith 14–32 physics-informed handcrafted features, including RMS,\nkurtosis, the characteristic bearing frequencies (BPFI, BPFO, BSF), and\nthe Gear Mesh Frequency (GMF). Feature fusion is performed through\na four-head CrossAttentionFusion module, where the CNN embedding\nserves as the query and the handcrafted descriptors act as keys and\nvalues. Instead of a conventional residual connection, both feature\nsources are integrated through a learnable gated residual mechanism",
+      "R. Kharkhach\nthe propagation of vibration and fault signatures throughout the bogie—\nfor example, a gear-tooth defect may simultaneously influence the\nvibration response of both axle boxes—while avoiding unnecessary\nconnections that could introduce spurious correlations.\nEach node is processed independently by a dedicated NodeCNN\noperating directly on the corresponding raw multi-channel signals. The\nencoder consists of four successive one-dimensional convolutional\nblocks (32 →64 →128 →128 channels, kernel sizes 7 →5 →3 →3),\nwhere larger kernels capture global signal trends and progressively\nsmaller kernels focus on localized impulsive patterns associated with\nmechanical faults. Adaptive average pooling followed by a linear pro-",
+      "discrepancy is consistent with the pronounced class imbalance of the\nright axle-box labels (RA0: 90.2%, RA1: 9.8% of test samples) and\nwith the fact that t-SNE projects the 128-dimensional node embedding\nonto only two dimensions, which are not guaranteed to align with the\ndecision boundary actually exploited by the linear classifier. As such,\nthis visualization should be interpreted as a qualitative, low-dimensional\nsummary of the embedding structure rather than a direct representation\nof classifier separability.\n5\nDISCUSSION\n5.1\nInterpretation of the Results\nThe results presented in Section 4 show that the proposed graph-based\nframework achieves high diagnostic accuracy across the four bogie com-\nponents, with values ranging from 95.4% to 99.97% on the held-out",
+      "module is introduced after the two GATConv layers, where the four 128-\ndimensional node embeddings are concatenated into a 512-dimensional\ngraph-level representation. This representation is connected to a Gra-\ndient Reversal Layer (GRL) and then supplied to a domain discrimi-\nnator. The discriminator comprises two fully connected blocks with\ndimensions 512 →256, each including Batch Normalization, ReLU\nactivation, and Dropout, followed by a linear layer that predicts the\nworking condition among the nine domain classes.\nThe GRL leaves the forward signal unchanged but reverses the gra-\ndient during backpropagation by multiplying it by −λ. The domain\ndiscriminator is consequently optimized to identify the operating con-\ndition, while the reversed gradient drives the shared feature extractor",
+      "[Figure, page 6] Figure 7: t-SNE projection of the post-GAT node embeddings on the test set.\nText detected in the figure:\nMotor t-SNE\n(5 classes)\nGearbox t-SNE\n(13 classes)\neft Axle t-SNE\n(11 classes)\nt-SNE\n100\n100\n100\nSe.\n100\nou\neee\nege\n“ee\nwa\nee\noS!\n34\nPo\ne*\nee\n‘19\n#9\nPe Pe\nFa\n®e\nFe\nee\ne®\n-50\n9\n-50\n-50\n-50\nOP\naq\n-100\net\n-100\n-100\n-100\n-50\nai. 1\n100\n-50\n1\n100\n-50\nt-SNE dim. 1\n100\n-50\nt-SNE dim. 1\n100"
+    ],
+    "n_citations": 1,
+    "latency_s": 13.7,
+    "source": "Article (2).pdf",
+    "context_sources": [
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf"
+    ],
+    "answer_mode": "text"
+  },
+  {
+    "question": "Quels sont les descripteurs du courant qui obtiennent les scores d'importance les plus élevés pour le nœud moteur dans la figure d'importance des caractéristiques ?",
+    "reference": "L'entropie spectrale du courant (SpEnt_cur), l'écart-type RMS des phases (Std_RMS_phases) et la moyenne RMS du courant (RMS_mean_cur).",
+    "answerable": true,
+    "modality": "figure",
+    "answer": "Les descripteurs du courant qui obtiennent les scores d’importance les plus élevés pour le nœud moteur sont : « spectral entropy of the current », « current imbalance » et « RMS current ».",
+    "found": true,
+    "contexts": [
+      "[Figure 5: Domain confusion matrix.]\nbogie component.\nFor the motor, current-related descriptors receive the highest weights,\nwith spectral entropy of the current, current imbalance, and RMS\ncurrent ranking above the vibration-related features. For both axle\nboxes, spectral kurtosis, crest factor, and bearing-envelope amplitudes\n(BPFI, BPFO, and BSF) appear among the most influential descriptors,\nwhich is consistent with the characteristic signatures associated with\nrolling-element bearing faults.\nThe gearbox exhibits a different feature distribution.\nThe in-\nput/output vibration ratio and spectral kurtosis receive the highest\nweights, whereas the bearing-envelope descriptors introduced for this\nnode (ABPFI_gb, ABPFO_gb, ABSF_gb, and AFTF_gb) have comparatively",
+      "[Figure 5: Domain confusion matrix.]\nnode (ABPFI_gb, ABPFO_gb, ABSF_gb, and AFTF_gb) have comparatively\nlower importance. This observation is consistent with the G4/G8 con-\nfusion reported in Section 4.2 and suggests that these descriptors, al-\nthough physically relevant, do not provide sufficient discrimination\nbetween the two fault categories in the current configuration.\n4.4\nFeature Importance Analysis\nFig. 6 reports the normalized cross-attention weights extracted from the\nCrossAttentionFusion module for each node, providing an interpretable\nview of which handcrafted physics-informed features the model relies\non most. For the motor node, current-domain features dominate—\nspectral entropy of the current, current imbalance, and RMS current\nrank above vibration-based descriptors, consistent with the electri-",
+      "[Fig. 6 reports the normalized cross-attention weights extracted from the]\nrank above vibration-based descriptors, consistent with the electri-\ncal nature of motor-related faults. For the left and right axle boxes,\nthe ranking is led by spectral kurtosis, crest factor, and the bearing\nenvelope amplitudes (BPFI, BPFO, BSF), matching the expected phys-\n4",
+      "[Figure, page 5] Figure 6: Normalized cross-attention feature importance across the four bogie components.\nText detected in the figure:\nMotor\nGearbox\nSpEnt_cur\nRatio_in_out\nStd_RMS_phases\nSpKurtosis\nRatio_bands\nRMS_mean_cur\nShapeFactor_in\nCur_Imbalance\nKurtosis_out\nSkewness_vib\nKurtosis_in\nImpulseFactor_in\nRMS_vib\nPeak2peak_vib\nCrestFactor_in\nEnv_energy\nA_frot_mean\nA_FTF_gb\nAsym_phase\nRatio_BSF_FTF\nA_fs_vib\nSum_bearing_gb\nA_BSF_gb\n2fs_vib\nA_BPFI_gb\nEnv_energy_low\nA_BPFO_gb\nTHD_cur\nSkewness_in\nPeak2peak_in\nCrest_Factor\nRMS_in\nSpEnt_vib\nSpEnt\nKurtosis_vib\nRMS_out\n0.0\n0.2\n0.4\n0.6\n0.8\n1.0\n0.0\n0.2\n0.4\n0.6\n0.8\n1.0\nImportance (attention normalisée)\nImportance (attention normalisée)\nLeft Axle\nRight Axle\nSpKurtosis\nSpEnt\nCrestFactor\nSpKurtosis\nImpulseFactor\nKurtosis_aco\nShapeFactor\nA_BSF\nKurtosis\nCrestFactor\nSpEnt\nSkewness\nKurtosis\nBPFI\nRatio_BPFI_BPFO\nRMS_aco\nPeak2peak\nSum_bearing_feats\nSum_bearing_feats\nEnv_low\nSkewness\nA_BPFO\nRMS_aco\nRatio_BPFI_BPFO\nA_BSF\nBPFI\nKurtosis_aco\nRMS_vib\nE_band_low\nShapeFactor\nRMS_vib\nE_band_low\nA_BPFO\nImpulseFactor\nEnv_low\nPeak2peak\n0.0\n0.2\n0.4\n0.6\n0.8\n1.0\n0.0\n0.2\n0.4\n0.6\n0.8\n1.0\nImportance (attention normalisée)\nImportance (attention normalisée)",
+      "provided in Fig. 3.\nThe two axle-box nodes show the strongest overall performance,\nwith macro-averaged F1-scores of at least 0.99. This performance can\nbe related to the combination of the learned CNN representations with\nbearing-related handcrafted descriptors, including BPFI, BPFO, and\nBSF envelope amplitudes. For the motor, the main reduction in preci-\nsion is observed for class M2, which reaches 0.84 while maintaining a\nrecall of 1.00. This indicates that some samples from other classes are\nassigned to M2, whereas M2 samples themselves are not missed.\n4.2\nWeak Classes and Confusion Patterns\nThe gearbox remains the most challenging node for the proposed frame-\nwork. Ten of its thirteen health states obtain an F1-score above 0.95,"
+    ],
+    "n_citations": 2,
+    "latency_s": 13.5,
+    "source": "Article (2).pdf",
+    "context_sources": [
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf"
+    ],
+    "answer_mode": "text"
+  },
+  {
+    "question": "D'après le texte de l'article, quels descripteurs du courant dominent pour le nœud moteur ?",
+    "reference": "L'entropie spectrale du courant, le déséquilibre du courant (current imbalance) et le courant RMS.",
+    "answerable": true,
+    "modality": "text",
+    "answer": "Les descripteurs du courant qui dominent pour le nœud moteur sont l’entropie spectrale du courant, le déséquilibre de courant et le courant RMS.",
+    "found": true,
+    "contexts": [
+      "[Figure 5: Domain confusion matrix.]\nnode (ABPFI_gb, ABPFO_gb, ABSF_gb, and AFTF_gb) have comparatively\nlower importance. This observation is consistent with the G4/G8 con-\nfusion reported in Section 4.2 and suggests that these descriptors, al-\nthough physically relevant, do not provide sufficient discrimination\nbetween the two fault categories in the current configuration.\n4.4\nFeature Importance Analysis\nFig. 6 reports the normalized cross-attention weights extracted from the\nCrossAttentionFusion module for each node, providing an interpretable\nview of which handcrafted physics-informed features the model relies\non most. For the motor node, current-domain features dominate—\nspectral entropy of the current, current imbalance, and RMS current\nrank above vibration-based descriptors, consistent with the electri-",
+      "[Figure 5: Domain confusion matrix.]\nbogie component.\nFor the motor, current-related descriptors receive the highest weights,\nwith spectral entropy of the current, current imbalance, and RMS\ncurrent ranking above the vibration-related features. For both axle\nboxes, spectral kurtosis, crest factor, and bearing-envelope amplitudes\n(BPFI, BPFO, and BSF) appear among the most influential descriptors,\nwhich is consistent with the characteristic signatures associated with\nrolling-element bearing faults.\nThe gearbox exhibits a different feature distribution.\nThe in-\nput/output vibration ratio and spectral kurtosis receive the highest\nweights, whereas the bearing-envelope descriptors introduced for this\nnode (ABPFI_gb, ABPFO_gb, ABSF_gb, and AFTF_gb) have comparatively",
+      "[Fig. 6 reports the normalized cross-attention weights extracted from the]\nrank above vibration-based descriptors, consistent with the electri-\ncal nature of motor-related faults. For the left and right axle boxes,\nthe ranking is led by spectral kurtosis, crest factor, and the bearing\nenvelope amplitudes (BPFI, BPFO, BSF), matching the expected phys-\n4",
+      "[Figure 3: Test set confusion matrices for the four bogie components.]\nwere not included in its training targets.\nThe domain confusion matrix in Fig. 5 supports this interpretation.\nSamples from WC3 and WC9 are mainly assigned to the working-\ncondition classes observed during training, particularly WC2, WC5,\nand WC6. Consequently, the discriminator accuracy alone cannot be\nused as a direct measure of domain invariance for the unseen conditions\nin this experimental setup.\nFigure 4: Training dynamics over 80 epochs.\nThe normalized cross-attention weights obtained from the CrossAt-\ntentionFusion module are presented in Fig. 6. They provide an indica-\nFigure 5: Domain confusion matrix.\ntion of the handcrafted features receiving the greatest attention for each\nbogie component.\nFor the motor, current-related descriptors receive the highest weights,",
+      "[Table 1: Working conditions and dataset partition]\nboxes, making the gearbox the central node connected bidirectionally\nto the other components. This physically meaningful topology reflects\n2"
+    ],
+    "n_citations": 2,
+    "latency_s": 10.2,
+    "source": "Article (2).pdf",
+    "context_sources": [
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf"
+    ],
+    "answer_mode": "text"
+  },
+  {
+    "question": "Pourquoi des têtes de classification indépendantes ont-elles été adoptées pour chaque composant du bogie ?",
+    "reference": "Pour éviter les interférences inter-composants : avec une couche partagée, optimiser un composant affectait les frontières de décision des autres.",
+    "answerable": true,
+    "modality": "text",
+    "answer": "Des têtes de classification indépendantes ont été adoptées pour chaque composant du bogie afin d’éviter les interférences entre composants et de permettre d’optimiser séparément les objectifs de classification propres à chaque composant, les catégories de défauts n’étant pas nécessairement liées entre elles.",
+    "found": true,
+    "contexts": [
+      "[Figure 7: t-SNE projection of the post-GAT node embeddings on the test set.]\nto real-world railway data.\nFrom an architectural perspective, independent linear classification\nheads were retained for the four bogie nodes instead of using a shared\nor prototype-based decision layer. During development, the shared\nconfiguration led to cross-component interference, where optimizing\nthe classification of one component could affect the decision boundaries\nassociated with other components. Independent heads avoid this interac-\ntion at the final classification stage and allow each component-specific\nobjective to be optimized separately. This choice results in a slightly\nless coupled decision structure, but provides a more stable configuration\nfor multi-component fault diagnosis, where performance degradation",
+      "neighboring nodes according to the fault context. Stacking two GAT\nlayers further enables information to propagate across the entire me-\nchanical graph, allowing the two axle boxes to exchange information\nindirectly through the gearbox despite the absence of a direct connec-\ntion.\n3.3.2\nClassification Heads and Loss Function\nFollowing the graph-based feature extraction and fusion stages, the\nresulting node embeddings are classified separately for the four bogie\ncomponents using dedicated linear classification heads. A separate\nclassifier is assigned to each node instead of using a shared decision\nlayer, since the fault categories associated with one component are not\nnecessarily related to those of another. This independent configuration",
+      "necessarily related to those of another. This independent configuration\nlimits the influence of one component’s classification objective on the\ndecision boundaries of the others and allows the motor, gearbox, and\naxle-box classifiers to be optimized separately.\nModel training is performed using Focal Loss to give greater empha-\nsis to difficult samples and mitigate the effect of the class imbalance\npresent in the dataset. The losses obtained from the four nodes are fur-\nther weighted according to the relative diagnostic importance and clas-\nsification difficulty of each component. In particular, a higher weight is\nassigned to the left axle-box loss, whereas the right axle-box receives a\nlower weight; the motor and gearbox losses are given equal importance.",
+      "R. Kharkhach\nthe propagation of vibration and fault signatures throughout the bogie—\nfor example, a gear-tooth defect may simultaneously influence the\nvibration response of both axle boxes—while avoiding unnecessary\nconnections that could introduce spurious correlations.\nEach node is processed independently by a dedicated NodeCNN\noperating directly on the corresponding raw multi-channel signals. The\nencoder consists of four successive one-dimensional convolutional\nblocks (32 →64 →128 →128 channels, kernel sizes 7 →5 →3 →3),\nwhere larger kernels capture global signal trends and progressively\nsmaller kernels focus on localized impulsive patterns associated with\nmechanical faults. Adaptive average pooling followed by a linear pro-",
+      "[Figure 1: General project workflow.]\nstates vastly outnumber severe fault occurrences.\nPrior to training, raw signals are filtered using a low-pass filter with\na 25 kHz cutoff frequency, which removes high-frequency noise while\npreserving the lower-frequency spectral content where fault-related\nsignatures are concentrated, most notably the characteristic bearing\nfault frequencies (BPFI, BPFO, BSF, FTF). The filtered signals are then\nsegmented into synchronized 2048-sample windows. The resulting\ndata are normalized independently for each bogie node using training-\nset statistics only, ensuring a consistent representation without data\nleakage.\nTo assess the generalization capability of the proposed framework,\nthe data are partitioned according to working conditions rather than"
+    ],
+    "n_citations": 2,
+    "latency_s": 23.8,
+    "source": "Article (2).pdf",
+    "context_sources": [
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf"
+    ],
+    "answer_mode": "text"
+  },
+  {
+    "question": "Comment s'explique l'aspect visuellement entremêlé des classes de la boîte d'essieu droite sur la projection t-SNE ?",
+    "reference": "Par le fort déséquilibre des classes et par le fait que la projection 2D ne correspond pas nécessairement à la frontière de décision du classifieur.",
+    "answerable": true,
+    "modality": "text",
+    "answer": "L’aspect entremêlé s’explique par le fort déséquilibre des classes de la boîte d’essieu droite (RA0 ≈ 90 % vs RA1 ≈ 10 %) et par le fait que t‑SNE ne projette les embeddings de 128 dimensions que sur deux dimensions, ce qui n’est pas garanti d’aligner la visualisation avec la frontière de décision réellement utilisée par le classifieur linéaire.",
+    "found": true,
+    "contexts": [
+      "four bogie components. For the motor and left axle-box nodes, the pro-\njected embeddings form visually distinct clusters that align well with\nthe corresponding health states, consistent with the high classification\naccuracies reported in Section 4.1. For the gearbox node, most health\nstates also form separable clusters; however, the G4 and G8 clusters\nappear spatially close and partially overlapping, which is consistent\nwith the reciprocal confusion between these two classes identified in\nSection 4.2.\nFor the right axle box, the two classes appear visually intermixed in\nthis two-dimensional projection, despite the near-perfect classification\naccuracy (99.97%) obtained by the model for this node. This apparent\ndiscrepancy is consistent with the pronounced class imbalance of the",
+      "discrepancy is consistent with the pronounced class imbalance of the\nright axle-box labels (RA0: 90.2%, RA1: 9.8% of test samples) and\nwith the fact that t-SNE projects the 128-dimensional node embedding\nonto only two dimensions, which are not guaranteed to align with the\ndecision boundary actually exploited by the linear classifier. As such,\nthis visualization should be interpreted as a qualitative, low-dimensional\nsummary of the embedding structure rather than a direct representation\nof classifier separability.\n5\nDISCUSSION\n5.1\nInterpretation of the Results\nThe results presented in Section 4 show that the proposed graph-based\nframework achieves high diagnostic accuracy across the four bogie com-\nponents, with values ranging from 95.4% to 99.97% on the held-out",
+      "[Figure, page 6] Figure 7: t-SNE projection of the post-GAT node embeddings on the test set.\nText detected in the figure:\nMotor t-SNE\n(5 classes)\nGearbox t-SNE\n(13 classes)\neft Axle t-SNE\n(11 classes)\nt-SNE\n100\n100\n100\nSe.\n100\nou\neee\nege\n“ee\nwa\nee\noS!\n34\nPo\ne*\nee\n‘19\n#9\nPe Pe\nFa\n®e\nFe\nee\ne®\n-50\n9\n-50\n-50\n-50\nOP\naq\n-100\net\n-100\n-100\n-100\n-50\nai. 1\n100\n-50\n1\n100\n-50\nt-SNE dim. 1\n100\n-50\nt-SNE dim. 1\n100",
+      "[Figure, page 19] Figure 8 Feature visualization based on t-SNE of JNU cross-condition experiment\nText detected in the figure:\nclass\nclass\nclass\n0\n0\noe\n1\n2\nod,\nwe\n210\n3\n10\naye\nor\nee\nRes\naa\nwee\ntg\n“10\nSee\nta\n-20\n“1s\n-10\n5\n10\n-»\n(a)-condition 1,3—2\n(c) condition",
+      "[Table 1: Working conditions and dataset partition]\nboxes, making the gearbox the central node connected bidirectionally\nto the other components. This physically meaningful topology reflects\n2"
+    ],
+    "n_citations": 2,
+    "latency_s": 14.0,
+    "source": "Article (2).pdf",
+    "context_sources": [
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article-LLM (1).pdf",
+      "Article (2).pdf"
+    ],
+    "answer_mode": "text"
+  },
+  {
+    "question": "Selon quel critère les données du benchmark sont-elles réparties entre l'entraînement, la validation et le test ?",
+    "reference": "Selon les conditions de travail (working conditions), et non par un découpage aléatoire.",
+    "answerable": true,
+    "modality": "text",
+    "answer": "Les données sont réparties selon les conditions de travail (working conditions) plutôt qu’un découpage aléatoire.",
+    "found": true,
+    "contexts": [
+      "[Figure 1: General project workflow.]\nthe data are partitioned according to working conditions rather than\nthrough a random split. WC1, WC2, WC4, WC5, and WC6 are used\nfor training, WC7 and WC8 for validation, while WC3 and WC9 are\nreserved exclusively for testing. The characteristics of the nine working\nconditions and their corresponding dataset partitions are summarized\nin Table 1. The test set includes operating configurations that are\nFigure 2: Experimental test rig of the BJTU-RAO benchmark bogie\nsystem.\nnot observed during training, allowing the robustness of the proposed\nmodel to changes in operating conditions to be evaluated.\nTable 1: Working conditions and dataset partition\nWorking Condition\nMotor speed / Lateral load\nDataset partition\nWC1\n20 Hz / 0 kN\nTraining\nWC2\n40 Hz / 0 kN\nTraining\nWC3\n60 Hz / 0 kN\nTest\nWC4",
+      "[Figure 1: General project workflow.]\nstates vastly outnumber severe fault occurrences.\nPrior to training, raw signals are filtered using a low-pass filter with\na 25 kHz cutoff frequency, which removes high-frequency noise while\npreserving the lower-frequency spectral content where fault-related\nsignatures are concentrated, most notably the characteristic bearing\nfault frequencies (BPFI, BPFO, BSF, FTF). The filtered signals are then\nsegmented into synchronized 2048-sample windows. The resulting\ndata are normalized independently for each bogie node using training-\nset statistics only, ensuring a consistent representation without data\nleakage.\nTo assess the generalization capability of the proposed framework,\nthe data are partitioned according to working conditions rather than",
+      "[Figure 5 STFT images of four datasets for different failure modes]\nfeatures were extracted from these samples using the formulas mentioned in the second section to\nbuild the fine-tuning dataset. The training and testing sets were split 8:2. For data-based LLM\nfault diagnosis experiments, the training, validation, and testing sets were split 8:1:1. To leverage\nthe LLM’s capability to learn from large datasets, we ensured that each fault mode in each dataset\nhad an equal number of samples, aiming to minimize the impact of class imbalance and to\nmaximize the knowledge learned from the data.\nFor subsequent experiments on model generalization with combined and cross-training on\ndifferent datasets, we classified each bearing dataset by fault mode (normal, inner race fault, outer",
+      "[Figure, page 2] Figure 2: Experimental test rig of the BJTU-RAO benchmark bogie system.\nText detected in the figure:\nty\n4\n\"ly\nay\nRe\nwe\nSe",
+      "[Figure, page 2] Figure 1: General project workflow.\nText detected in the figure:\n6]\nDataset\n4)\nPreprocessing Feature Extraction (Graph Mod Model Architecture\nEvaluation\nFault 4\nHealthy\nWa\njaf\nFault 2\n1h\nTHO\nFaultN\ni,\nBJTU-RAO\nDataset\ndil"
+    ],
+    "n_citations": 1,
+    "latency_s": 13.9,
+    "source": "Article (2).pdf",
+    "context_sources": [
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article-LLM (1).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf"
+    ],
+    "answer_mode": "text"
+  },
+  {
+    "question": "Quel composant mécanique présente la plus lente convergence et les fluctuations les plus marquées lors de l'entraînement ?",
+    "reference": "La boîte de vitesses (gearbox).",
+    "answerable": true,
+    "modality": "text",
+    "answer": "Le composant mécanique qui présente la plus lente convergence et les fluctuations les plus marquées est le gearbox.",
+    "found": true,
+    "contexts": [
+      "R. Kharkhach\nFigure 3: Test set confusion matrices for the four bogie components.\nclassified as G3+G5, suggesting that compound conditions involving\nG5 are more difficult to distinguish than the corresponding single-fault\nstates.\n4.3\nTraining Dynamics and Domain Invariance\nThe evolution of the training process over 80 epochs is shown in Fig. 4.\nThe task loss decreases rapidly during the first 10–15 epochs and\nsubsequently remains relatively stable. Validation accuracy follows\na similar trend, reaching a plateau around 98–99%. Among the four\nnodes, the gearbox presents the slowest convergence and the largest\nfluctuations, which is consistent with its lower final accuracy and the\nclass-specific errors discussed above.\nThe domain discriminator reaches an accuracy of 0.000 on the test",
+      "[Figure, page 4] Figure 3: Test set confusion matrices for the four bogie components.\nText detected in the figure:\nMotor\nGearbox\nLeft axle\nRight Axle\n(5 classes) acc=0.970\n(13 classes)\n(11 classes)\n20.998\n(2 classes)\n10\n10\n1.0\n10\naL\n200\n08\n200\n08\n08\n08\n00\n00\nao\n06\nas\n0.6\nas\n06\n06\n2\n°°\n04\n04\n04\n04\nUa\n02\nox»\n02\n02\n02\nAl\n65\n00\n0.0\n0.0\n0.0\nPrédit\nPrédit",
+      "[Figure 3: Test set confusion matrices for the four bogie components.]\nwere not included in its training targets.\nThe domain confusion matrix in Fig. 5 supports this interpretation.\nSamples from WC3 and WC9 are mainly assigned to the working-\ncondition classes observed during training, particularly WC2, WC5,\nand WC6. Consequently, the discriminator accuracy alone cannot be\nused as a direct measure of domain invariance for the unseen conditions\nin this experimental setup.\nFigure 4: Training dynamics over 80 epochs.\nThe normalized cross-attention weights obtained from the CrossAt-\ntentionFusion module are presented in Fig. 6. They provide an indica-\nFigure 5: Domain confusion matrix.\ntion of the handcrafted features receiving the greatest attention for each\nbogie component.\nFor the motor, current-related descriptors receive the highest weights,",
+      "provided in Fig. 3.\nThe two axle-box nodes show the strongest overall performance,\nwith macro-averaged F1-scores of at least 0.99. This performance can\nbe related to the combination of the learned CNN representations with\nbearing-related handcrafted descriptors, including BPFI, BPFO, and\nBSF envelope amplitudes. For the motor, the main reduction in preci-\nsion is observed for class M2, which reaches 0.84 while maintaining a\nrecall of 1.00. This indicates that some samples from other classes are\nassigned to M2, whereas M2 samples themselves are not missed.\n4.2\nWeak Classes and Confusion Patterns\nThe gearbox remains the most challenging node for the proposed frame-\nwork. Ten of its thirteen health states obtain an F1-score above 0.95,",
+      "[Fig. 6 reports the normalized cross-attention weights extracted from the]\nrank above vibration-based descriptors, consistent with the electri-\ncal nature of motor-related faults. For the left and right axle boxes,\nthe ranking is led by spectral kurtosis, crest factor, and the bearing\nenvelope amplitudes (BPFI, BPFO, BSF), matching the expected phys-\n4"
+    ],
+    "n_citations": 1,
+    "latency_s": 11.6,
+    "source": "Article (2).pdf",
+    "context_sources": [
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf"
+    ],
+    "answer_mode": "text"
+  },
+  {
+    "question": "Quel rôle joue la couche d'inversion de gradient (GRL) dans le module d'apprentissage contradictoire ?",
+    "reference": "Elle laisse le signal inchangé vers l'avant mais inverse le gradient pendant la rétropropagation, poussant l'extracteur vers des représentations moins dépendantes du domaine.",
+    "answerable": true,
+    "modality": "text",
+    "answer": "La couche d’inversion de gradient transmet le signal vers le discriminateur sans le modifier en avant, mais lors de la rétropropagation elle inverse le gradient (le multiplie par –λ), ce qui pousse l’extracteur de caractéristiques partagé à produire des représentations moins dépendantes des caractéristiques propres au domaine.",
+    "found": true,
+    "contexts": [
+      "module is introduced after the two GATConv layers, where the four 128-\ndimensional node embeddings are concatenated into a 512-dimensional\ngraph-level representation. This representation is connected to a Gra-\ndient Reversal Layer (GRL) and then supplied to a domain discrimi-\nnator. The discriminator comprises two fully connected blocks with\ndimensions 512 →256, each including Batch Normalization, ReLU\nactivation, and Dropout, followed by a linear layer that predicts the\nworking condition among the nine domain classes.\nThe GRL leaves the forward signal unchanged but reverses the gra-\ndient during backpropagation by multiplying it by −λ. The domain\ndiscriminator is consequently optimized to identify the operating con-\ndition, while the reversed gradient drives the shared feature extractor",
+      "dition, while the reversed gradient drives the shared feature extractor\ntoward representations that are less dependent on domain-specific char-\nacteristics. In this architecture, the adversarial constraint is applied to\nthe NodeCNN, CrossAttentionFusion, and GATConv layers. The coef-\nficient λ is progressively increased according to the sigmoid schedule:\nλ(p) = λmax\n \n2\n1+e−γ p −1\n \n,\n(1)\nwhere p denotes the fraction of completed training epochs, γ = 5 con-\ntrols the ramp-up rate, and λmax = 0.5 defines the maximum adversarial\nstrength. A five-epoch warm-up is used at the beginning of training,\nwith λ = 0, allowing the feature extractor and classification heads to\nstabilize before the adversarial objective is introduced.\nThe diagnostic and domain objectives are optimized jointly using",
+      "6\nDeclaration\nFunding: This study was supported by the National Key R&D Program of China under Grant\nSTI 2030—Major Projects (Grant No. 2021ZD0201300), the National Natural Science Foundation\nof China (Grant Nos. 52472442 and 72471013), and the Research Start-up Funds of Hangzhou\nInternational Innovation Institute of Beihang University (Grant Nos. 2024KQ069, 2024KQ036\nand 2024KQ035).\nAuthor Contributions: Data curation, G.N. and C.L.; Formal analysis, L.T.; Methodology,\nL.T. and H.L.; Writing—original draft, H.L. and G.N.; Validation, W.C.; Investigation, W.C. and\nB.H.; Supervision, L.T. and C.L. All authors have read and agreed to the published version of the\nmanuscript.\n7\nReferences\nAn, Y., Zhang, K., Liu, Q., Chai, Y., & Huang, X. (2022). Rolling Bearing Fault Diagnosis Method",
+      "[Figure 3: Test set confusion matrices for the four bogie components.]\nThe domain discriminator reaches an accuracy of 0.000 on the test\nset, compared with the random-guess probability of 1/9 ≈0.111. This\nvalue should, however, be interpreted with caution. Although a very\nlow discriminator accuracy might initially suggest strong domain in-\nvariance, the validation domain accuracy also remains exactly 0.000\nthroughout the 80 training epochs. Rather than providing direct evi-\ndence of learned invariance, this behavior results from the domain-class\nconfiguration used during training. The discriminator is trained only on\nthe working-condition labels available in the training set and therefore\ncannot correctly predict the validation or test domains, whose labels\nwere not included in its training targets.",
+      "A Graph-Based Multimodal Framework for Intelligent Predictive\nMaintenance of High-Speed Train Bogies\nRihabe Kharkhach∗\nKhalid Dahi\nComplex Systems and Interactions\nComplex Systems and Interactions\nEcole Centrale of Casablanca\nEcole Centrale of Casablanca\nBouskoura, Morocco\nBouskoura, Morocco\nÉcole Nationale de l’Intelligence Artificielle et du Digital\nkhalid.dahi@centrale-casablanca.ma\nENIAD\nBerkane, Morocco\nkharkhach.rihabe@gmail.com\nMeryem Abtane\nHervé Martinez\nComplex Systems and Interactions\nComplex Systems and Interactions\nEcole Centrale of Casablanca\nEcole Centrale of Casablanca\nBouskoura, Morocco\nBouskoura, Morocco\nUniversité de Pau et des pays de l’Adour\nUniversité de Pau et des pays de l’Adour\nE2S UPPA, CNRS UMR 5254, IPREM\nE2S UPPA, CNRS UMR 5254, IPREM\nPau, France\nPau, France"
+    ],
+    "n_citations": 2,
+    "latency_s": 12.3,
+    "source": "Article (2).pdf",
+    "context_sources": [
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article-LLM (1).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf"
+    ],
+    "answer_mode": "text"
+  },
+  {
+    "question": "Vers quelles classes de conditions d'entraînement les échantillons des conditions de test non vues sont-ils principalement assignés par le discriminateur ?",
+    "reference": "Principalement vers les conditions WC2, WC5 et WC6.",
+    "answerable": true,
+    "modality": "text",
+    "answer": "Ils sont principalement assignés aux classes de conditions d'entraînement WC2, WC5 et WC6.",
+    "found": true,
+    "contexts": [
+      "[Figure 3: Test set confusion matrices for the four bogie components.]\nwere not included in its training targets.\nThe domain confusion matrix in Fig. 5 supports this interpretation.\nSamples from WC3 and WC9 are mainly assigned to the working-\ncondition classes observed during training, particularly WC2, WC5,\nand WC6. Consequently, the discriminator accuracy alone cannot be\nused as a direct measure of domain invariance for the unseen conditions\nin this experimental setup.\nFigure 4: Training dynamics over 80 epochs.\nThe normalized cross-attention weights obtained from the CrossAt-\ntentionFusion module are presented in Fig. 6. They provide an indica-\nFigure 5: Domain confusion matrix.\ntion of the handcrafted features receiving the greatest attention for each\nbogie component.\nFor the motor, current-related descriptors receive the highest weights,",
+      "however, should not be interpreted as direct evidence of perfect do-\nmain invariance. The discriminator was trained only on the working-\ncondition classes included in the training set and therefore could not\ncorrectly predict the validation and test domains, whose labels were\nnot available during its training. The resulting accuracy is consequently\nmore representative of the evaluation protocol than of the actual de-\ngree of domain invariance achieved by the learned representation. The\nadversarial objective may still reduce domain-specific information in\nthe shared embedding, but the current experiment does not provide a\ndirect measure of this effect on unseen domains. A more conclusive\nevaluation would require a leave-one-domain-out protocol in which the",
+      "[Figure 3: Test set confusion matrices for the four bogie components.]\nThe domain discriminator reaches an accuracy of 0.000 on the test\nset, compared with the random-guess probability of 1/9 ≈0.111. This\nvalue should, however, be interpreted with caution. Although a very\nlow discriminator accuracy might initially suggest strong domain in-\nvariance, the validation domain accuracy also remains exactly 0.000\nthroughout the 80 training epochs. Rather than providing direct evi-\ndence of learned invariance, this behavior results from the domain-class\nconfiguration used during training. The discriminator is trained only on\nthe working-condition labels available in the training set and therefore\ncannot correctly predict the validation or test domains, whose labels\nwere not included in its training targets.",
+      "[Figure 1: General project workflow.]\nthe data are partitioned according to working conditions rather than\nthrough a random split. WC1, WC2, WC4, WC5, and WC6 are used\nfor training, WC7 and WC8 for validation, while WC3 and WC9 are\nreserved exclusively for testing. The characteristics of the nine working\nconditions and their corresponding dataset partitions are summarized\nin Table 1. The test set includes operating configurations that are\nFigure 2: Experimental test rig of the BJTU-RAO benchmark bogie\nsystem.\nnot observed during training, allowing the robustness of the proposed\nmodel to changes in operating conditions to be evaluated.\nTable 1: Working conditions and dataset partition\nWorking Condition\nMotor speed / Lateral load\nDataset partition\nWC1\n20 Hz / 0 kN\nTraining\nWC2\n40 Hz / 0 kN\nTraining\nWC3\n60 Hz / 0 kN\nTest\nWC4",
+      "work. Ten of its thirteen health states obtain an F1-score above 0.95,\nwhereas G4 and G8 remain around 0.50. The corresponding confusion\nmatrix in Fig. 3 reveals a clear pattern: 47% of G4 samples are assigned\nto G8, while 50% of G8 samples are classified as G4. Misclassification\ninvolving the remaining gearbox classes is comparatively limited.\nThis reciprocal confusion indicates a strong similarity between the\nlearned representations of G4 and G8 under the current feature set.\nThe bearing-envelope descriptors introduced for the gearbox node do\nnot appear sufficient to clearly separate these two fault categories. A\nweaker confusion is also observed for the compound state G2+G5, for\nwhich the recall decreases to 0.65. In this case, 29% of the samples are\n3"
+    ],
+    "n_citations": 1,
+    "latency_s": 13.1,
+    "source": "Article (2).pdf",
+    "context_sources": [
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf"
+    ],
+    "answer_mode": "text"
+  },
+  {
+    "question": "Quelle information additionnelle a permis de réduire en partie la confusion entre les états de défaut G4 et G8 ?",
+    "reference": "L'ajout de caractéristiques d'énergie harmonique calculées sur les trois premiers harmoniques des fréquences caractéristiques des roulements.",
+    "answerable": true,
+    "modality": "text",
+    "answer": "L’ajout de caractéristiques d’énergie harmonique calculées sur les trois premières harmoniques des fréquences caractéristiques des roulements (BPFI, BPFO, BSF et FTF) a permis de réduire en partie la confusion entre G4 et G8.",
+    "found": true,
+    "contexts": [
+      "[Figure 7: t-SNE projection of the post-GAT node embeddings on the test set.]\n71.8%.\nAlthough this experiment was performed on an earlier checkpoint\nand has not been re-evaluated on the final gearbox model, the result\nsuggests that harmonic-domain information may help recover part of the\nconfusion between G4 and G8. It therefore provides a useful direction\nfor future refinement of the gearbox classifier. At the same time, the\nremaining errors indicate that the ambiguity may not be explained\nsolely by insufficient feature engineering. A possible explanation is\nthat the two fault conditions generate partially similar impulsive and\nbroadband vibration responses, making their separation intrinsically\nmore difficult from the available measurements.\n5.2\nLimitations and Architectural Choices\nThe proposed framework is evaluated on the BJTU-RAO benchmark,",
+      "work. Ten of its thirteen health states obtain an F1-score above 0.95,\nwhereas G4 and G8 remain around 0.50. The corresponding confusion\nmatrix in Fig. 3 reveals a clear pattern: 47% of G4 samples are assigned\nto G8, while 50% of G8 samples are classified as G4. Misclassification\ninvolving the remaining gearbox classes is comparatively limited.\nThis reciprocal confusion indicates a strong similarity between the\nlearned representations of G4 and G8 under the current feature set.\nThe bearing-envelope descriptors introduced for the gearbox node do\nnot appear sufficient to clearly separate these two fault categories. A\nweaker confusion is also observed for the compound state G2+G5, for\nwhich the recall decreases to 0.65. In this case, 29% of the samples are\n3",
+      "[Figure 7: t-SNE projection of the post-GAT node embeddings on the test set.]\nout WC3 and WC9 conditions. The strongest results are obtained for\nthe two axle-box nodes, highlighting the benefit of combining learned\nrepresentations with physics-informed descriptors for bearing-related\nfault diagnosis.\nThe gearbox remains the main challenging component, particularly\ndue to the persistent confusion between the G4 and G8 fault classes.\nA preliminary post-hoc experiment using additional harmonic-domain\nfeatures showed that part of this confusion can be reduced, although the\ncorrection was evaluated on an earlier training checkpoint and has not\nyet been validated on the final gearbox model. This result provides a\npromising direction for further improving the discrimination of closely\nrelated gearbox fault conditions.",
+      "R. Kharkhach\nFigure 7: t-SNE projection of the post-GAT node embeddings on the test set.\ngearbox model reported in Section 4. A dedicated binary classifier\nwas applied only to samples initially classified as G4 or G8, while all\nother predictions were left unchanged. The classifier used the exist-\ning handcrafted feature vector enriched with harmonic-energy features\ncalculated over the first three harmonics of the characteristic bearing\nfrequencies (BPFI, BPFO, BSF, and FTF), rather than relying only\non the fundamental frequency. On this earlier checkpoint, for which\nthe G4 and G8 F1-scores were substantially lower (0.04 and 0.42, re-\nspectively), the restricted G4/G8 accuracy increased from 27.2% to\n71.8%.\nAlthough this experiment was performed on an earlier checkpoint",
+      "four bogie components. For the motor and left axle-box nodes, the pro-\njected embeddings form visually distinct clusters that align well with\nthe corresponding health states, consistent with the high classification\naccuracies reported in Section 4.1. For the gearbox node, most health\nstates also form separable clusters; however, the G4 and G8 clusters\nappear spatially close and partially overlapping, which is consistent\nwith the reciprocal confusion between these two classes identified in\nSection 4.2.\nFor the right axle box, the two classes appear visually intermixed in\nthis two-dimensional projection, despite the near-perfect classification\naccuracy (99.97%) obtained by the model for this node. This apparent\ndiscrepancy is consistent with the pronounced class imbalance of the"
+    ],
+    "n_citations": 1,
+    "latency_s": 12.3,
+    "source": "Article (2).pdf",
+    "context_sources": [
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf"
+    ],
+    "answer_mode": "text"
+  },
+  {
+    "question": "Quelle est l'augmentation exacte du taux d'erreur du modèle causée par l'usure à long terme des composants ?",
+    "reference": "",
+    "answerable": false,
+    "modality": "none",
+    "answer": "L’augmentation exacte du taux d’erreur est de 0,0232.",
+    "found": true,
+    "contexts": [
+      "suggested that LLM can learn the distribution of failure modes under different operating\nconditions and apply them to new operating conditions to realize cross-condition fault diagnosis.\nTable 10 Cross-condition experiment results of CWRU dataset\nNo.\nTrain\nCondition\nTest\nCondition\nAccuracy\n1\n0,2\n1\n0.9976−0.0024\n+0.0024\n2\n0,2\n3\n0.9888−0.0065\n+0.0065\n3\n1,3\n2\n0.9963−0.0064\n+0.0037\n4\n1,3\n0\n0.9832−0.0103\n+0.0103\n5\n0,3\n1\n0.9753−0.0204\n+0.0204\n6\n0,3\n2\n0.9607−0.0232\n+0.0232\n7\n0,1\n2\n0.9900−0.0079\n+0.0079\n8\n0,1\n3\n0.9570−0.0210\n+0.0210\n9\n1,2\n0\n0.9707−0.0267\n+0.0267\n10\n1,2\n3\n0.9951−0.0035\n+0.0035\n11\n2,3\n1\n0.9853−0.0153\n+0.0147\n12\n2,3\n0\n0.9667−0.0223\n+0.0223\n13\n0,1,2\n3\n0.9814−0.0022\n+0.0022\n14\n1,2,3\n0\n0.9901−0.0072\n+0.0072\n15\n0,1,3\n2\n0.9967−0.0046\n+0.0033\n16\n0,2,3\n1\n1.0000−0.0000\n+0.0000",
+      "[Figure, page 4] Figure 4: Training dynamics over 80 epochs.\nText detected in the figure:\nTask Loss\nTask Accuracy\n040\nTrin\n100\n035\nvi\n0.98\n0.30\n0.96\n0.25\n094\n0.20\n0.92\n015\n0.90\n0.10\n088\n0.05\n0.86\nTrain\n0.00\n—— Val\n20\n20\n40\nSo\n6\n70\n80\n20\n20\n40\n50\n60\nEpoch\nEpoch\nDomain Loss\nDomain Accuracy\n1.5\nTrin\nTen\nwi\n—wi\n06\nes\nRandom (1/9=0.21)\n15.0\nos\n25\no4\n10.0\n03\n1S\n02\n5.0\neee\n25\n00\n0.0\n10\n2\nx»\n50\n70\n80\n10\n20\n40\n50\n60\n70\n80\nEpoch\nEpoch",
+      "generalization and stability of the model on new datasets. The most significant improvements\nwere observed for the PU, MFPT, and JNU datasets, with accuracy increases by 0.0396, 0.0376,\nand 0.0327, respectively, while the CWRU dataset saw a minimal increase of 0.0028.\nTable 16 Few data cross-dataset experiment results\nNo.\nTrain Dataset\nTransfer\nDataset\nTest\nDataset\nAccuracy\n1\nCWRU+MFPT+JNU\n10% PU\nPU\n0.7872−0.0084\n+0.0084\n2\nCWRU+JNU+PU\n10% MFPT\nMFPT\n0.9495−0.0075\n+0.0075\n3\nCWRU+MFPT+PU\n10% JNU\nJNU\n0.8644−0.0238\n+0.0238\n4\nMFPT+JNU+PU\n10% CWRU\nCWRU\n0.9634−0.0037\n+0.0037\n5\n10% PU\n/\nPU\n0.7476−0.0153\n+0.0153\n6\n10% MFPT\n/\nMFPT\n0.9118−0.0275\n+0.0275\n7\n10% JNU\n/\nJNU\n0.8317−0.0230\n+0.0230\n8\n10% CWRU\n/\nCWRU\n0.9606−0.0157\n+0.0157\nFigure 11 Limited data cross-dataset experiment results\n5\nConclusion",
+      "[Figure, page 21] Figure 11 Limited data cross-dataset experiment results 5 Conclusion\nText detected in the figure:\n10\nmm Single\nTrans\n0.9 4\n0.8 4\n0.74\n0.64\n05\nMFPT\nJNU\nCWRU\ndataset",
+      "R. Kharkhach\nFigure 3: Test set confusion matrices for the four bogie components.\nclassified as G3+G5, suggesting that compound conditions involving\nG5 are more difficult to distinguish than the corresponding single-fault\nstates.\n4.3\nTraining Dynamics and Domain Invariance\nThe evolution of the training process over 80 epochs is shown in Fig. 4.\nThe task loss decreases rapidly during the first 10–15 epochs and\nsubsequently remains relatively stable. Validation accuracy follows\na similar trend, reaching a plateau around 98–99%. Among the four\nnodes, the gearbox presents the slowest convergence and the largest\nfluctuations, which is consistent with its lower final accuracy and the\nclass-specific errors discussed above.\nThe domain discriminator reaches an accuracy of 0.000 on the test"
+    ],
+    "n_citations": 1,
+    "latency_s": 17.4,
+    "source": "Article (2).pdf",
+    "context_sources": [
+      "Article-LLM (1).pdf",
+      "Article (2).pdf",
+      "Article-LLM (1).pdf",
+      "Article-LLM (1).pdf",
+      "Article (2).pdf"
+    ],
+    "answer_mode": "text"
+  },
+  {
+    "question": "Quelle est la charge latérale de la condition de fonctionnement WC7 ?",
+    "reference": "-10 kN (avec une vitesse moteur de 20 Hz).",
+    "answerable": true,
+    "modality": "table",
+    "answer": "La charge latérale de la condition de fonctionnement WC7 est de -10 kN.",
+    "found": true,
+    "contexts": [
+      "[Figure 1: General project workflow.]\nthe data are partitioned according to working conditions rather than\nthrough a random split. WC1, WC2, WC4, WC5, and WC6 are used\nfor training, WC7 and WC8 for validation, while WC3 and WC9 are\nreserved exclusively for testing. The characteristics of the nine working\nconditions and their corresponding dataset partitions are summarized\nin Table 1. The test set includes operating configurations that are\nFigure 2: Experimental test rig of the BJTU-RAO benchmark bogie\nsystem.\nnot observed during training, allowing the robustness of the proposed\nmodel to changes in operating conditions to be evaluated.\nTable 1: Working conditions and dataset partition\nWorking Condition\nMotor speed / Lateral load\nDataset partition\nWC1\n20 Hz / 0 kN\nTraining\nWC2\n40 Hz / 0 kN\nTraining\nWC3\n60 Hz / 0 kN\nTest\nWC4",
+      "[Table 1: Working conditions and dataset partition]\nDataset partition\nWC1\n20 Hz / 0 kN\nTraining\nWC2\n40 Hz / 0 kN\nTraining\nWC3\n60 Hz / 0 kN\nTest\nWC4\n20 Hz / +10 kN\nTraining\nWC5\n40 Hz / +10 kN\nTraining\nWC6\n60 Hz / +10 kN\nTraining\nWC7\n20 Hz / −10 kN\nValidation\nWC8\n40 Hz / −10 kN\nValidation\nWC9\n60 Hz / −10 kN\nTest\n3.3\nProposed Model\n3.3.1\nGraph-level reasoning and Multi-Source Fusion\nThe proposed architecture models the bogie as a graph composed of\nfour nodes corresponding to the traction motor, gearbox, and the left and\nright axle boxes. Instead of using a fully connected graph, the topology\nfollows the actual drivetrain kinematic chain. Mechanical power flows\nfrom the motor to the gearbox before being transmitted to both axle\nboxes, making the gearbox the central node connected bidirectionally",
+      "[Figure, page 4] Figure 5: Domain confusion matrix.\nText detected in the figure:\nwcl\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\nwc2\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.8\nwc3\n0.03\n0.31\n0.00\n0.15\n0.24\n0.26\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\nWC4\n0.6\nwow\nwcs\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\nWC6\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.4\nWwC7\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.2\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\nwcg\n0.02\n0.21\n0.00\n0.08\n0.30\n0.39\n0.00\n0.00\n0.00\n0.0\nReg\nCF\nWC prédit",
+      "fault diagnosis based on the easily accessible time-domain and frequency-domain features.\nTable 1 Time-domain and frequency-domain features\nTime\ndomain\nFeature\nFormula\nFrequency\ndomain\nFeature\nFormula\nMean\nvalue\n�1 = 1\n�\n�=1\n�\n�(�)\n෍\nFrequency\nmean value\n�13 = 1\n�\n�=1\n�\n�(�)\n෍\nStandard\ndeviation\n�2 =\n1\n�−1\n�=�\n�\n��−�1 2\n෍\nFrequency\nvariance\n�14 =\n1\n�−1\n�=1\n�\n��−�13\n2\n෍\nSquare\nroot\namplitude\n�3 =\n1\n�\n�=1\n�\n|�(�)|\n෍\n2\nFrequency\nskewness\n�15 =\n1\n��14\n3\n2\n�=1\n�\n��−�13\n3\n෍\nAbsolute\nmean\nvalue\n�4 = 1\n�\n�=1\n�\n|�(�)|\n෍\nFrequency\nkurtosis\n�16 =\n1\n��14\n2\n�=1\n�\n��−�13\n4\n෍\nPeak value\n�5 = �����\nGravity\nfrequency\n�17 =\n�=1\n�\n����\nσ\n�=1\n�\n��\nσ\nSkewness\n�6 = 1\n�\n�=1\n�\n��\n3\n෍\nFrequency\nstandard\ndeviation\n�18 =\n�=1\n�\n��−�17 2�(�)\n෌\n�\n�=1\n�\n��\nσ\nKurtosis\n�7 = 1\n�\n�=1\n�\n��\n4\n෍\nFrequency\nroot mean\nsquare",
+      "guess probability of 1/9 ≈0.11. Such behavior indicates that the\nlearned graph representation retains information relevant to fault diag-\nnosis while reducing its dependence on the operating condition.\n4\nEXPERIMENTAL RESULTS\n4.1\nTask Classification Performance\nThe proposed framework is evaluated on the held-out test conditions,\nWC3 and WC9. The model reaches an accuracy of 97.0% for the\nmotor, 95.4% for the gearbox, 99.8% for the left axle box, and 99.97%\nfor the right axle box. These results indicate that the learned graph\nrepresentation remains effective under operating configurations not\nincluded in the training set. The corresponding confusion matrices are\nprovided in Fig. 3.\nThe two axle-box nodes show the strongest overall performance,"
+    ],
+    "n_citations": 1,
+    "latency_s": 18.3,
+    "source": "Article (2).pdf",
+    "context_sources": [
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article-LLM (1).pdf",
+      "Article (2).pdf"
+    ],
+    "answer_mode": "text"
+  },
+  {
+    "question": "Combien de canaux de capteurs le jeu de données fournit-il, et quelle est la fréquence de coupure du filtre passe-bas appliqué avant l'entraînement ?",
+    "reference": "24 canaux synchronisés ; filtre passe-bas avec une fréquence de coupure de 25 kHz.",
+    "answerable": true,
+    "modality": "multi",
+    "answer": "Le jeu de données fournit 24 canaux de capteurs, et le filtre passe-bas appliqué avant l'entraînement a une fréquence de coupure de 25 kHz.",
+    "found": true,
+    "contexts": [
+      "[Figure 1: General project workflow.]\nstates vastly outnumber severe fault occurrences.\nPrior to training, raw signals are filtered using a low-pass filter with\na 25 kHz cutoff frequency, which removes high-frequency noise while\npreserving the lower-frequency spectral content where fault-related\nsignatures are concentrated, most notably the characteristic bearing\nfault frequencies (BPFI, BPFO, BSF, FTF). The filtered signals are then\nsegmented into synchronized 2048-sample windows. The resulting\ndata are normalized independently for each bogie node using training-\nset statistics only, ensuring a consistent representation without data\nleakage.\nTo assess the generalization capability of the proposed framework,\nthe data are partitioned according to working conditions rather than",
+      "[Figure 1: General project workflow.]\npublicly available benchmark dedicated to railway bogie transmission\nsystems, it includes a half-scale experimental bogie test rig equipped\nwith an asynchronous traction motor, a helical gearbox, and two axle-\nbox assemblies (Fig. 2). The dataset provides 24 synchronized sensing\nchannels, including vibration, motor current, rotational speed, and\nacoustic signals sampled at 64 kHz. It covers 51 health conditions under\nnine operating conditions, combining different rotational speeds and\nlateral loads [3]. The dataset also exhibits a pronounced class imbalance\nacross health conditions, which faithfully reflects the industrial reality\nof railway predictive maintenance, where healthy or mildly degraded\nstates vastly outnumber severe fault occurrences.",
+      "[Figure, page 2] Figure 2: Experimental test rig of the BJTU-RAO benchmark bogie system.\nText detected in the figure:\nty\n4\n\"ly\nay\nRe\nwe\nSe",
+      "[Figure 1: General project workflow.]\nthe data are partitioned according to working conditions rather than\nthrough a random split. WC1, WC2, WC4, WC5, and WC6 are used\nfor training, WC7 and WC8 for validation, while WC3 and WC9 are\nreserved exclusively for testing. The characteristics of the nine working\nconditions and their corresponding dataset partitions are summarized\nin Table 1. The test set includes operating configurations that are\nFigure 2: Experimental test rig of the BJTU-RAO benchmark bogie\nsystem.\nnot observed during training, allowing the robustness of the proposed\nmodel to changes in operating conditions to be evaluated.\nTable 1: Working conditions and dataset partition\nWorking Condition\nMotor speed / Lateral load\nDataset partition\nWC1\n20 Hz / 0 kN\nTraining\nWC2\n40 Hz / 0 kN\nTraining\nWC3\n60 Hz / 0 kN\nTest\nWC4",
+      "[Figure, page 2] Figure 1: General project workflow.\nText detected in the figure:\n6]\nDataset\n4)\nPreprocessing Feature Extraction (Graph Mod Model Architecture\nEvaluation\nFault 4\nHealthy\nWa\njaf\nFault 2\n1h\nTHO\nFaultN\ni,\nBJTU-RAO\nDataset\ndil"
+    ],
+    "n_citations": 2,
+    "latency_s": 9.6,
+    "source": "Article (2).pdf",
+    "context_sources": [
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf"
+    ],
+    "answer_mode": "text"
+  },
+  {
+    "question": "Dans la matrice de confusion de domaine, quelle proportion des échantillons de WC9 est assignée à WC6 ?",
+    "reference": "0,39.",
+    "answerable": true,
+    "modality": "figure",
+    "answer": "Le contexte ne fournit pas la proportion exacte des échantillons de WC9 assignés à WC6.",
+    "found": false,
+    "contexts": [
+      "[Figure, page 4] Figure 5: Domain confusion matrix.\nText detected in the figure:\nwcl\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\nwc2\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.8\nwc3\n0.03\n0.31\n0.00\n0.15\n0.24\n0.26\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\nWC4\n0.6\nwow\nwcs\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\nWC6\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.4\nWwC7\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.2\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\nwcg\n0.02\n0.21\n0.00\n0.08\n0.30\n0.39\n0.00\n0.00\n0.00\n0.0\nReg\nCF\nWC prédit",
+      "[Figure 3: Test set confusion matrices for the four bogie components.]\nwere not included in its training targets.\nThe domain confusion matrix in Fig. 5 supports this interpretation.\nSamples from WC3 and WC9 are mainly assigned to the working-\ncondition classes observed during training, particularly WC2, WC5,\nand WC6. Consequently, the discriminator accuracy alone cannot be\nused as a direct measure of domain invariance for the unseen conditions\nin this experimental setup.\nFigure 4: Training dynamics over 80 epochs.\nThe normalized cross-attention weights obtained from the CrossAt-\ntentionFusion module are presented in Fig. 6. They provide an indica-\nFigure 5: Domain confusion matrix.\ntion of the handcrafted features receiving the greatest attention for each\nbogie component.\nFor the motor, current-related descriptors receive the highest weights,",
+      "[Figure 1: General project workflow.]\nthe data are partitioned according to working conditions rather than\nthrough a random split. WC1, WC2, WC4, WC5, and WC6 are used\nfor training, WC7 and WC8 for validation, while WC3 and WC9 are\nreserved exclusively for testing. The characteristics of the nine working\nconditions and their corresponding dataset partitions are summarized\nin Table 1. The test set includes operating configurations that are\nFigure 2: Experimental test rig of the BJTU-RAO benchmark bogie\nsystem.\nnot observed during training, allowing the robustness of the proposed\nmodel to changes in operating conditions to be evaluated.\nTable 1: Working conditions and dataset partition\nWorking Condition\nMotor speed / Lateral load\nDataset partition\nWC1\n20 Hz / 0 kN\nTraining\nWC2\n40 Hz / 0 kN\nTraining\nWC3\n60 Hz / 0 kN\nTest\nWC4",
+      "work. Ten of its thirteen health states obtain an F1-score above 0.95,\nwhereas G4 and G8 remain around 0.50. The corresponding confusion\nmatrix in Fig. 3 reveals a clear pattern: 47% of G4 samples are assigned\nto G8, while 50% of G8 samples are classified as G4. Misclassification\ninvolving the remaining gearbox classes is comparatively limited.\nThis reciprocal confusion indicates a strong similarity between the\nlearned representations of G4 and G8 under the current feature set.\nThe bearing-envelope descriptors introduced for the gearbox node do\nnot appear sufficient to clearly separate these two fault categories. A\nweaker confusion is also observed for the compound state G2+G5, for\nwhich the recall decreases to 0.65. In this case, 29% of the samples are\n3",
+      "[Figure 3: Test set confusion matrices for the four bogie components.]\nThe domain discriminator reaches an accuracy of 0.000 on the test\nset, compared with the random-guess probability of 1/9 ≈0.111. This\nvalue should, however, be interpreted with caution. Although a very\nlow discriminator accuracy might initially suggest strong domain in-\nvariance, the validation domain accuracy also remains exactly 0.000\nthroughout the 80 training epochs. Rather than providing direct evi-\ndence of learned invariance, this behavior results from the domain-class\nconfiguration used during training. The discriminator is trained only on\nthe working-condition labels available in the training set and therefore\ncannot correctly predict the validation or test domains, whose labels\nwere not included in its training targets."
+    ],
+    "n_citations": 0,
+    "latency_s": 14.7,
+    "source": "Article (2).pdf",
+    "context_sources": [
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf"
+    ],
+    "answer_mode": "text"
+  },
+  {
+    "question": "Dans la matrice de confusion de domaine, quelle proportion des échantillons de WC3 est assignée à WC2 ?",
+    "reference": "0,31.",
+    "answerable": true,
+    "modality": "figure",
+    "answer": "0.31",
+    "found": true,
+    "contexts": [
+      "[Figure, page 4] Figure 5: Domain confusion matrix.\nText detected in the figure:\nwcl\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\nwc2\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.8\nwc3\n0.03\n0.31\n0.00\n0.15\n0.24\n0.26\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\nWC4\n0.6\nwow\nwcs\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\nWC6\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.4\nWwC7\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.2\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\n0.00\nwcg\n0.02\n0.21\n0.00\n0.08\n0.30\n0.39\n0.00\n0.00\n0.00\n0.0\nReg\nCF\nWC prédit",
+      "[Figure 3: Test set confusion matrices for the four bogie components.]\nwere not included in its training targets.\nThe domain confusion matrix in Fig. 5 supports this interpretation.\nSamples from WC3 and WC9 are mainly assigned to the working-\ncondition classes observed during training, particularly WC2, WC5,\nand WC6. Consequently, the discriminator accuracy alone cannot be\nused as a direct measure of domain invariance for the unseen conditions\nin this experimental setup.\nFigure 4: Training dynamics over 80 epochs.\nThe normalized cross-attention weights obtained from the CrossAt-\ntentionFusion module are presented in Fig. 6. They provide an indica-\nFigure 5: Domain confusion matrix.\ntion of the handcrafted features receiving the greatest attention for each\nbogie component.\nFor the motor, current-related descriptors receive the highest weights,",
+      "[Figure 1: General project workflow.]\nthe data are partitioned according to working conditions rather than\nthrough a random split. WC1, WC2, WC4, WC5, and WC6 are used\nfor training, WC7 and WC8 for validation, while WC3 and WC9 are\nreserved exclusively for testing. The characteristics of the nine working\nconditions and their corresponding dataset partitions are summarized\nin Table 1. The test set includes operating configurations that are\nFigure 2: Experimental test rig of the BJTU-RAO benchmark bogie\nsystem.\nnot observed during training, allowing the robustness of the proposed\nmodel to changes in operating conditions to be evaluated.\nTable 1: Working conditions and dataset partition\nWorking Condition\nMotor speed / Lateral load\nDataset partition\nWC1\n20 Hz / 0 kN\nTraining\nWC2\n40 Hz / 0 kN\nTraining\nWC3\n60 Hz / 0 kN\nTest\nWC4",
+      "[Figure 3: Test set confusion matrices for the four bogie components.]\nThe domain discriminator reaches an accuracy of 0.000 on the test\nset, compared with the random-guess probability of 1/9 ≈0.111. This\nvalue should, however, be interpreted with caution. Although a very\nlow discriminator accuracy might initially suggest strong domain in-\nvariance, the validation domain accuracy also remains exactly 0.000\nthroughout the 80 training epochs. Rather than providing direct evi-\ndence of learned invariance, this behavior results from the domain-class\nconfiguration used during training. The discriminator is trained only on\nthe working-condition labels available in the training set and therefore\ncannot correctly predict the validation or test domains, whose labels\nwere not included in its training targets.",
+      "[Figure, page 19] Figure 9 Test confusion matrix of JNU cross-condition experiment\nText detected in the figure:\nConfusion matrix\nConfusion matrix\nConfusion matrix\n0.082\n0.020\n0.000\n0.000\n0.061\n0.143\n0.000\n0.000\n0.020\n14\n0.000\n0.000\n0.000\n0.000\n0.000\n0.000\n0.102\n0.102\n0.000\n24\n0.000\n0.000\n0.000\n0.000\n0.000\n0.000\n24\n0.034\n0.000\n0.000\n34\n0.000\n0.020\n0.000\n0.020\n0.000\n0.000\n34\n0.000\n0.000\n0.000\nPredicted label\nPredicted label\nPredicted label\n(a) condition\n(b) condition\n(c) condition 2,3—1"
+    ],
+    "n_citations": 1,
+    "latency_s": 14.1,
+    "source": "Article (2).pdf",
+    "context_sources": [
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article-LLM (1).pdf"
+    ],
+    "answer_mode": "text"
+  },
+  {
+    "question": "Combien de caractéristiques temporelles et fréquentielles sont sélectionnées au total pour la méthode basée sur les caractéristiques ?",
+    "reference": "24 caractéristiques : 12 dans le domaine temporel et 12 dans le domaine fréquentiel.",
+    "answerable": true,
+    "modality": "text",
+    "answer": "24 caractéristiques au total (12 temporelles et 12 fréquentielles).",
+    "found": true,
+    "contexts": [
+      "average frequency, regularity degree, variation parameter, eighth-order moment, and sixteenth-\norder moment.\nWe selected 12 time-domain and 12 frequency-domain features, totaling 24 features, as\nshown in Table 1. These are simpler parameters, and complex time-frequency analysis methods\nlike EMD decomposition or wavelet packet analysis were not used for extracting complex or\nlocalized features of vibration signals. There are two reasons: First, the extraction of complex\nfeatures is cumbersome and may need to be designed for the features of vibration data; second, we\nwant to make full use of the learning, extraction, and classification capabilities of the LLM for\nfault diagnosis based on the easily accessible time-domain and frequency-domain features.",
+      "[Table 1 Time-domain and frequency-domain features]\n�18 =\n�=1\n�\n��−�17 2�(�)\n෌\n�\n�=1\n�\n��\nσ\nKurtosis\n�7 = 1\n�\n�=1\n�\n��\n4\n෍\nFrequency\nroot mean\nsquare\n�19 =\n�=1\n�\n��\n2�(�)\n෌\n�=1\n�\n��\nσ\nVariance\n�8 = 1\n�\n�=1\n�\n��\n2\n෍\nAverage\nfrequency\n�20 =\n�=1\n�\n��\n4�(�)\n෌\n�=1\n�\n��\n2��\n෌\nKurtosis\nindex\n�9 = �7/\n�6\n2\nRegularity\ndegree\n�21 =\n�=1\n�\n��\n2��\n෌\n�=1\n�\n��\nσ\n�=1\n�\n��\n4��\n෌",
+      "fault diagnosis based on the easily accessible time-domain and frequency-domain features.\nTable 1 Time-domain and frequency-domain features\nTime\ndomain\nFeature\nFormula\nFrequency\ndomain\nFeature\nFormula\nMean\nvalue\n�1 = 1\n�\n�=1\n�\n�(�)\n෍\nFrequency\nmean value\n�13 = 1\n�\n�=1\n�\n�(�)\n෍\nStandard\ndeviation\n�2 =\n1\n�−1\n�=�\n�\n��−�1 2\n෍\nFrequency\nvariance\n�14 =\n1\n�−1\n�=1\n�\n��−�13\n2\n෍\nSquare\nroot\namplitude\n�3 =\n1\n�\n�=1\n�\n|�(�)|\n෍\n2\nFrequency\nskewness\n�15 =\n1\n��14\n3\n2\n�=1\n�\n��−�13\n3\n෍\nAbsolute\nmean\nvalue\n�4 = 1\n�\n�=1\n�\n|�(�)|\n෍\nFrequency\nkurtosis\n�16 =\n1\n��14\n2\n�=1\n�\n��−�13\n4\n෍\nPeak value\n�5 = �����\nGravity\nfrequency\n�17 =\n�=1\n�\n����\nσ\n�=1\n�\n��\nσ\nSkewness\n�6 = 1\n�\n�=1\n�\n��\n3\n෍\nFrequency\nstandard\ndeviation\n�18 =\n�=1\n�\n��−�17 2�(�)\n෌\n�\n�=1\n�\n��\nσ\nKurtosis\n�7 = 1\n�\n�=1\n�\n��\n4\n෍\nFrequency\nroot mean\nsquare",
+      "feature extraction for example (Landauskas et al., 2020).\nCommonly used time-domain features include mean value, standard deviation, square root\namplitude, absolute mean value, peak value, skewness, kurtosis, variance, kurtosis index, peak\nindex, waveform index, and pulse index. Generally, frequency analysis refers to analyzing a signal\nfollowing Fourier transform. Commonly used frequency-domain analysis methods include\nspectrum, power spectrum, and cepstrum. The frequency-domain features of vibration signals\ncommonly used include frequency mean value, frequency variance, frequency skewness,\nfrequency kurtosis, gravity frequency, frequency standard deviation, frequency root mean square,\naverage frequency, regularity degree, variation parameter, eighth-order moment, and sixteenth-",
+      "Peak index\n�10 = �����/�2\nVariation\nparameter\n�22 = �18/�17\nWaveform\nindex\n�11 = �2/�4\nEighth-order\nmoment\n�23 =\n�=1\n�\n��−�17\n3��\n෌\n��18\n3\nPulse\nindex\n�12 = �����/�4\nSixteenth-\norder moment\n�24 =\n�=1\n�\n��−�17\n4��\n෌\n��18\n4\n3.1.2\nFine-tuning dataset construction and fine-tuning\nAfter extracting time-domain and frequency-domain features, we converted them into a\nformat that the LLM can understand by using language descriptions instead of direct numerical\nvalues. As shown in Figure 2, we combine the values of the time-frequency domain features\nextracted above with their textual descriptions, while using the fault modes as labels for\nsupervised learning, with inputs in the form of question-and-answer pairs, with the aim that the"
+    ],
+    "n_citations": 1,
+    "latency_s": 13.9,
+    "source": "Article-LLM (1).pdf",
+    "context_sources": [
+      "Article-LLM (1).pdf",
+      "Article-LLM (1).pdf",
+      "Article-LLM (1).pdf",
+      "Article-LLM (1).pdf",
+      "Article-LLM (1).pdf"
+    ],
+    "answer_mode": "text"
+  },
+  {
+    "question": "Quelle valeur est donnée au paramètre de température du modèle de langage afin d'obtenir des sorties stables ?",
+    "reference": "0,01.",
+    "answerable": true,
+    "modality": "text",
+    "answer": "0.01",
+    "found": true,
+    "contexts": [
+      "4.4 Feature-based LLM fault diagnosis case study\nIn the feature-based LLM bearing fault diagnosis case study, we used the ChatGLM2-6B-\nchat model, an open-source bilingual dialogue model developed by THUDM of Tsinghua\nUniversity. The model’s weights are fully open for academic research, and its bilingual training\nfacilitates fine-tuning with Chinese data for fault diagnosis. Due to the high stability requirements\nof fault diagnosis tasks, we set the temperature coefficient to 0.01 to ensure consistent results from\nthe LLM.\n4.4.1\nSingle-dataset experiment\nThe diagnosis results for a single dataset are shown in the table below. The results indicated\nthat the LLM effectively recognized and identified the features of bearing vibration signals for",
+      "suggested that LLM can learn the distribution of failure modes under different operating\nconditions and apply them to new operating conditions to realize cross-condition fault diagnosis.\nTable 10 Cross-condition experiment results of CWRU dataset\nNo.\nTrain\nCondition\nTest\nCondition\nAccuracy\n1\n0,2\n1\n0.9976−0.0024\n+0.0024\n2\n0,2\n3\n0.9888−0.0065\n+0.0065\n3\n1,3\n2\n0.9963−0.0064\n+0.0037\n4\n1,3\n0\n0.9832−0.0103\n+0.0103\n5\n0,3\n1\n0.9753−0.0204\n+0.0204\n6\n0,3\n2\n0.9607−0.0232\n+0.0232\n7\n0,1\n2\n0.9900−0.0079\n+0.0079\n8\n0,1\n3\n0.9570−0.0210\n+0.0210\n9\n1,2\n0\n0.9707−0.0267\n+0.0267\n10\n1,2\n3\n0.9951−0.0035\n+0.0035\n11\n2,3\n1\n0.9853−0.0153\n+0.0147\n12\n2,3\n0\n0.9667−0.0223\n+0.0223\n13\n0,1,2\n3\n0.9814−0.0022\n+0.0022\n14\n1,2,3\n0\n0.9901−0.0072\n+0.0072\n15\n0,1,3\n2\n0.9967−0.0046\n+0.0033\n16\n0,2,3\n1\n1.0000−0.0000\n+0.0000",
+      "Peak index\n�10 = �����/�2\nVariation\nparameter\n�22 = �18/�17\nWaveform\nindex\n�11 = �2/�4\nEighth-order\nmoment\n�23 =\n�=1\n�\n��−�17\n3��\n෌\n��18\n3\nPulse\nindex\n�12 = �����/�4\nSixteenth-\norder moment\n�24 =\n�=1\n�\n��−�17\n4��\n෌\n��18\n4\n3.1.2\nFine-tuning dataset construction and fine-tuning\nAfter extracting time-domain and frequency-domain features, we converted them into a\nformat that the LLM can understand by using language descriptions instead of direct numerical\nvalues. As shown in Figure 2, we combine the values of the time-frequency domain features\nextracted above with their textual descriptions, while using the fault modes as labels for\nsupervised learning, with inputs in the form of question-and-answer pairs, with the aim that the",
+      "[Figure, page 14] Figure 6 Results of feature-based single-dataset experiments 4.4.2 Single-dataset cross-condition experiment To assess the generalization capability of the prop\nText detected in the figure:\n10\n0.9\n08\n07\n0.6\n—@\n05\njnu\n—@ MFPT\nPU\n0.4\n1\n2\n4\n8\n5\n10\nepoch",
+      "layer norm and position embedding layers. The multi-head attention and FFN layers of the model\ncontained most of the knowledge learned by the model in the pre-training phase. Therefore, this\nmodule was frozen in order to: 1) make full use of the knowledge learned by the model to help\nrealize the fault diagnosis of bearing vibration data, and 2) to reduce the number of trainable\nparameters and accelerate the training process since it contained the vast majority of the model’s\nparameters.\n3.2.4\nNormalization\nWe instance normalize the input vibration data using mean and variance while adding affine\ntransformations to the LayerNorm layer of the gpt2 model by training its learnable affine\ntransformation parameters\nto\nfurther facilitate knowledge\ntransfer. The learnable affine"
+    ],
+    "n_citations": 1,
+    "latency_s": 12.7,
+    "source": "Article-LLM (1).pdf",
+    "context_sources": [
+      "Article-LLM (1).pdf",
+      "Article-LLM (1).pdf",
+      "Article-LLM (1).pdf",
+      "Article-LLM (1).pdf",
+      "Article-LLM (1).pdf"
+    ],
+    "answer_mode": "text"
+  },
+  {
+    "question": "Which patch size and stride were finally selected for the data-based method?",
+    "reference": "A patch size of 128 and a stride of 8.",
+    "answerable": true,
+    "modality": "text",
+    "answer": "Patch size 128 and stride 8 were finally selected.",
+    "found": true,
+    "contexts": [
+      "higher diagnosis accuracy. However, due to longer training times with a smaller stride, we selected\na patch size of 128 and a stride of 8 for a balance of accuracy and training time.\nTable 8 Results of hyperparameter selection experiment\nPatch Size\nStride\nAccuracy\n256\n8\n0.9943−0.0032\n+0.0032\n128\n64\n0.9853−0.0024\n+0.0024\n128\n32\n0.9936−0.0032\n+0.0032\n128\n16\n0.9928−0.0032\n+0.0032\n128\n8\n0.9955−0.0024\n+0.0024\n128\n4\n0.9970−0.0019\n+0.0019\n64\n32\n0.9807−0.0061\n+0.0061\n64\n16\n0.9894−0.0010\n+0.0010\n64\n8\n0.9932−0.0016\n+0.0016\n64\n4\n0.9981−0.0011\n+0.0011\n32\n16\n0.9796−0.0025\n+0.0025\n32\n8\n0.9909−0.0016\n+0.0016\n32\n4\n0.9955−0.0012\n+0.0012\n16\n8\n0.9803−0.0060\n+0.0060\n16\n4\n0.9841−0.0065\n+0.0065\n8\n4\n0.9758−0.0030\n+0.0030\n4.5.2\nSingle-dataset experiment",
+      "[Table 8 Results of hyperparameter selection experiment]\n+0.0060\n16\n4\n0.9841−0.0065\n+0.0065\n8\n4\n0.9758−0.0030\n+0.0030\n4.5.2\nSingle-dataset experiment\nThe main hyperparameters for the single dataset experiment were patch size=128, stride=8,\nlearning rate=0.001, and epoch=50. After each training epoch, the model was validated using the\nvalidation set, and the best-performing model was selected as the final one. The experimental\nresults are shown in the table below.\nTable 9 Results of single-dataset experiment\nDataset\nAccuracy\nCWRU\n0.9996−0.0006\n+0.0004\nMFPT\n0.9982−0.0015\n+0.0015\nJNU\n0.9981−0.0006\n+0.0006\nPU\n0.9239−0.0051\n+0.0051\n4.5.3\nSingle-dataset cross-condition Experiment\nIn order to verify the generalizability of the proposed method for unseen working conditions,",
+      "[Figure, page 10] Figure 4 Framework of data-based LLM fault diagnosis 3.2.1 Patching The high sampling frequency of vibration data creates information redundancy. To address thi\nText detected in the figure:\nFault\nDiagnosis resul ts\nModel\ndimen sion\nPatch number\nCl\nWD\nPE(pos, 2i)\n10000a\n———\n‘| PE(pos,2i+1)=\n000\n——\nWwW\npatchsize\nstride\npatching\nwm\nVibration signal",
+      "Epoch\nAccuracy\n1\n0.1304\n0.4991\n0.0502\n0.0000\n2\n0.4155\n0.5060\n0.5119\n0.0000\n3\n0.4560\n0.5645\n0.5301\n0.0000\n4\n0.4637\n0.6371\n0.6058\n0.2308\n5\n0.4446\n0.6366\n0.6852\n0.5064\n6\n0.4369\n0.6440\n0.6223\n0.2548\n7\n0.4601\n0.6457\n0.6487\n0.3157\n8\n0.5202\n0.6536\n0.5985\n0.2484\n9\n0.5482\n0.6587\n0.6122\n0.3189\n10\n0.5815\n0.6740\n0.6387\n0.3157\n4.5 Data-based LLM fault diagnosis case study\n4.5.1\nHyperparameter selection experiment\nTo determine the optimal hyperparameters for bearing fault diagnosis, we optimized the\npatch size and stride based on the JNU dataset. The experimental design and results are shown in\nthe table below. The results showed that a larger patch size and smaller stride parameter achieved\nhigher diagnosis accuracy. However, due to longer training times with a smaller stride, we selected",
+      "[Figure, page 21] Figure 11 Limited data cross-dataset experiment results 5 Conclusion\nText detected in the figure:\n10\nmm Single\nTrans\n0.9 4\n0.8 4\n0.74\n0.64\n05\nMFPT\nJNU\nCWRU\ndataset"
+    ],
+    "n_citations": 2,
+    "latency_s": 13.9,
+    "source": "Article-LLM (1).pdf",
+    "context_sources": [
+      "Article-LLM (1).pdf",
+      "Article-LLM (1).pdf",
+      "Article-LLM (1).pdf",
+      "Article-LLM (1).pdf",
+      "Article-LLM (1).pdf"
+    ],
+    "answer_mode": "text"
+  },
+  {
+    "question": "Quelles parties du modèle GPT-2 sont figées et lesquelles sont réentraînées ?",
+    "reference": "Les couches multi-head attention et FFN sont figées ; seules les couches layer norm et position embedding sont entraînées.",
+    "answerable": true,
+    "modality": "text",
+    "answer": "Dans le modèle GPT‑2, les couches d’attention multi‑têtes et les couches FFN sont figées, tandis que les couches de normalisation (layer norm) et les embeddings de position sont réentraînées.",
+    "found": true,
+    "contexts": [
+      "convert each merged patch into the LLM input dimension.\nPosition embedding: For position embedding, we used the standard sinusoidal position\nembedding of the transformer to embed the position information directly into the representation of\nthe sequence. The sinusoidal position embedding formula is shown below.\n��Ԧ\nሬሬ(�) = �(�)(�): = sin ���,\nif �= 2�\ncos ���,\nif �= 2�+ 1\n��=\n1\n100002�/�\nTherefore, following token embedding and position embedding on the bearing vibration data,\nthe embedded values were added up as the final input embedding value to be delivered to the\nLLM.\n3.2.3\nFreeze attention layer\nIn our GPT-2 model, we froze the multi-head attention and FFN layers, and only trained the\nlayer norm and position embedding layers. The multi-head attention and FFN layers of the model",
+      "layer norm and position embedding layers. The multi-head attention and FFN layers of the model\ncontained most of the knowledge learned by the model in the pre-training phase. Therefore, this\nmodule was frozen in order to: 1) make full use of the knowledge learned by the model to help\nrealize the fault diagnosis of bearing vibration data, and 2) to reduce the number of trainable\nparameters and accelerate the training process since it contained the vast majority of the model’s\nparameters.\n3.2.4\nNormalization\nWe instance normalize the input vibration data using mean and variance while adding affine\ntransformations to the LayerNorm layer of the gpt2 model by training its learnable affine\ntransformation parameters\nto\nfurther facilitate knowledge\ntransfer. The learnable affine",
+      "lower weight; the motor and gearbox losses are given equal importance.\nLabel smoothing is also incorporated with a small smoothing factor\nto reduce excessive classifier confidence and improve the stability of\nthe predictions across the imbalanced health-state distribution. The\nresulting task loss is computed as the weighted combination of the four\nnode-level losses and is optimized jointly with the domain-adversarial\nobjective presented in Section 3.3.3.\n3.3.3\nDomain-Adversarial Training\nTo improve the robustness of the proposed model across the nine operat-\ning conditions of the BJTU-RAO benchmark (WC1–WC9), each work-\ning condition is treated as a separate domain. The domain-adversarial\nmodule is introduced after the two GATConv layers, where the four 128-",
+      "work. Ten of its thirteen health states obtain an F1-score above 0.95,\nwhereas G4 and G8 remain around 0.50. The corresponding confusion\nmatrix in Fig. 3 reveals a clear pattern: 47% of G4 samples are assigned\nto G8, while 50% of G8 samples are classified as G4. Misclassification\ninvolving the remaining gearbox classes is comparatively limited.\nThis reciprocal confusion indicates a strong similarity between the\nlearned representations of G4 and G8 under the current feature set.\nThe bearing-envelope descriptors introduced for the gearbox node do\nnot appear sufficient to clearly separate these two fault categories. A\nweaker confusion is also observed for the compound state G2+G5, for\nwhich the recall decreases to 0.65. In this case, 29% of the samples are\n3",
+      "R. Kharkhach\nFigure 7: t-SNE projection of the post-GAT node embeddings on the test set.\ngearbox model reported in Section 4. A dedicated binary classifier\nwas applied only to samples initially classified as G4 or G8, while all\nother predictions were left unchanged. The classifier used the exist-\ning handcrafted feature vector enriched with harmonic-energy features\ncalculated over the first three harmonics of the characteristic bearing\nfrequencies (BPFI, BPFO, BSF, and FTF), rather than relying only\non the fundamental frequency. On this earlier checkpoint, for which\nthe G4 and G8 F1-scores were substantially lower (0.04 and 0.42, re-\nspectively), the restricted G4/G8 accuracy increased from 27.2% to\n71.8%.\nAlthough this experiment was performed on an earlier checkpoint"
+    ],
+    "n_citations": 2,
+    "latency_s": 10.8,
+    "source": "Article-LLM (1).pdf",
+    "context_sources": [
+      "Article-LLM (1).pdf",
+      "Article-LLM (1).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf"
+    ],
+    "answer_mode": "text"
+  },
+  {
+    "question": "Pourquoi le même nombre d'échantillons est-il utilisé pour chaque mode de défaut de chaque jeu de données ?",
+    "reference": "Pour minimiser l'impact du déséquilibre des classes et maximiser les connaissances apprises à partir des données.",
+    "answerable": true,
+    "modality": "text",
+    "answer": "Parce qu’ils ont voulu réduire l’impact du déséquilibre des classes et maximiser les connaissances apprises, ils ont donc garanti le même nombre d’échantillons pour chaque mode de défaut de chaque jeu de données.",
+    "found": true,
+    "contexts": [
+      "[Figure 5 STFT images of four datasets for different failure modes]\nfeatures were extracted from these samples using the formulas mentioned in the second section to\nbuild the fine-tuning dataset. The training and testing sets were split 8:2. For data-based LLM\nfault diagnosis experiments, the training, validation, and testing sets were split 8:1:1. To leverage\nthe LLM’s capability to learn from large datasets, we ensured that each fault mode in each dataset\nhad an equal number of samples, aiming to minimize the impact of class imbalance and to\nmaximize the knowledge learned from the data.\nFor subsequent experiments on model generalization with combined and cross-training on\ndifferent datasets, we classified each bearing dataset by fault mode (normal, inner race fault, outer",
+      "[Figure, page 13] Figure 5 STFT images of four datasets for different failure modes 4.2 Data preprocessing The bearing vibration data are divided into samples of 2048 points usin\nText detected in the figure:\ninner stft\nGHRU nomal stft\nJNU normal stft\nNU inner stft\n2\n2\nx0\n0\nxs\nme\nJNU bal\nstft\nJNU\nouter stft\nCHRU bal\nstft\nGNRU outer stft\nwee\nsee\nve\nsee\nax\nox\n“3\nxe\n“8\nvex\n(a) CWRU\n(b) JNU\nPU norma\nstft\nPU outer\nstft\nnormal stft\ninner stft\nwee\nwo\nnove\nBo\n5\n5\nxe\nfre\nx0\nWPT outer stft\nPU inner stft\noo\nmm\n$x\nm8\n0\n(c) MFPT",
+      "[Figure, page 2] Figure 1: General project workflow.\nText detected in the figure:\n6]\nDataset\n4)\nPreprocessing Feature Extraction (Graph Mod Model Architecture\nEvaluation\nFault 4\nHealthy\nWa\njaf\nFault 2\n1h\nTHO\nFaultN\ni,\nBJTU-RAO\nDataset\ndil",
+      "[Figure 5 STFT images of four datasets for different failure modes]\nrace fault, and rolling element fault) without further label distinction based on operating\nconditions or fault severity due to the possibly great differences in these cross-dataset factors.\n4.3 Experimental environment\nThe experimental setup is as follows: Nvidia GeForce RTX 4090 GPU with 24GB memory;\ndevelopment tools were VScode and torch 2.1.0; CUDA version 12.2.",
+      "Second, due to the high reliability requirements of industrial systems, faults occur randomly\nand infrequently, resulting in fewer fault samples than normal (Wu et al., 2024a) . For instance,\ncommercial aircraft engines, known for their reliability, may record only a few faults over\nthousands of flight hours, leading to a problem of fault samples for bearing fault diagnosis. This\nimbalance can cause classification bias, i.e., the models tend to misclassify fault samples as\nnormal (Wang et al., 2024). Achieving high-precision diagnosis with small and imbalanced fault\nsamples remains a widespread research focus (López et al., 2013).\nThird, in practical applications, various types of bearings are used in equipment, such as"
+    ],
+    "n_citations": 1,
+    "latency_s": 24.5,
+    "source": "Article-LLM (1).pdf",
+    "context_sources": [
+      "Article-LLM (1).pdf",
+      "Article-LLM (1).pdf",
+      "Article (2).pdf",
+      "Article-LLM (1).pdf",
+      "Article-LLM (1).pdf"
+    ],
+    "answer_mode": "text"
+  },
+  {
+    "question": "Quelle précision est obtenue sur CWRU à l'époque 10 dans l'expérience mono-jeu de données basée sur les caractéristiques ?",
+    "reference": "0,9685.",
+    "answerable": true,
+    "modality": "table",
+    "answer": "0.9920",
+    "found": true,
+    "contexts": [
+      "[Figure, page 21] Figure 11 Limited data cross-dataset experiment results 5 Conclusion\nText detected in the figure:\n10\nmm Single\nTrans\n0.9 4\n0.8 4\n0.74\n0.64\n05\nMFPT\nJNU\nCWRU\ndataset",
+      "[Table 5 Complete-data cross-dataset experiment results]\nCWRU\nTest dataset\nPU\nJNU\nMFPT\nCWRU\nEpoch\nAccuracy\n1\n0.8607\n0.8688\n0.9918\n0.9391\n2\n0.8738\n0.9063\n0.9973\n0.9760\n3\n0.8929\n0.9120\n0.9991\n0.9840\n4\n0.8935\n0.9182\n1.0000\n0.9872\n5\n0.8976\n0.9114\n0.9991\n0.9808\n6\n0.9024\n0.9211\n1.0000\n0.9840\n7\n0.9101\n0.9182\n0.9991\n0.9872\n8\n0.9131\n0.9177\n0.9991\n0.9904\n9\n0.9113\n0.9211\n1.0000\n0.9888\n10\n0.9173\n0.9194\n1.0000\n0.9920",
+      "0\n1797\n0\n1\n1772\n1\n2\n1750\n2\n3\n1730\n3\nTable 4 Cross-condition experiment results of the CWRU dataset\nNo.\nTrain\nCondition\nTest\nCondition\nAccuracy\n(Epoch=10)\n1\n0,1\n2\n0.7074\n2\n0,1\n3\n0.6769\n3\n1,2\n0\n0.6419\n4\n1,2\n3\n0.7293\n5\n0,2\n1\n0.7686\n6\n0,2\n3\n0.6463\n7\n1,3\n2\n0.8559\n8\n1,3\n0\n0.6332\n9\n0,3\n1\n0.7074\n10\n0,3\n2\n0.6638\n11\n2,3\n0\n0.6245\n12\n2,3\n1\n0.7948\n13\n1,2,3\n0\n0.6550\n14\n0,2,3\n1\n0.8646\n15\n0,1,2\n3\n0.7249\n16\n0,1,3\n2\n0.8996\n4.4.3\nCross-dataset experiment\n4.4.3.1 Complete data transfer experiment\nCross-dataset experiments were conducted using the CWRU, MFPT, JNU, and PU datasets.\nThe model was trained on three of these datasets and tested it on the fourth. The design and results\nof these experiments are presented in the table below. Compared with single dataset training,",
+      "[Table 4 Cross-condition experiment results of the CWRU dataset]\nof these experiments are presented in the table below. Compared with single dataset training,\nmulti-dataset training improved the LLM’s knowledge transfer to new datasets. For the four\ndatasets, the diagnosis effect was greatly improved compared with single-dataset training at\ntransfer training under epoch=1. For the PU and CWRU datasets, the diagnosis accuracy was\nimproved by 0.077 and 0.0235, respectively, after 10 training epochs with the other three datasets.\nIn contrast, improvements for the MFPT and JNU datasets were smaller.\nTable 5 Complete-data cross-dataset experiment results\nTrain Dataset\n(epoch=10)\nCWRU+MFPT\n+JNU\nCWRU+MFPT\n+PU\nCWRU+JNU\n+PU\nMFPT+JNU\n+PU\nTransfer dataset\nPU\nJNU\nMFPT\nCWRU\nTest dataset\nPU\nJNU\nMFPT\nCWRU\nEpoch\nAccuracy\n1\n0.8607\n0.8688\n0.9918\n0.9391\n2\n0.8738\n0.9063",
+      "[Table 6 Limited data cross-dataset experiment results]\nTrain Dataset\n(epoch=10)\nCWRU+MFPT\n+JNU\nCWRU+MFPT\n+PU\nCWRU+JNU\n+PU\nMFPT+JNU\n+PU\nTransfer dataset\n10% PU\n10% JNU\n10% MFPT\n10% CWRU\nTest dataset\nPU\nJNU\nMFPT\nCWRU\nEpoch\nAccuracy\n1\n0.8899\n0.6616\n0.6396\n0.4423\n2\n0.8982\n0.6945\n0.6268\n0.6314\n3\n0.8756\n0.6775\n0.6442\n0.6987\n4\n0.8935\n0.6934\n0.6405\n0.7660\n5\n0.8833\n0.6996\n0.6469\n0.8093\n6\n0.8946\n0.7036\n0.6460\n0.8125\n7\n0.8845\n0.6746\n0.6487\n0.8349\n8\n0.8768\n0.6672\n0.6487\n0.8109\n9\n0.8720\n0.6672\n0.6460\n0.8029\n10\n0.8690\n0.6746\n0.6460\n0.8253\nTable 7 Limited data experiment results\nTrain Dataset\n10% PU\n10% JNU\n10% MFPT\n10% CWRU\nTest dataset\nPU\nJNU\nMFPT\nCWRU"
+    ],
+    "n_citations": 1,
+    "latency_s": 17.2,
+    "source": "Article-LLM (1).pdf",
+    "context_sources": [
+      "Article-LLM (1).pdf",
+      "Article-LLM (1).pdf",
+      "Article-LLM (1).pdf",
+      "Article-LLM (1).pdf",
+      "Article-LLM (1).pdf"
+    ],
+    "answer_mode": "text"
+  },
+  {
+    "question": "In the CWRU cross-condition experiment with the data-based method, what accuracy is reached when training on conditions 0, 2 and 3 and testing on condition 1?",
+    "reference": "1.0000.",
+    "answerable": true,
+    "modality": "table",
+    "answer": "1.0000",
+    "found": true,
+    "contexts": [
+      "0\n1797\n0\n1\n1772\n1\n2\n1750\n2\n3\n1730\n3\nTable 4 Cross-condition experiment results of the CWRU dataset\nNo.\nTrain\nCondition\nTest\nCondition\nAccuracy\n(Epoch=10)\n1\n0,1\n2\n0.7074\n2\n0,1\n3\n0.6769\n3\n1,2\n0\n0.6419\n4\n1,2\n3\n0.7293\n5\n0,2\n1\n0.7686\n6\n0,2\n3\n0.6463\n7\n1,3\n2\n0.8559\n8\n1,3\n0\n0.6332\n9\n0,3\n1\n0.7074\n10\n0,3\n2\n0.6638\n11\n2,3\n0\n0.6245\n12\n2,3\n1\n0.7948\n13\n1,2,3\n0\n0.6550\n14\n0,2,3\n1\n0.8646\n15\n0,1,2\n3\n0.7249\n16\n0,1,3\n2\n0.8996\n4.4.3\nCross-dataset experiment\n4.4.3.1 Complete data transfer experiment\nCross-dataset experiments were conducted using the CWRU, MFPT, JNU, and PU datasets.\nThe model was trained on three of these datasets and tested it on the fourth. The design and results\nof these experiments are presented in the table below. Compared with single dataset training,",
+      "suggested that LLM can learn the distribution of failure modes under different operating\nconditions and apply them to new operating conditions to realize cross-condition fault diagnosis.\nTable 10 Cross-condition experiment results of CWRU dataset\nNo.\nTrain\nCondition\nTest\nCondition\nAccuracy\n1\n0,2\n1\n0.9976−0.0024\n+0.0024\n2\n0,2\n3\n0.9888−0.0065\n+0.0065\n3\n1,3\n2\n0.9963−0.0064\n+0.0037\n4\n1,3\n0\n0.9832−0.0103\n+0.0103\n5\n0,3\n1\n0.9753−0.0204\n+0.0204\n6\n0,3\n2\n0.9607−0.0232\n+0.0232\n7\n0,1\n2\n0.9900−0.0079\n+0.0079\n8\n0,1\n3\n0.9570−0.0210\n+0.0210\n9\n1,2\n0\n0.9707−0.0267\n+0.0267\n10\n1,2\n3\n0.9951−0.0035\n+0.0035\n11\n2,3\n1\n0.9853−0.0153\n+0.0147\n12\n2,3\n0\n0.9667−0.0223\n+0.0223\n13\n0,1,2\n3\n0.9814−0.0022\n+0.0022\n14\n1,2,3\n0\n0.9901−0.0072\n+0.0072\n15\n0,1,3\n2\n0.9967−0.0046\n+0.0033\n16\n0,2,3\n1\n1.0000−0.0000\n+0.0000",
+      "a single-dataset cross-condition fault diagnosis experiment was also designed for the data-based\nLLM fault diagnosis method. The specific experimental design and results are shown in the table\nbelow. The CWRU dataset specific operating conditions are described in Section 4.1.\nFrom the experimental results, it could be seen that the proposed method had good diagnosis\nperformance for single-dataset cross-case diagnosis. Specifically, the working condition inference\ncase had a higher diagnosis accuracy than the extrapolation case, while a larger amount of\nworking condition data also had a certain improvement effect on the diagnosis accuracy. It\nsuggested that LLM can learn the distribution of failure modes under different operating",
+      "[Table 10 Cross-condition experiment results of CWRU dataset]\n14\n1,2,3\n0\n0.9901−0.0072\n+0.0072\n15\n0,1,3\n2\n0.9967−0.0046\n+0.0033\n16\n0,2,3\n1\n1.0000−0.0000\n+0.0000\nCross-case experiments were also conducted on the JNU bearing dataset. The JNU dataset\nconsists of three conditions, which are described in the following table:\nTable 11 Working condition of JNU dataset\nWorking Condition\nNo.\nApprox. Motor Speed\n(rpm)\n1\n600\n2\n800\n3\n1000\nThe specific experimental design and results are shown in the table below:\nTable 12 Cross-condition experiment results of JNU dataset\nNo.\nTrain\nCondition\nTest\nCondition\nAccuracy\n1\n1,3\n2\n0.9796−0.0064\n+0.0064\n2\n1,2\n3\n0.9439−0.0227\n+0.0227\n3\n2,3\n1\n0.8991−0.0363\n+0.0363",
+      "training significantly improved diagnosis accuracy by approximately 1%. For the CWRU, MFPT,\nand JNU datasets, the impact of multi-dataset training was minimal.\nTable 15 Complete-data cross-dataset experiment results\nNo.\nTrain Dataset\nContinued\nTraining\nDataset\nTest Dataset\nAccuracy\n1\nCWRU+MFPT+JNU\nPU\nPU\n0.9338−0.0096\n+0.0096\n2\nCWRU+MFPT+PU\nJNU\nJNU\n0.9958−0.0011\n+0.0011\n3\nCWRU+JNU+PU\nMFPT\nMFPT\n0.9988−0.0008\n+0.0008\n4\nMFPT+JNU+PU\nCWRU\nCWRU\n0.9987−0.0010\n+0.0010\nFigure 10 The comparison with single-dataset complete-data experiments\n4.5.4.2 Limited data transfer experiment\nA limited data transfer experiment was conducted for the data-based LLM fault diagnosis\nmethod. Following training on multiple datasets, the model underwent fine-tuning with 10% of a"
+    ],
+    "n_citations": 1,
+    "latency_s": 18.0,
+    "source": "Article-LLM (1).pdf",
+    "context_sources": [
+      "Article-LLM (1).pdf",
+      "Article-LLM (1).pdf",
+      "Article-LLM (1).pdf",
+      "Article-LLM (1).pdf",
+      "Article-LLM (1).pdf"
+    ],
+    "answer_mode": "text"
+  },
+  {
+    "question": "Quel est le temps d'entraînement total, en heures, du modèle sur le GPU RTX 4090 ?",
+    "reference": "",
+    "answerable": false,
+    "modality": "none",
+    "answer": "Le contexte ne fournit pas le temps d'entraînement total en heures du modèle sur le GPU RTX 4090.",
+    "found": false,
+    "contexts": [
+      "[Figure 5 STFT images of four datasets for different failure modes]\nrace fault, and rolling element fault) without further label distinction based on operating\nconditions or fault severity due to the possibly great differences in these cross-dataset factors.\n4.3 Experimental environment\nThe experimental setup is as follows: Nvidia GeForce RTX 4090 GPU with 24GB memory;\ndevelopment tools were VScode and torch 2.1.0; CUDA version 12.2.",
+      "[Figure, page 4] Figure 4: Training dynamics over 80 epochs.\nText detected in the figure:\nTask Loss\nTask Accuracy\n040\nTrin\n100\n035\nvi\n0.98\n0.30\n0.96\n0.25\n094\n0.20\n0.92\n015\n0.90\n0.10\n088\n0.05\n0.86\nTrain\n0.00\n—— Val\n20\n20\n40\nSo\n6\n70\n80\n20\n20\n40\n50\n60\nEpoch\nEpoch\nDomain Loss\nDomain Accuracy\n1.5\nTrin\nTen\nwi\n—wi\n06\nes\nRandom (1/9=0.21)\n15.0\nos\n25\no4\n10.0\n03\n1S\n02\n5.0\neee\n25\n00\n0.0\n10\n2\nx»\n50\n70\n80\n10\n20\n40\n50\n60\n70\n80\nEpoch\nEpoch",
+      "[Figure, page 2] Figure 1: General project workflow.\nText detected in the figure:\n6]\nDataset\n4)\nPreprocessing Feature Extraction (Graph Mod Model Architecture\nEvaluation\nFault 4\nHealthy\nWa\njaf\nFault 2\n1h\nTHO\nFaultN\ni,\nBJTU-RAO\nDataset\ndil",
+      "[Table 1: Working conditions and dataset partition]\nDataset partition\nWC1\n20 Hz / 0 kN\nTraining\nWC2\n40 Hz / 0 kN\nTraining\nWC3\n60 Hz / 0 kN\nTest\nWC4\n20 Hz / +10 kN\nTraining\nWC5\n40 Hz / +10 kN\nTraining\nWC6\n60 Hz / +10 kN\nTraining\nWC7\n20 Hz / −10 kN\nValidation\nWC8\n40 Hz / −10 kN\nValidation\nWC9\n60 Hz / −10 kN\nTest\n3.3\nProposed Model\n3.3.1\nGraph-level reasoning and Multi-Source Fusion\nThe proposed architecture models the bogie as a graph composed of\nfour nodes corresponding to the traction motor, gearbox, and the left and\nright axle boxes. Instead of using a fully connected graph, the topology\nfollows the actual drivetrain kinematic chain. Mechanical power flows\nfrom the motor to the gearbox before being transmitted to both axle\nboxes, making the gearbox the central node connected bidirectionally",
+      "R. Kharkhach\nFigure 3: Test set confusion matrices for the four bogie components.\nclassified as G3+G5, suggesting that compound conditions involving\nG5 are more difficult to distinguish than the corresponding single-fault\nstates.\n4.3\nTraining Dynamics and Domain Invariance\nThe evolution of the training process over 80 epochs is shown in Fig. 4.\nThe task loss decreases rapidly during the first 10–15 epochs and\nsubsequently remains relatively stable. Validation accuracy follows\na similar trend, reaching a plateau around 98–99%. Among the four\nnodes, the gearbox presents the slowest convergence and the largest\nfluctuations, which is consistent with its lower final accuracy and the\nclass-specific errors discussed above.\nThe domain discriminator reaches an accuracy of 0.000 on the test"
+    ],
+    "n_citations": 0,
+    "latency_s": 12.9,
+    "source": "Article-LLM (1).pdf",
+    "context_sources": [
+      "Article-LLM (1).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf"
+    ],
+    "answer_mode": "text"
+  },
+  {
+    "question": "Combien de roulements contient le jeu de données PU et à quelle fréquence les signaux sont-ils échantillonnés ?",
+    "reference": "12 roulements artificiellement endommagés (7 avec défaut de bague externe, 5 avec défaut de bague interne) et 6 roulements sains ; fréquence d'échantillonnage de 64 kHz.",
+    "answerable": true,
+    "modality": "multi",
+    "answer": "Le jeu de données PU contient 18 roulements (12 endommagés et 6 normaux) et les signaux sont échantillonnés à 64 kHz.",
+    "found": true,
+    "contexts": [
+      "[Table 2 Content and validated capabilities for case study]\nThe JNU dataset had a sampling frequency of 50 kHz and included three rotational speeds:\n600 rpm, 800 rpm, and 1000 rpm. It covered four fault modes: normal, inner race fault, outer race\nfault, and rolling element fault.\nIn the PU dataset, we used data from 12 artificially damaged bearings (seven with outer race\nfaults and five with inner race faults) and six normal bearings. The vibration signal sampling\nfrequency was 64 kHz, with three fault modes.",
+      "[Figure 1: General project workflow.]\npublicly available benchmark dedicated to railway bogie transmission\nsystems, it includes a half-scale experimental bogie test rig equipped\nwith an asynchronous traction motor, a helical gearbox, and two axle-\nbox assemblies (Fig. 2). The dataset provides 24 synchronized sensing\nchannels, including vibration, motor current, rotational speed, and\nacoustic signals sampled at 64 kHz. It covers 51 health conditions under\nnine operating conditions, combining different rotational speeds and\nlateral loads [3]. The dataset also exhibits a pronounced class imbalance\nacross health conditions, which faithfully reflects the industrial reality\nof railway predictive maintenance, where healthy or mildly degraded\nstates vastly outnumber severe fault occurrences.",
+      "Figure 8 Feature visualization based on t-SNE of JNU cross-condition experiment\nFigure 9 Test confusion matrix of JNU cross-condition experiment\n(Label ball inner normal outer)\nThe specific working conditions of the PU dataset, and the PU data cross-condition fault\ndiagnosis results are shown in the tables below.\nTable 13 Working condition of PU dataset\nWorking\nCondition No.\nRotational Speed\n(rpm)\nLoad Torque\n(Nm)\nRadial Force\n(N)\n0\n1500\n0.7\n1000\n1\n900\n0.7\n1000\n2\n1500\n0.1\n1000\n3\n1500\n0.7\n400\nTable 14 Cross-condition experiment results of PU dataset\nNo.\nTrain\nCondition\nTest\nCondition\nAccuracy\n1\n0,2\n1\n0.4852−0.0478\n+0.0478\n2\n0,2\n3\n0.7722−0.0060\n+0.0060\n3\n1,3\n2\n0.6704−0.0238\n+0.0238\n4\n1,3\n0\n0.6500−0.0363\n+0.0363\n5\n0,3\n1\n0.5889−0.0520\n+0.0520\n6\n0,3\n2\n0.9232−0.0079\n+0.0079\n7\n0,1\n2\n0.8537−0.0107",
+      "[Table 14 Cross-condition experiment results of PU dataset]\n+0.0363\n5\n0,3\n1\n0.5889−0.0520\n+0.0520\n6\n0,3\n2\n0.9232−0.0079\n+0.0079\n7\n0,1\n2\n0.8537−0.0107\n+0.0107\n8\n0,1\n3\n0.6982−0.0261\n+0.0261\n9\n1,2\n0\n0.8908−0.0053\n+0.0053",
+      "[Figure 1: General project workflow.]\nstates vastly outnumber severe fault occurrences.\nPrior to training, raw signals are filtered using a low-pass filter with\na 25 kHz cutoff frequency, which removes high-frequency noise while\npreserving the lower-frequency spectral content where fault-related\nsignatures are concentrated, most notably the characteristic bearing\nfault frequencies (BPFI, BPFO, BSF, FTF). The filtered signals are then\nsegmented into synchronized 2048-sample windows. The resulting\ndata are normalized independently for each bogie node using training-\nset statistics only, ensuring a consistent representation without data\nleakage.\nTo assess the generalization capability of the proposed framework,\nthe data are partitioned according to working conditions rather than"
+    ],
+    "n_citations": 1,
+    "latency_s": 23.7,
+    "source": "Article-LLM (1).pdf",
+    "context_sources": [
+      "Article-LLM (1).pdf",
+      "Article (2).pdf",
+      "Article-LLM (1).pdf",
+      "Article-LLM (1).pdf",
+      "Article (2).pdf"
+    ],
+    "answer_mode": "text"
+  },
+  {
+    "question": "De combien la précision augmente-t-elle pour PU, MFPT, JNU et CWRU quand le modèle est d'abord entraîné sur plusieurs jeux puis ajusté avec 10 % des nouvelles données ?",
+    "reference": "+0,0396 pour PU, +0,0376 pour MFPT, +0,0327 pour JNU et seulement +0,0028 pour CWRU.",
+    "answerable": true,
+    "modality": "text",
+    "answer": "PU : +0,0396 ; MFPT : +0,0376 ; JNU : +0,0327 ; CWRU : +0,0028",
+    "found": true,
+    "contexts": [
+      "generalization and stability of the model on new datasets. The most significant improvements\nwere observed for the PU, MFPT, and JNU datasets, with accuracy increases by 0.0396, 0.0376,\nand 0.0327, respectively, while the CWRU dataset saw a minimal increase of 0.0028.\nTable 16 Few data cross-dataset experiment results\nNo.\nTrain Dataset\nTransfer\nDataset\nTest\nDataset\nAccuracy\n1\nCWRU+MFPT+JNU\n10% PU\nPU\n0.7872−0.0084\n+0.0084\n2\nCWRU+JNU+PU\n10% MFPT\nMFPT\n0.9495−0.0075\n+0.0075\n3\nCWRU+MFPT+PU\n10% JNU\nJNU\n0.8644−0.0238\n+0.0238\n4\nMFPT+JNU+PU\n10% CWRU\nCWRU\n0.9634−0.0037\n+0.0037\n5\n10% PU\n/\nPU\n0.7476−0.0153\n+0.0153\n6\n10% MFPT\n/\nMFPT\n0.9118−0.0275\n+0.0275\n7\n10% JNU\n/\nJNU\n0.8317−0.0230\n+0.0230\n8\n10% CWRU\n/\nCWRU\n0.9606−0.0157\n+0.0157\nFigure 11 Limited data cross-dataset experiment results\n5\nConclusion",
+      "training significantly improved diagnosis accuracy by approximately 1%. For the CWRU, MFPT,\nand JNU datasets, the impact of multi-dataset training was minimal.\nTable 15 Complete-data cross-dataset experiment results\nNo.\nTrain Dataset\nContinued\nTraining\nDataset\nTest Dataset\nAccuracy\n1\nCWRU+MFPT+JNU\nPU\nPU\n0.9338−0.0096\n+0.0096\n2\nCWRU+MFPT+PU\nJNU\nJNU\n0.9958−0.0011\n+0.0011\n3\nCWRU+JNU+PU\nMFPT\nMFPT\n0.9988−0.0008\n+0.0008\n4\nMFPT+JNU+PU\nCWRU\nCWRU\n0.9987−0.0010\n+0.0010\nFigure 10 The comparison with single-dataset complete-data experiments\n4.5.4.2 Limited data transfer experiment\nA limited data transfer experiment was conducted for the data-based LLM fault diagnosis\nmethod. Following training on multiple datasets, the model underwent fine-tuning with 10% of a",
+      "[Table 6 Limited data cross-dataset experiment results]\nTrain Dataset\n(epoch=10)\nCWRU+MFPT\n+JNU\nCWRU+MFPT\n+PU\nCWRU+JNU\n+PU\nMFPT+JNU\n+PU\nTransfer dataset\n10% PU\n10% JNU\n10% MFPT\n10% CWRU\nTest dataset\nPU\nJNU\nMFPT\nCWRU\nEpoch\nAccuracy\n1\n0.8899\n0.6616\n0.6396\n0.4423\n2\n0.8982\n0.6945\n0.6268\n0.6314\n3\n0.8756\n0.6775\n0.6442\n0.6987\n4\n0.8935\n0.6934\n0.6405\n0.7660\n5\n0.8833\n0.6996\n0.6469\n0.8093\n6\n0.8946\n0.7036\n0.6460\n0.8125\n7\n0.8845\n0.6746\n0.6487\n0.8349\n8\n0.8768\n0.6672\n0.6487\n0.8109\n9\n0.8720\n0.6672\n0.6460\n0.8029\n10\n0.8690\n0.6746\n0.6460\n0.8253\nTable 7 Limited data experiment results\nTrain Dataset\n10% PU\n10% JNU\n10% MFPT\n10% CWRU\nTest dataset\nPU\nJNU\nMFPT\nCWRU",
+      "[Table 4 Cross-condition experiment results of the CWRU dataset]\nof these experiments are presented in the table below. Compared with single dataset training,\nmulti-dataset training improved the LLM’s knowledge transfer to new datasets. For the four\ndatasets, the diagnosis effect was greatly improved compared with single-dataset training at\ntransfer training under epoch=1. For the PU and CWRU datasets, the diagnosis accuracy was\nimproved by 0.077 and 0.0235, respectively, after 10 training epochs with the other three datasets.\nIn contrast, improvements for the MFPT and JNU datasets were smaller.\nTable 5 Complete-data cross-dataset experiment results\nTrain Dataset\n(epoch=10)\nCWRU+MFPT\n+JNU\nCWRU+MFPT\n+PU\nCWRU+JNU\n+PU\nMFPT+JNU\n+PU\nTransfer dataset\nPU\nJNU\nMFPT\nCWRU\nTest dataset\nPU\nJNU\nMFPT\nCWRU\nEpoch\nAccuracy\n1\n0.8607\n0.8688\n0.9918\n0.9391\n2\n0.8738\n0.9063",
+      "Figure 7 Complete-data cross-dataset experiment results\n4.4.3.2 Limited data transfer experiment\nConsidering the actual needs of engineering applications and conditions of use, less failure\ndata may be available for new equipment. To simulate practical engineering conditions with\nlimited fault data, we fine-tuned the model with 10% of the new dataset and compared the results\nwith those trained only on 10% of the new dataset on the basis of the original training on multiple\ndatasets to validate the model’s impact on the auxiliary diagnosis performance of new small\nsample data based on old knowledge. The experimental design and results are shown in the table\nbelow.\nTable 6 Limited data cross-dataset experiment results\nTrain Dataset\n(epoch=10)\nCWRU+MFPT\n+JNU\nCWRU+MFPT\n+PU\nCWRU+JNU\n+PU"
+    ],
+    "n_citations": 1,
+    "latency_s": 18.2,
+    "source": "Article-LLM (1).pdf",
+    "context_sources": [
+      "Article-LLM (1).pdf",
+      "Article-LLM (1).pdf",
+      "Article-LLM (1).pdf",
+      "Article-LLM (1).pdf",
+      "Article-LLM (1).pdf"
+    ],
+    "answer_mode": "text"
+  },
+  {
+    "question": "Dans la Figure 9(a) (condition 1,3→2), quelle proportion des échantillons de la classe « normal » est correctement classée ?",
+    "reference": "1,000.",
+    "answerable": true,
+    "modality": "figure",
+    "answer": "Le contexte fourni ne donne pas la proportion des échantillons de la classe « normal » correctement classés dans la Figure 9(a) (condition 1,3→2).",
+    "found": false,
+    "contexts": [
+      "[Figure, page 19] Figure 9 Test confusion matrix of JNU cross-condition experiment\nText detected in the figure:\nConfusion matrix\nConfusion matrix\nConfusion matrix\n0.082\n0.020\n0.000\n0.000\n0.061\n0.143\n0.000\n0.000\n0.020\n14\n0.000\n0.000\n0.000\n0.000\n0.000\n0.000\n0.102\n0.102\n0.000\n24\n0.000\n0.000\n0.000\n0.000\n0.000\n0.000\n24\n0.034\n0.000\n0.000\n34\n0.000\n0.020\n0.000\n0.020\n0.000\n0.000\n34\n0.000\n0.000\n0.000\nPredicted label\nPredicted label\nPredicted label\n(a) condition\n(b) condition\n(c) condition 2,3—1",
+      "[Figure, page 19] Figure 8 Feature visualization based on t-SNE of JNU cross-condition experiment\nText detected in the figure:\nclass\nclass\nclass\n0\n0\noe\n1\n2\nod,\nwe\n210\n3\n10\naye\nor\nee\nRes\naa\nwee\ntg\n“10\nSee\nta\n-20\n“1s\n-10\n5\n10\n-»\n(a)-condition 1,3—2\n(c) condition",
+      "Figure 8 Feature visualization based on t-SNE of JNU cross-condition experiment\nFigure 9 Test confusion matrix of JNU cross-condition experiment\n(Label ball inner normal outer)\nThe specific working conditions of the PU dataset, and the PU data cross-condition fault\ndiagnosis results are shown in the tables below.\nTable 13 Working condition of PU dataset\nWorking\nCondition No.\nRotational Speed\n(rpm)\nLoad Torque\n(Nm)\nRadial Force\n(N)\n0\n1500\n0.7\n1000\n1\n900\n0.7\n1000\n2\n1500\n0.1\n1000\n3\n1500\n0.7\n400\nTable 14 Cross-condition experiment results of PU dataset\nNo.\nTrain\nCondition\nTest\nCondition\nAccuracy\n1\n0,2\n1\n0.4852−0.0478\n+0.0478\n2\n0,2\n3\n0.7722−0.0060\n+0.0060\n3\n1,3\n2\n0.6704−0.0238\n+0.0238\n4\n1,3\n0\n0.6500−0.0363\n+0.0363\n5\n0,3\n1\n0.5889−0.0520\n+0.0520\n6\n0,3\n2\n0.9232−0.0079\n+0.0079\n7\n0,1\n2\n0.8537−0.0107",
+      "suggested that LLM can learn the distribution of failure modes under different operating\nconditions and apply them to new operating conditions to realize cross-condition fault diagnosis.\nTable 10 Cross-condition experiment results of CWRU dataset\nNo.\nTrain\nCondition\nTest\nCondition\nAccuracy\n1\n0,2\n1\n0.9976−0.0024\n+0.0024\n2\n0,2\n3\n0.9888−0.0065\n+0.0065\n3\n1,3\n2\n0.9963−0.0064\n+0.0037\n4\n1,3\n0\n0.9832−0.0103\n+0.0103\n5\n0,3\n1\n0.9753−0.0204\n+0.0204\n6\n0,3\n2\n0.9607−0.0232\n+0.0232\n7\n0,1\n2\n0.9900−0.0079\n+0.0079\n8\n0,1\n3\n0.9570−0.0210\n+0.0210\n9\n1,2\n0\n0.9707−0.0267\n+0.0267\n10\n1,2\n3\n0.9951−0.0035\n+0.0035\n11\n2,3\n1\n0.9853−0.0153\n+0.0147\n12\n2,3\n0\n0.9667−0.0223\n+0.0223\n13\n0,1,2\n3\n0.9814−0.0022\n+0.0022\n14\n1,2,3\n0\n0.9901−0.0072\n+0.0072\n15\n0,1,3\n2\n0.9967−0.0046\n+0.0033\n16\n0,2,3\n1\n1.0000−0.0000\n+0.0000",
+      "[Table 10 Cross-condition experiment results of CWRU dataset]\n14\n1,2,3\n0\n0.9901−0.0072\n+0.0072\n15\n0,1,3\n2\n0.9967−0.0046\n+0.0033\n16\n0,2,3\n1\n1.0000−0.0000\n+0.0000\nCross-case experiments were also conducted on the JNU bearing dataset. The JNU dataset\nconsists of three conditions, which are described in the following table:\nTable 11 Working condition of JNU dataset\nWorking Condition\nNo.\nApprox. Motor Speed\n(rpm)\n1\n600\n2\n800\n3\n1000\nThe specific experimental design and results are shown in the table below:\nTable 12 Cross-condition experiment results of JNU dataset\nNo.\nTrain\nCondition\nTest\nCondition\nAccuracy\n1\n1,3\n2\n0.9796−0.0064\n+0.0064\n2\n1,2\n3\n0.9439−0.0227\n+0.0227\n3\n2,3\n1\n0.8991−0.0363\n+0.0363"
+    ],
+    "n_citations": 1,
+    "latency_s": 36.4,
+    "source": "Article-LLM (1).pdf",
+    "context_sources": [
+      "Article-LLM (1).pdf",
+      "Article-LLM (1).pdf",
+      "Article-LLM (1).pdf",
+      "Article-LLM (1).pdf",
+      "Article-LLM (1).pdf"
+    ],
+    "answer_mode": "text"
+  },
+  {
+    "question": "In Figure 9(b) (condition 1,2→3), what proportion of ball-fault samples is wrongly predicted as outer-race faults?",
+    "reference": "0.143.",
+    "answerable": true,
+    "modality": "figure",
+    "answer": "0",
+    "found": true,
+    "contexts": [
+      "[Figure, page 19] Figure 9 Test confusion matrix of JNU cross-condition experiment\nText detected in the figure:\nConfusion matrix\nConfusion matrix\nConfusion matrix\n0.082\n0.020\n0.000\n0.000\n0.061\n0.143\n0.000\n0.000\n0.020\n14\n0.000\n0.000\n0.000\n0.000\n0.000\n0.000\n0.102\n0.102\n0.000\n24\n0.000\n0.000\n0.000\n0.000\n0.000\n0.000\n24\n0.034\n0.000\n0.000\n34\n0.000\n0.020\n0.000\n0.020\n0.000\n0.000\n34\n0.000\n0.000\n0.000\nPredicted label\nPredicted label\nPredicted label\n(a) condition\n(b) condition\n(c) condition 2,3—1",
+      "Figure 8 Feature visualization based on t-SNE of JNU cross-condition experiment\nFigure 9 Test confusion matrix of JNU cross-condition experiment\n(Label ball inner normal outer)\nThe specific working conditions of the PU dataset, and the PU data cross-condition fault\ndiagnosis results are shown in the tables below.\nTable 13 Working condition of PU dataset\nWorking\nCondition No.\nRotational Speed\n(rpm)\nLoad Torque\n(Nm)\nRadial Force\n(N)\n0\n1500\n0.7\n1000\n1\n900\n0.7\n1000\n2\n1500\n0.1\n1000\n3\n1500\n0.7\n400\nTable 14 Cross-condition experiment results of PU dataset\nNo.\nTrain\nCondition\nTest\nCondition\nAccuracy\n1\n0,2\n1\n0.4852−0.0478\n+0.0478\n2\n0,2\n3\n0.7722−0.0060\n+0.0060\n3\n1,3\n2\n0.6704−0.0238\n+0.0238\n4\n1,3\n0\n0.6500−0.0363\n+0.0363\n5\n0,3\n1\n0.5889−0.0520\n+0.0520\n6\n0,3\n2\n0.9232−0.0079\n+0.0079\n7\n0,1\n2\n0.8537−0.0107",
+      "suggested that LLM can learn the distribution of failure modes under different operating\nconditions and apply them to new operating conditions to realize cross-condition fault diagnosis.\nTable 10 Cross-condition experiment results of CWRU dataset\nNo.\nTrain\nCondition\nTest\nCondition\nAccuracy\n1\n0,2\n1\n0.9976−0.0024\n+0.0024\n2\n0,2\n3\n0.9888−0.0065\n+0.0065\n3\n1,3\n2\n0.9963−0.0064\n+0.0037\n4\n1,3\n0\n0.9832−0.0103\n+0.0103\n5\n0,3\n1\n0.9753−0.0204\n+0.0204\n6\n0,3\n2\n0.9607−0.0232\n+0.0232\n7\n0,1\n2\n0.9900−0.0079\n+0.0079\n8\n0,1\n3\n0.9570−0.0210\n+0.0210\n9\n1,2\n0\n0.9707−0.0267\n+0.0267\n10\n1,2\n3\n0.9951−0.0035\n+0.0035\n11\n2,3\n1\n0.9853−0.0153\n+0.0147\n12\n2,3\n0\n0.9667−0.0223\n+0.0223\n13\n0,1,2\n3\n0.9814−0.0022\n+0.0022\n14\n1,2,3\n0\n0.9901−0.0072\n+0.0072\n15\n0,1,3\n2\n0.9967−0.0046\n+0.0033\n16\n0,2,3\n1\n1.0000−0.0000\n+0.0000",
+      "work. Ten of its thirteen health states obtain an F1-score above 0.95,\nwhereas G4 and G8 remain around 0.50. The corresponding confusion\nmatrix in Fig. 3 reveals a clear pattern: 47% of G4 samples are assigned\nto G8, while 50% of G8 samples are classified as G4. Misclassification\ninvolving the remaining gearbox classes is comparatively limited.\nThis reciprocal confusion indicates a strong similarity between the\nlearned representations of G4 and G8 under the current feature set.\nThe bearing-envelope descriptors introduced for the gearbox node do\nnot appear sufficient to clearly separate these two fault categories. A\nweaker confusion is also observed for the compound state G2+G5, for\nwhich the recall decreases to 0.65. In this case, 29% of the samples are\n3",
+      "[Table 10 Cross-condition experiment results of CWRU dataset]\n14\n1,2,3\n0\n0.9901−0.0072\n+0.0072\n15\n0,1,3\n2\n0.9967−0.0046\n+0.0033\n16\n0,2,3\n1\n1.0000−0.0000\n+0.0000\nCross-case experiments were also conducted on the JNU bearing dataset. The JNU dataset\nconsists of three conditions, which are described in the following table:\nTable 11 Working condition of JNU dataset\nWorking Condition\nNo.\nApprox. Motor Speed\n(rpm)\n1\n600\n2\n800\n3\n1000\nThe specific experimental design and results are shown in the table below:\nTable 12 Cross-condition experiment results of JNU dataset\nNo.\nTrain\nCondition\nTest\nCondition\nAccuracy\n1\n1,3\n2\n0.9796−0.0064\n+0.0064\n2\n1,2\n3\n0.9439−0.0227\n+0.0227\n3\n2,3\n1\n0.8991−0.0363\n+0.0363"
+    ],
+    "n_citations": 1,
+    "latency_s": 14.7,
+    "source": "Article-LLM (1).pdf",
+    "context_sources": [
+      "Article-LLM (1).pdf",
+      "Article-LLM (1).pdf",
+      "Article-LLM (1).pdf",
+      "Article (2).pdf",
+      "Article-LLM (1).pdf"
+    ],
+    "answer_mode": "text"
+  },
+  {
+    "question": "Sur les courbes d'entraînement mono-jeu de la Figure 6, quel jeu de données démarre avec la précision la plus basse à l'époque 1 ?",
+    "reference": "PU (environ 0,50).",
+    "answerable": true,
+    "modality": "figure",
+    "answer": "Le contexte fourni ne précise pas quel jeu de données démarre avec la précision la plus basse à l'époque 1 sur les courbes de la Figure 6.",
+    "found": false,
+    "contexts": [
+      "[Figure, page 14] Figure 6 Results of feature-based single-dataset experiments 4.4.2 Single-dataset cross-condition experiment To assess the generalization capability of the prop\nText detected in the figure:\n10\n0.9\n08\n07\n0.6\n—@\n05\njnu\n—@ MFPT\nPU\n0.4\n1\n2\n4\n8\n5\n10\nepoch",
+      "[Figure, page 2] Figure 1: General project workflow.\nText detected in the figure:\n6]\nDataset\n4)\nPreprocessing Feature Extraction (Graph Mod Model Architecture\nEvaluation\nFault 4\nHealthy\nWa\njaf\nFault 2\n1h\nTHO\nFaultN\ni,\nBJTU-RAO\nDataset\ndil",
+      "[Figure, page 5] Figure 6: Normalized cross-attention feature importance across the four bogie components.\nText detected in the figure:\nMotor\nGearbox\nSpEnt_cur\nRatio_in_out\nStd_RMS_phases\nSpKurtosis\nRatio_bands\nRMS_mean_cur\nShapeFactor_in\nCur_Imbalance\nKurtosis_out\nSkewness_vib\nKurtosis_in\nImpulseFactor_in\nRMS_vib\nPeak2peak_vib\nCrestFactor_in\nEnv_energy\nA_frot_mean\nA_FTF_gb\nAsym_phase\nRatio_BSF_FTF\nA_fs_vib\nSum_bearing_gb\nA_BSF_gb\n2fs_vib\nA_BPFI_gb\nEnv_energy_low\nA_BPFO_gb\nTHD_cur\nSkewness_in\nPeak2peak_in\nCrest_Factor\nRMS_in\nSpEnt_vib\nSpEnt\nKurtosis_vib\nRMS_out\n0.0\n0.2\n0.4\n0.6\n0.8\n1.0\n0.0\n0.2\n0.4\n0.6\n0.8\n1.0\nImportance (attention normalisée)\nImportance (attention normalisée)\nLeft Axle\nRight Axle\nSpKurtosis\nSpEnt\nCrestFactor\nSpKurtosis\nImpulseFactor\nKurtosis_aco\nShapeFactor\nA_BSF\nKurtosis\nCrestFactor\nSpEnt\nSkewness\nKurtosis\nBPFI\nRatio_BPFI_BPFO\nRMS_aco\nPeak2peak\nSum_bearing_feats\nSum_bearing_feats\nEnv_low\nSkewness\nA_BPFO\nRMS_aco\nRatio_BPFI_BPFO\nA_BSF\nBPFI\nKurtosis_aco\nRMS_vib\nE_band_low\nShapeFactor\nRMS_vib\nE_band_low\nA_BPFO\nImpulseFactor\nEnv_low\nPeak2peak\n0.0\n0.2\n0.4\n0.6\n0.8\n1.0\n0.0\n0.2\n0.4\n0.6\n0.8\n1.0\nImportance (attention normalisée)\nImportance (attention normalisée)",
+      "[Figure, page 4] Figure 4: Training dynamics over 80 epochs.\nText detected in the figure:\nTask Loss\nTask Accuracy\n040\nTrin\n100\n035\nvi\n0.98\n0.30\n0.96\n0.25\n094\n0.20\n0.92\n015\n0.90\n0.10\n088\n0.05\n0.86\nTrain\n0.00\n—— Val\n20\n20\n40\nSo\n6\n70\n80\n20\n20\n40\n50\n60\nEpoch\nEpoch\nDomain Loss\nDomain Accuracy\n1.5\nTrin\nTen\nwi\n—wi\n06\nes\nRandom (1/9=0.21)\n15.0\nos\n25\no4\n10.0\n03\n1S\n02\n5.0\neee\n25\n00\n0.0\n10\n2\nx»\n50\n70\n80\n10\n20\n40\n50\n60\n70\n80\nEpoch\nEpoch",
+      "[Figure, page 21] Figure 11 Limited data cross-dataset experiment results 5 Conclusion\nText detected in the figure:\n10\nmm Single\nTrans\n0.9 4\n0.8 4\n0.74\n0.64\n05\nMFPT\nJNU\nCWRU\ndataset"
+    ],
+    "n_citations": 0,
+    "latency_s": 16.1,
+    "source": "Article-LLM (1).pdf",
+    "context_sources": [
+      "Article-LLM (1).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article (2).pdf",
+      "Article-LLM (1).pdf"
+    ],
+    "answer_mode": "text"
+  },
+  {
+    "question": "Sur la Figure 10, pour quel jeu de données la barre « Trans » est-elle visiblement plus haute que la barre « Single » ?",
+    "reference": "Pour PU (environ 0,934 contre 0,924).",
+    "answerable": true,
+    "modality": "figure",
+    "answer": "Le contexte ne précise pas quel jeu de données montre une barre « Trans » visiblement plus haute que la barre « Single » dans la Figure 10.",
+    "found": false,
+    "contexts": [
+      "[Figure, page 20] Figure 10 The comparison with single-dataset complete-data experiments 4.5.4.2 Limited data transfer experiment A limited data transfer experiment was conducted\nText detected in the figure:\n1.0\nSingle\nTrans\n0.9\n0.8\n0.7\nCWRU\nMFPT\nJNU\ndataset",
+      "[Figure, page 21] Figure 11 Limited data cross-dataset experiment results 5 Conclusion\nText detected in the figure:\n10\nmm Single\nTrans\n0.9 4\n0.8 4\n0.74\n0.64\n05\nMFPT\nJNU\nCWRU\ndataset",
+      "[Figure 10 The comparison with single-dataset complete-data experiments]\nmethod. Following training on multiple datasets, the model underwent fine-tuning with 10% of a\nnew dataset. The results were compared with those from a scenario where the model was trained\nsolely on 10% of the new dataset. The test dataset was the full test set rather than a subset of the\nsmall data. Multiple trials were conducted simultaneously, and the average diagnosis accuracy was\ntaken to reduce experimental error. The experimental design and results are shown in the table\nbelow. By comparing the experimental results with Figure 11, it was found that the multi-dataset\ntraining improved accuracy and reduced the standard deviation for small data scenarios,\nsuggesting that LLMs can transfer the learned knowledge to new datasets and improve the",
+      "higher diagnosis accuracy. However, due to longer training times with a smaller stride, we selected\na patch size of 128 and a stride of 8 for a balance of accuracy and training time.\nTable 8 Results of hyperparameter selection experiment\nPatch Size\nStride\nAccuracy\n256\n8\n0.9943−0.0032\n+0.0032\n128\n64\n0.9853−0.0024\n+0.0024\n128\n32\n0.9936−0.0032\n+0.0032\n128\n16\n0.9928−0.0032\n+0.0032\n128\n8\n0.9955−0.0024\n+0.0024\n128\n4\n0.9970−0.0019\n+0.0019\n64\n32\n0.9807−0.0061\n+0.0061\n64\n16\n0.9894−0.0010\n+0.0010\n64\n8\n0.9932−0.0016\n+0.0016\n64\n4\n0.9981−0.0011\n+0.0011\n32\n16\n0.9796−0.0025\n+0.0025\n32\n8\n0.9909−0.0016\n+0.0016\n32\n4\n0.9955−0.0012\n+0.0012\n16\n8\n0.9803−0.0060\n+0.0060\n16\n4\n0.9841−0.0065\n+0.0065\n8\n4\n0.9758−0.0030\n+0.0030\n4.5.2\nSingle-dataset experiment",
+      "[Figure, page 16] Figure 7 Complete-data cross-dataset experiment results 4.4.3.2 Limited data transfer experiment Considering the actual needs of engineering applications and co\nText detected in the figure:\n1.00\n10\n0.95\n0.9\n0.90\nos\n0.85\no7\n3 0.80\n0.75\n0.6\n0.70\n0s\n0.65\ncCwRU\n—@ JNU\nCWRU-Trans\nJNU-Trans\n0.4\n0.60\n8\n9\n10\n8\n9\n10\nepoch\nepoch\n(a) CWRU\n(b) JNU\n10\n1.00\n09\n0.95\n08\n5 07\n0.90\n06\n0.85\nos\n—@ MFPT\nMFPT-Trans\n—t— PU-Trans\n0.80\n04\n1\n2\n5\n6\n8\n9\n10\n2\n3\n4\n8\n9\n10\nepoch\nepoch\n(c) MFPT\n(d) PU"
+    ],
+    "n_citations": 0,
+    "latency_s": 13.6,
+    "source": "Article-LLM (1).pdf",
+    "context_sources": [
+      "Article-LLM (1).pdf",
+      "Article-LLM (1).pdf",
+      "Article-LLM (1).pdf",
+      "Article-LLM (1).pdf",
+      "Article-LLM (1).pdf"
+    ],
+    "answer_mode": "text"
+  },
+  {
+    "question": "Sur la Figure 4, quelles couches suivent le LLM pré-entraîné avant la sortie du diagnostic ?",
+    "reference": "Une couche Layer Norm puis une couche Linear, qui produit les résultats du diagnostic de défaut.",
+    "answerable": true,
+    "modality": "figure",
+    "answer": "Les couches Add & Layer Norm, puis les couches Layer Normalization et Linear.",
+    "found": true,
+    "contexts": [
+      "[Figure, page 10] Figure 4 Framework of data-based LLM fault diagnosis 3.2.1 Patching The high sampling frequency of vibration data creates information redundancy. To address thi\nText detected in the figure:\nFault\nDiagnosis resul ts\nModel\ndimen sion\nPatch number\nCl\nWD\nPE(pos, 2i)\n10000a\n———\n‘| PE(pos,2i+1)=\n000\n——\nWwW\npatchsize\nstride\npatching\nwm\nVibration signal",
+      "[Figure, page 7] Figure 1 The overall process of the proposed method\nText detected in the figure:\nLLM-based framework for bearing fault diagnosis\nDataset\nCondition\nSample Account\nSingle\nSingle\nFault Diagnosis Tasks\nCase Study\n(Fine-tuned LLM)\nSingle\nCross\n(Both Feature-based\nand Data-based)\nCross\nComplete Transfer\nCross\nLimited Transfer\nLORA\nQLORA\n10;\ngn\n«yy\nwy\nOe\nse\nta\nyo\nso\nMth, ed\nNe,\n“age\nge\n10n\nav\naS\n‘Me.\nae\ncave\n“lr\n2h;\n“do,\nyw\nngs\ney\nNain\ne-\nave\ngel\niM\nCo,\now\nwer\nwo\n4°\nsis\ndios\nwt\nwe\nwork\nFal\no>\n“bry Voy\npre\nSng,\npeo\"",
+      "Figure 3 Framework of feature-based LLM fault diagnosis\n3.2 Fault diagnosis model fine-tuning framework based on LLM\nThe LLM-based fault diagnosis model is illustrated below. After instance normalization of\nthe vibration data, we segmented the signal into patches and converted each patch into an LLM\ninput dimension vector using value and position embeddings. Then these vectors were input into\nthe LLM. We extracted features by fine-tuning the Add & Layer Norm layers of LLM and\nclassified the data by the Layer normalization and Linear layers.\nFigure 4 Framework of data-based LLM fault diagnosis\n3.2.1\nPatching\nThe high sampling frequency of vibration data creates information redundancy. To address\nthis, we use a patching method from PatchTST to aggregate adjacent data points. This method",
+      "[Figure, page 10] Figure 3 Framework of feature-based LLM fault diagnosis\nText detected in the figure:\nFault\nDiagnosis Results\nCy\ntrainset\nTime-domain\nFeature\nCJ training\nCJ frozen\nVibration si",
+      "[Figure, page 4] Figure 4: Training dynamics over 80 epochs.\nText detected in the figure:\nTask Loss\nTask Accuracy\n040\nTrin\n100\n035\nvi\n0.98\n0.30\n0.96\n0.25\n094\n0.20\n0.92\n015\n0.90\n0.10\n088\n0.05\n0.86\nTrain\n0.00\n—— Val\n20\n20\n40\nSo\n6\n70\n80\n20\n20\n40\n50\n60\nEpoch\nEpoch\nDomain Loss\nDomain Accuracy\n1.5\nTrin\nTen\nwi\n—wi\n06\nes\nRandom (1/9=0.21)\n15.0\nos\n25\no4\n10.0\n03\n1S\n02\n5.0\neee\n25\n00\n0.0\n10\n2\nx»\n50\n70\n80\n10\n20\n40\n50\n60\n70\n80\nEpoch\nEpoch"
+    ],
+    "n_citations": 1,
+    "latency_s": 13.0,
+    "source": "Article-LLM (1).pdf",
+    "context_sources": [
+      "Article-LLM (1).pdf",
+      "Article-LLM (1).pdf",
+      "Article-LLM (1).pdf",
+      "Article-LLM (1).pdf",
+      "Article (2).pdf"
+    ],
+    "answer_mode": "text"
+  }
+]

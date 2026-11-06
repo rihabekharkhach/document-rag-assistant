@@ -139,7 +139,17 @@ def render_message(message: dict, previous_user: str) -> None:
         sources = message.get("sources") or []
         citations = message.get("citations") or []
 
-        if message.get("found") is False:
+        if message.get("answer_mode") == "vision":
+            st.caption("👁️ Réponse lue sur la figure par un modèle de vision : vérifiez sur l'image.")
+            figures: dict[str, dict] = {}
+            for src in sources:
+                if src.get("type") == "figure" and src.get("image_path"):
+                    figures.setdefault(src["image_path"], src)
+            for path, src in figures.items():
+                data = load_image(path)
+                if data:
+                    st.image(data, caption=source_label(src), use_container_width=True)
+        elif message.get("found") is False:
             st.caption("⚠️ Information non trouvée dans les documents.")
         else:
             if citations:
@@ -147,34 +157,26 @@ def render_message(message: dict, previous_user: str) -> None:
                     for c in citations:
                         st.markdown(f"> {c['quote']}")
                         src = source_at(sources, c["chunk"])
-                        label = source_label(src) + (" · texte OCR de la figure" if src.get("type") == "figure" else "")
-                        st.caption(f"📄 {label}" if src else f"extrait n°{c['chunk']}")
+                        st.caption(f"📄 {source_label(src)}" if src else f"extrait n°{c['chunk']}")
             else:
                 st.caption("ℹ️ Aucune citation vérifiée pour cette réponse.")
 
             cited = [s for c in citations if (s := source_at(sources, c["chunk"])) is not None]
-            text_supported = any(s.get("type") != "figure" for s in cited)
-
-            # A figure is shown only when it is the evidence: the answer has no text support
-            figures: dict[str, dict] = {}
-            if not text_supported:
+            if not any(s.get("type") != "figure" for s in cited):  # a figure is shown only when it is the evidence
+                figs: dict[str, dict] = {}
                 for s in cited:
                     if s.get("type") == "figure" and s.get("image_path"):
-                        figures.setdefault(s["image_path"], s)
-
-            if figures:
-                with st.expander(f"Figure source ({len(figures)})", expanded=True):
-                    for path, src in figures.items():
-                        data = load_image(path)
-                        if data:
-                            st.image(data, caption=source_label(src), use_container_width=True)
-                        else:
-                            st.caption(f"{source_label(src)} (image indisponible)")
+                        figs.setdefault(s["image_path"], s)
+                if figs:
+                    with st.expander(f"Figure source ({len(figs)})", expanded=True):
+                        for path, src in figs.items():
+                            data = load_image(path)
+                            if data:
+                                st.image(data, caption=source_label(src), use_container_width=True)
 
         rewritten = message.get("standalone_query")
         if rewritten and not same_text(rewritten, previous_user):
             st.caption(f"Question reformulée : {rewritten}")
-
 
 def chat_page() -> None:
     docs = api("GET", "/documents") or []

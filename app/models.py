@@ -34,6 +34,7 @@ class QueryResponse(BaseModel):
     citations: list[CitationOut]
     standalone_query: str
     sources: list[SourceOut] = []
+    answer_mode: str = "text"
 
 
 class IngestReportOut(BaseModel):
@@ -67,3 +68,4 @@ class MessageOut(BaseModel):
     standalone_query: str | None = None
     sources: list[SourceOut] = []
     created_at: str
+    answer_mode: str = "text"

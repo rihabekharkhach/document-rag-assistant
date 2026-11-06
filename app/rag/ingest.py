@@ -11,7 +11,7 @@ import os
 import time
 from pathlib import Path
 
-from app.rag.chunking import chunk_text
+from app.rag.chunking import chunk_text, chunk_page_with_context
 from app.rag.figures import Figure, extract_figures
 from app.rag.loaders import load_file
 from app.rag.ocr import ocr_image
@@ -32,6 +32,8 @@ def figure_item(fig: Figure) -> dict:
         "source": fig.source,
         "page": fig.page,
         "image_path": fig.image_path,
+        "vision_path": fig.vision_path,
+        "nearby": fig.nearby,
     }
 
 
@@ -56,6 +58,7 @@ def ingest_file(path: str) -> dict:
             "source": name,
             "page": 1,
             "image_path": path,
+            "vision_path": path,
         }]
         pages, characters = 1, len(ocr_text)
         if len(ocr_text.strip()) < 20:
@@ -64,7 +67,7 @@ def ingest_file(path: str) -> dict:
         raw_pages = [clean_text(p) for p in load_file(path)]  # raises ValueError for unsupported types
         is_pdf = name.lower().endswith(".pdf")
         for page_number, page_text in enumerate(raw_pages, start=1):
-            for chunk in chunk_text(page_text):
+            for chunk in chunk_page_with_context(page_text):
                 text_items.append({
                     "text": chunk, "type": "text", "source": name,
                     "page": page_number if is_pdf else None,

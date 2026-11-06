@@ -98,7 +98,12 @@ Rules:
 - Support your answer with citations: the chunk number and a short excerpt copied EXACTLY
   (word for word) from that chunk. Never paraphrase inside a quote.
 - Quotes must stay in the original language of the chunk. Never translate a quote.
-- Write the answer in the exact language of the question, even if the context is in another language."""
+- Write the answer in the exact language of the question, even if the context is in another language.
+- Set found=true ONLY if the context states the specific fact the question asks for (a number, a name, an
+  explanation). If the context merely mentions the topic without giving that fact, set found=false and say what is missing.
+- But if the context DOES contain the fact (in running text, a table row, or text read from a figure), answer it,
+  even if the wording differs from the question or the context is in another language. Do not abstain on a
+  question the context can answer."""
 
     result: Answer = _invoke_structured(prompt)
     answer = result.answer.strip() or "Je n'ai pas trouvé cette information dans les documents."

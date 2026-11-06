@@ -56,9 +56,12 @@ def _connect():
 def init_db() -> None:
     with _connect() as conn:
         conn.executescript(SCHEMA)
+        # Migrations for databases created before these columns existed
         columns = {row["name"] for row in conn.execute("PRAGMA table_info(messages)")}
-        if "sources" not in columns:  # migration for databases created before this feature
+        if "sources" not in columns:
             conn.execute("ALTER TABLE messages ADD COLUMN sources TEXT")
+        if "answer_mode" not in columns:
+            conn.execute("ALTER TABLE messages ADD COLUMN answer_mode TEXT")
 
 
 def create_conversation(title: str) -> str:
@@ -94,19 +97,25 @@ def add_message(
     citations: list[dict] | None = None,
     standalone_query: str | None = None,
     sources: list[dict] | None = None,
+    answer_mode: str = "text",
 ) -> None:
     now = _now()
     with _connect() as conn:
         conn.execute(
             """INSERT INTO messages
-               (conversation_id, role, content, found, citations, standalone_query, created_at, sources)
-               VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
+               (conversation_id, role, content, found, citations, standalone_query,
+                sources, answer_mode, created_at)
+               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)""",
             (
-                conversation_id, role, content,
+                conversation_id,
+                role,
+                content,
                 None if found is None else int(found),
                 json.dumps(citations or [], ensure_ascii=False),
-                standalone_query, now,
+                standalone_query,
                 json.dumps(sources or [], ensure_ascii=False),
+                answer_mode,
+                now,
             ),
         )
         conn.execute("UPDATE conversations SET updated_at = ? WHERE id = ?", (now, conversation_id))
@@ -115,7 +124,8 @@ def add_message(
 def get_messages(conversation_id: str) -> list[dict]:
     with _connect() as conn:
         rows = conn.execute(
-            """SELECT role, content, found, citations, standalone_query, created_at, sources
+            """SELECT role, content, found, citations, standalone_query,
+                      sources, answer_mode, created_at
                FROM messages WHERE conversation_id = ? ORDER BY id""",
             (conversation_id,),
         ).fetchall()
@@ -126,8 +136,9 @@ def get_messages(conversation_id: str) -> list[dict]:
             "found": None if r["found"] is None else bool(r["found"]),
             "citations": json.loads(r["citations"] or "[]"),
             "standalone_query": r["standalone_query"],
+            "sources": json.loads(r["sources"] or "[]"),
+            "answer_mode": r["answer_mode"] or "text",
             "created_at": r["created_at"],
-            "sources": json.loads(r["sources"] or "[]")
         }
         for r in rows
     ]

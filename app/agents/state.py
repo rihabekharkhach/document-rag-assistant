@@ -13,3 +13,4 @@ class GraphState(TypedDict):
     sources: list[str] | None   # documents to search; None = all
     items: list[dict]         # retrieved elements with metadata (same order as chunks)
     sources_used: list[dict]  # metadata of the chunks given to the generator
+    candidates: list[dict]

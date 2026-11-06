@@ -153,6 +153,7 @@ def query(req: QueryRequest) -> QueryResponse:
         found=result["found"], citations=result["citations"],
         standalone_query=result["standalone_query"],
         sources=result["sources_used"],
+        answer_mode=result.get("answer_mode", "text")
     )
 
     return QueryResponse(
@@ -162,4 +163,5 @@ def query(req: QueryRequest) -> QueryResponse:
         citations=result["citations"],
         standalone_query=result["standalone_query"],
         sources=result["sources_used"],
+        answer_mode=result.get("answer_mode", "text")
     )
