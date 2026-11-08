@@ -13,7 +13,10 @@ class QueryRequest(BaseModel):
     question: str = Field(..., min_length=1, max_length=2000)
     thread_id: str | None = Field(default=None, description="Conversation id. Omit to start a new one.")
     sources: list[str] | None = Field(default=None, description="Document names to search. Omit for all.")
+    title: str | None = Field(default=None, max_length=80, description="Name of the new conversation (optional).")
 
+class RenameIn(BaseModel):
+    title: str = Field(..., min_length=1, max_length=80)
 
 class SourceOut(BaseModel):          # must come before QueryResponse and MessageOut
     source: str | None = None

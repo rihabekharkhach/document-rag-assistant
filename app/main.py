@@ -8,14 +8,15 @@ import logging
 import shutil
 from contextlib import asynccontextmanager
 from pathlib import Path
+import pymupdf
 
 from fastapi import FastAPI, File, HTTPException, UploadFile
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, Response
 
 from app import db
 from app.agents.graph import research_graph
 from app.models import (
-    ConversationOut, DocumentOut, IngestReportOut, MessageOut, QueryRequest, QueryResponse,
+    ConversationOut, DocumentOut, IngestReportOut, MessageOut, QueryRequest, QueryResponse, RenameIn
 )
 from app.rag.ingest import SOURCE_DIR, ingest_file
 from app.rag.vector_store import delete_source, list_sources
@@ -102,11 +103,41 @@ def image(path: str) -> FileResponse:
     return FileResponse(resolved)
 
 
+def _fragments(quote: str, window: int = 7, limit: int = 12) -> list[str]:
+    """Short word windows of the quote: robust to line breaks and hyphenation in the PDF."""
+    words = quote.split()
+    return [" ".join(words[i:i + window]) for i in range(0, len(words), window)][:limit]
+
+
+@app.get("/page-image")
+def page_image(source: str, page: int, quote: str = "") -> Response:
+    """Render one PDF page as an image, with the quoted passage highlighted when it can be found."""
+    path = Path(SOURCE_DIR) / Path(source).name  # strips any folder part from the client's value
+    if path.suffix.lower() != ".pdf" or not path.is_file():
+        raise HTTPException(status_code=404, detail="PDF not found.")
+
+    with pymupdf.open(path) as doc:
+        if not 1 <= page <= len(doc):
+            raise HTTPException(status_code=404, detail="Page not found.")
+        pdf_page = doc[page - 1]
+        for fragment in _fragments(quote):
+            for rect in pdf_page.search_for(fragment):
+                pdf_page.add_highlight_annot(rect)  # in memory only: the file on disk is never modified
+        png = pdf_page.get_pixmap(dpi=130).tobytes("png")
+    return Response(content=png, media_type="image/png")
+
 # ---------- conversations ----------
 
 @app.get("/conversations", response_model=list[ConversationOut])
 def conversations() -> list[dict]:
     return db.list_conversations()
+
+
+@app.patch("/conversations/{conversation_id}")
+def rename_conversation(conversation_id: str, body: RenameIn) -> dict:
+    if not db.rename_conversation(conversation_id, body.title):
+        raise HTTPException(status_code=404, detail="Conversation not found.")
+    return {"renamed": conversation_id}
 
 
 @app.get("/conversations/{conversation_id}", response_model=list[MessageOut])
@@ -145,7 +176,7 @@ def query(req: QueryRequest) -> QueryResponse:
 
     # Created only after success, so a failed first question leaves no empty conversation behind
     if not thread_id:
-        thread_id = db.create_conversation(title=req.question)
+        thread_id = db.create_conversation(title=(req.title or "").strip() or req.question)
 
     db.add_message(thread_id, "user", req.question)
     db.add_message(

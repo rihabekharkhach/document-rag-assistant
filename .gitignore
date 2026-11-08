@@ -1,6 +1,10 @@
 venv/
+.venv/
 __pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
 .env
-data/source_documents/
-data/figures/
-data/app.db
+data/
+evaluation/outputs*.json
+evaluation/*.csv

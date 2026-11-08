@@ -158,3 +158,11 @@ def delete_conversation(conversation_id: str) -> bool:
     with _connect() as conn:
         cursor = conn.execute("DELETE FROM conversations WHERE id = ?", (conversation_id,))
     return cursor.rowcount > 0
+
+def rename_conversation(conversation_id: str, title: str) -> bool:
+    title = title.strip()[:80]
+    if not title:
+        return False
+    with _connect() as conn:
+        cursor = conn.execute("UPDATE conversations SET title = ? WHERE id = ?", (title, conversation_id))
+    return cursor.rowcount > 0
