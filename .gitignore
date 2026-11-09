@@ -8,3 +8,4 @@ __pycache__/
 data/
 evaluation/outputs*.json
 evaluation/*.csv
+dev_scratch/
