@@ -38,7 +38,7 @@ jobs:
 
   docker:
     needs: test
-    if: github.event_name == 'push'
+    Document RAG assistant: Docker Compose, CI/CD, tests
     runs-on: ubuntu-latest
     timeout-minutes: 40
     permissions:
@@ -60,7 +60,7 @@ jobs:
         with:
           images: ghcr.io/${{ github.repository }}-${{ matrix.target }}
           tags: |
-            type=raw,value=latest,enable={{is_default_branch}}
+            type=raw,value=latest
             type=sha
             type=semver,pattern={{version}}
       - uses: docker/build-push-action@v6

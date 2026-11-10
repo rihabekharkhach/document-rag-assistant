@@ -58,3 +58,15 @@ Small evaluation: 2 papers, 40 questions written by the author (36 answerable, 4
 ## Evaluation
 
 `python -m evaluation.collect`, then `evaluation.basic_metrics`, `evaluation.score_correctness`, `evaluation.retrieval_metrics`.
+
+![CI](https://github.com/rihabekharkhach/document-rag-assistant/actions/workflows/ci.yml/badge.svg)
+
+## Run with Docker
+
+```bash
+cp .env.example .env     # then fill in your keys
+docker compose up -d     # Qdrant + API + interface
+```
+
+Open http://localhost:8501, add your documents in the knowledge base, and ask questions.
+Data lives in Docker volumes: `docker compose down` keeps it, `docker compose down -v` deletes it.
