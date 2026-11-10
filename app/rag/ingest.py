@@ -11,7 +11,7 @@ import os
 import time
 from pathlib import Path
 
-from app.rag.chunking import chunk_text, chunk_page_with_context
+from app.rag.chunking import chunk_page_with_context
 from app.rag.figures import Figure, extract_figures
 from app.rag.loaders import load_file
 from app.rag.ocr import ocr_image

@@ -2,30 +2,38 @@
 
 """
 Qdrant vector store: owns the client connection, collection setup,
-document ingestion (embed + upsert), and retrieval (embed query +
-similarity search).
+document ingestion (embed + upsert) and retrieval.
 
-This is the only file in the project that talks to Qdrant directly —
-other files (ingest.py, researcher.py) call ingest_documents() /
-retrieve() without knowing how the storage works underneath.
+This is the only file in the project that talks to Qdrant directly.
 """
 
-from qdrant_client import QdrantClient
-from app.rag.embeddings import embed_text, embed_texts, EMBEDDING_DIM
 import os
+import uuid
+
+from qdrant_client import QdrantClient
 from qdrant_client.models import (
     Distance, FieldCondition, Filter, Fusion, FusionQuery, MatchAny, MatchValue,
     Modifier, PointStruct, Prefetch, SparseVectorParams, VectorParams,
 )
 
+from app.rag.embeddings import EMBEDDING_DIM, embed_text, embed_texts
 from app.rag.sparse import sparse_document, sparse_query
-import uuid
-
 
 COLLECTION_NAME = "docs"
 
-# Local Qdrant running in Docker (docker-compose) — swap to :memory: only for quick throwaway tests
-client = QdrantClient(host="localhost", port=6333)
+# Locally this is localhost; in Docker Compose the host is the "qdrant" service (see docker-compose.yml)
+client = QdrantClient(
+    host=os.getenv("QDRANT_HOST", "localhost"),
+    port=int(os.getenv("QDRANT_PORT", "6333")),
+)
+
+
+def _source_filter(sources: list[str] | None) -> Filter | None:
+    """Restrict a search to some documents. None or empty = search everything."""
+    if not sources:
+        return None
+    return Filter(must=[FieldCondition(key="source", match=MatchAny(any=sources))])
+
 
 def create_collection() -> None:
     existing = [c.name for c in client.get_collections().collections]
@@ -53,7 +61,7 @@ def ingest_documents(items: list[dict]) -> None:
 
 def retrieve_items(query: str, top_k: int = 5, sources: list[str] | None = None,
                    mode: str | None = None) -> list[dict]:
-    """mode: 'dense', 'sparse' or 'hybrid' (default, or set RETRIEVAL_MODE in .env)."""
+    """mode: 'dense' (default, or set RETRIEVAL_MODE in .env), 'sparse' or 'hybrid'."""
     mode = mode or os.getenv("RETRIEVAL_MODE", "dense")
     flt = _source_filter(sources)
     sparse = sparse_query(query)
@@ -78,23 +86,6 @@ def retrieve_items(query: str, top_k: int = 5, sources: list[str] | None = None,
 def retrieve_chunks(query: str, top_k: int = 5, sources: list[str] | None = None,
                     mode: str | None = None) -> list[str]:
     return [item["text"] for item in retrieve_items(query, top_k, sources, mode)]
-
-
-def _source_filter(sources: list[str] | None) -> Filter | None:
-    """Restrict a search to some documents. None or empty = search everything."""
-    if not sources:
-        return None
-    return Filter(must=[FieldCondition(key="source", match=MatchAny(any=sources))])
-
-
-def retrieve_chunks(query: str, top_k: int = 5, sources: list[str] | None = None) -> list[str]:
-    results = client.query_points(
-        collection_name=COLLECTION_NAME,
-        query=embed_text(query),
-        limit=top_k,
-        query_filter=_source_filter(sources),
-    )
-    return [hit.payload["text"] for hit in results.points]
 
 
 def delete_source(source: str) -> None:
@@ -126,12 +117,3 @@ def list_sources() -> list[dict]:
         if offset is None:
             break
     return sorted(stats.values(), key=lambda d: d["name"])
-
-
-def retrieve(query: str, top_k: int = 3) -> str:
-    """Same as before, kept so your test scripts still work."""
-    return "\n\n".join(retrieve_chunks(query, top_k))
-
-
-def retrieve_chunks(query: str, top_k: int = 5, sources: list[str] | None = None) -> list[str]:
-    return [item["text"] for item in retrieve_items(query, top_k, sources)]

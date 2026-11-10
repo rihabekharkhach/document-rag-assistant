@@ -12,7 +12,7 @@ import pymupdf
 
 from PIL import Image
 from pdf2image import convert_from_path
-from langchain_community.document_loaders import PyPDFLoader, Docx2txtLoader
+from langchain_community.document_loaders import Docx2txtLoader
 from langchain_ollama import ChatOllama
 from langchain_core.messages import HumanMessage
 
